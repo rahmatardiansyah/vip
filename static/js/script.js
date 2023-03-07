@@ -55,11 +55,12 @@ function process() {
   // const imageUrl = URL.createObjectURL(event.target.files[0]);
   // const imageUrl = document.getElementById('upload-image').value;
   // console.log(imageUrl);
+
   // tutup image collapse
-  // const collapeseImage = document.getElementById('collapseImage');
-  // if (collapeseImage.classList.contains('show')) {
-  //   bootstrap.Collapse.getInstance(collapeseImage).hide();
-  // }
+  const collapeseImage = document.getElementById('collapseImage');
+  if (collapeseImage.classList.contains('show')) {
+    bootstrap.Collapse.getInstance(collapeseImage).hide();
+  }
 
   switch (operation) {
     case 'robert':

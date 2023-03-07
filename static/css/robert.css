@@ -1,0 +1,28 @@
+@media only screen and (min-width: 992px) {
+  .choose-image,
+  .upload-image {
+    margin-left: 5px;
+  }
+}
+
+/* HIDE RADIO */
+.hidden-radio [type='radio'] {
+  display: flex;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+.hidden-radio [type='radio'] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+.hidden-radio [type='radio']:checked + img {
+  border: 2px solid red;
+}
+
+canvas {
+  display: none;
+}
