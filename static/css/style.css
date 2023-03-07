@@ -1,5 +1,6 @@
 @media only screen and (min-width: 992px) {
-  .choose-image {
+  .choose-image,
+  .upload-image {
     margin-left: 5px;
   }
 }
