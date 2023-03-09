@@ -6,7 +6,7 @@ clearFileEl.addEventListener('click', function () {
   inputFileEl.value = '';
 });
 
-const canvasEl = document.querySelectorAll('canvas');
+const canvasEl = document.querySelectorAll('.canvas-robert canvas');
 
 const processButtonEl = document.querySelector('.button-process');
 
@@ -23,6 +23,7 @@ function process() {
     imageUrl = URL.createObjectURL(inputFileEl.files[0]);
   }
 
+  // Hide collapseImage
   const collapeseImage = document.getElementById('collapseImage');
   if (collapeseImage.classList.contains('show')) {
     bootstrap.Collapse.getInstance(collapeseImage).hide();
@@ -69,12 +70,10 @@ function process() {
 
     for (let i = 0; i < pixels.length; i += 4) {
       let grayscale = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-
       pixels[i] = grayscale;
       pixels[i + 1] = grayscale;
       pixels[i + 2] = grayscale;
     }
-
     canvasGreyGrayScale.width = width;
     canvasGreyGrayScale.height = height;
     contextGreyScale.putImageData(imageDataGreyScale, 0, 0);
@@ -117,5 +116,45 @@ function process() {
     [...canvasEl].forEach(function (el) {
       el.style.display = 'block';
     });
+
+    const canvasProcess = document.getElementById('canvasProcess');
+    const contextProcess = canvasProcess.getContext('2d');
+    contextProcess.drawImage(image, 0, 0, 5, 5);
+
+    const imageDataProcess = contextProcess.getImageData(0, 0, 5, 5);
+    const pixelsProcess = [];
+    for (let i = 0; i < imageDataProcess.data.length; i += 4) {
+      pixelsProcess.push(
+        Math.round(
+          (imageDataProcess.data[i] +
+            imageDataProcess.data[i + 1] +
+            imageDataProcess.data[i + 2]) /
+            3
+        )
+      );
+    }
+
+    const newPixelsProcess = [];
+    for (let i = 0; i < pixelsProcess.length; i += 5) {
+      newPixelsProcess.push([...pixelsProcess.slice(i, i + 5), 0]);
+    }
+    newPixelsProcess.push([0, 0, 0, 0, 0, 0]);
+
+    const tableProcess = document.querySelector('.table-process tbody');
+    tableProcess.innerHTML = '';
+
+    for (let i = 0; i < 6; i++) {
+      const trEl = document.createElement('tr');
+      for (let j = 0; j < 6; j++) {
+        const tdEl = document.createElement('td');
+        tdEl.appendChild(document.createTextNode(newPixelsProcess[i][j]));
+        trEl.appendChild(tdEl);
+      }
+      tableProcess.appendChild(trEl);
+    }
+
+    // Show Tables
+    const tableRobertEl = document.querySelector('.table-robert');
+    tableRobertEl.style.display = 'flex';
   };
 }

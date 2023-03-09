@@ -101,6 +101,7 @@
                   id="inputGroupFile04"
                   aria-describedby="inputGroupFileAddon04"
                   aria-label="Upload"
+                  accept="image/*"
                 />
                 <button
                   class="btn btn-outline-danger"
@@ -169,7 +170,7 @@
       </div>
       <main>
         <div
-          class="alert alert-warning alert-dismissible fade show mt-3"
+          class="alert alert-primary alert-dismissible fade show mt-3"
           role="alert"
         >
           Operator Roberts pertama kali dipublikasikan pada tahun 1965,terdiri
@@ -189,6 +190,50 @@
             <canvas id="canvasGreyScale"></canvas>
             <canvas id="canvasResult"></canvas>
           </div>
+
+          <div
+            class="row justify-content-start align-items-center mt-3 table-robert"
+          >
+            <div class="col-lg-6 col-md-8 col-sm-12">
+              <span>Citra Greyscale</span>
+              <table
+                class="table table-bordered border-dark text-center table-process"
+              >
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="col-lg-3 col-md-2 col-sm-12">
+              <span>Gx</span>
+              <table class="table table-bordered border-primary text-center">
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>0</td>
+                    <td>-1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-lg-3 col-md-2 col-sm-12">
+              <span>Gy</span>
+              <table class="table table-bordered border-primary text-center">
+                <tbody>
+                  <tr>
+                    <td>0</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td>-1</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <canvas id="canvasProcess"></canvas>
         </div>
       </main>
     </div>
