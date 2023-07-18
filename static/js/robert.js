@@ -5,7 +5,6 @@ const clearFileEl = document.getElementById('inputGroupFileAddon04');
 clearFileEl.addEventListener('click', function () {
   inputFileEl.value = '';
 });
-
 const canvasEl = document.querySelectorAll('.canvas-robert canvas');
 
 const processButtonEl = document.querySelector('.button-process');
@@ -40,8 +39,8 @@ function process() {
   image.src = imageUrl;
 
   // Menentukan ukuran gambar minimum dan maksimum
-  const minSize = 200;
-  const maxSize = 300;
+  const minSize = 100;
+  const maxSize = 900;
   image.onload = function () {
     const ratio = image.width / image.height;
     // Menentukan ukuran yang sesuai dengan rasio aspek gambar
