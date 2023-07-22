@@ -30,6 +30,10 @@ nav form {
   width: 220px;
 }
 
+nav .active {
+  color: #fff;
+}
+
 .remove-border {
   border-bottom: none;
 }
@@ -62,34 +66,40 @@ nav form {
 
 #hero img {
   border: 2px solid #95a5a6;
-  height: 380px;
+  width: 500px;
   padding: 9px;
+  transition: 0.7s;
+}
+
+#hero img:hover {
+  border: 2px solid #fff;
+  transition: 0.7s;
 }
 
 /* Materi Dasar */
-#materi-dasar {
+#basic-learning {
   margin-top: 320px;
 }
 
-#materi-dasar .row h2 {
+#basic-learning .row h2 {
   font-family: 'JetBrains Mono', sans-serif;
 }
 
-/* Hasil Proses */
-#hasil-proses {
+/* Process Result */
+#process-result {
   margin-top: 200px;
 }
 
-#hasil-proses p {
+#process-result p {
   width: 900px;
 }
 
-#hasil-proses .project {
+#process-result .project {
   overflow: hidden;
   position: relative;
 }
 
-#hasil-proses .project .overlay {
+#process-result .project .overlay {
   padding: 32px;
   position: absolute;
   bottom: 0;
@@ -99,18 +109,29 @@ nav form {
   transform: translateY(60px);
 }
 
-#hasil-proses .border-custom {
-  border: 2px solid #95a5a6;
-  padding: 3px;
+#process-result .overlay a {
+  color: #fff;
+  text-decoration: none;
 }
 
-#hasil-proses .project:hover .overlay {
+#process-result .border-custom {
+  border: 2px solid #95a5a6;
+  padding: 3px;
+  transition: 0.7s;
+}
+
+#process-result .border-custom:hover {
+  border: 2px solid #fff;
+  transition: 0.7s;
+}
+
+#process-result .project:hover .overlay {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Tentang */
-#tentang {
+/* About */
+#about {
   margin-top: 50px;
 }
 
@@ -127,6 +148,13 @@ footer a {
 footer a:visited {
   color: #fff;
   text-decoration: none;
+}
+
+@media only screen and (max-width: 1400px) {
+  /* Navbar */
+  nav ul li {
+    margin-right: 5px;
+  }
 }
 
 @media only screen and (max-width: 1200px) {

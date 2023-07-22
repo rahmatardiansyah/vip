@@ -1,7 +1,12 @@
+AOS.init({
+  duration: 1000,
+  easing: 'ease-in-out'
+});
+
 const navbarEl = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
+  if (window.scrollY > 100) {
     navbarEl.classList.remove('remove-border');
   } else {
     navbarEl.classList.add('remove-border');
@@ -25,4 +30,40 @@ var swiper = new Swiper('.mySwiper', {
       slidesPerView: 2
     }
   }
+});
+
+const menuNavbarEl = navbarEl.querySelector('nav ul.navbar-nav');
+
+// Beri warna pada link yang aktif
+menuNavbarEl.addEventListener('click', function (e) {
+  const targetMenu = e.target;
+  if (targetMenu.classList.contains('nav-link')) {
+    const menuLinkActive = document.querySelector('ul li a.active');
+    if (
+      menuLinkActive !== null &&
+      targetMenu.getAttribute('href') !== menuLinkActive.getAttribute('href')
+    ) {
+      menuLinkActive.classList.remove('active');
+    }
+    targetMenu.classList.add('active');
+  }
+});
+
+const navbarLinks = menuNavbarEl.querySelectorAll('.navbar-nav .nav-link');
+navbarLinks.forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+
+    if (link.textContent.trim() === 'Beranda') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const navbarHeight = document.querySelector('.navbar').offsetHeight;
+      const scrollOffset =
+        target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+      window.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+    }
+  });
 });
