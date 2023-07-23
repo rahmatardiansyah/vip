@@ -50,6 +50,7 @@ menuNavbarEl.addEventListener('click', function (e) {
 });
 
 const navbarLinks = menuNavbarEl.querySelectorAll('.navbar-nav .nav-link');
+
 navbarLinks.forEach(link => {
   link.addEventListener('click', function (event) {
     event.preventDefault();
@@ -67,3 +68,34 @@ navbarLinks.forEach(link => {
     }
   });
 });
+
+// TODO
+
+// // Tambahkan event listener saat halaman di-scroll
+// window.addEventListener('scroll', () => {
+//   // Dapatkan posisi scroll halaman
+//   const scrollPosition = window.scrollY;
+
+//   // Loop melalui semua menu link
+//   navbarLinks.forEach(link => {
+//     // Dapatkan elemen target dari atribut href
+//     const target = document.querySelector(link.getAttribute('href'));
+//     if (!target) return;
+
+//     // Dapatkan posisi bagian
+//     const targetPosition = target.offsetTop;
+//     const targetHeight = target.offsetHeight;
+
+//     // Cek apakah posisi scroll berada di dalam bagian
+//     if (
+//       scrollPosition >= targetPosition &&
+//       scrollPosition < targetPosition + targetHeight
+//     ) {
+//       // Jika scroll berada di dalam bagian, tambahkan kelas CSS "active" pada menu link
+//       link.classList.add('active');
+//     } else {
+//       // Jika scroll berada di luar bagian, hapus kelas CSS "active" pada menu link
+//       link.classList.remove('active');
+//     }
+//   });
+// });

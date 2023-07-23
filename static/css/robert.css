@@ -1,8 +1,53 @@
-@media only screen and (min-width: 992px) {
-  .choose-image,
-  .upload-image {
-    margin-left: 5px;
+.katex {
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 1400px) {
+}
+
+@media only screen and (max-width: 1200px) {
+}
+
+@media only screen and (max-width: 992px) {
+}
+
+@media only screen and (max-width: 769px) {
+  .katex {
+    font-size: 25px;
   }
+}
+
+@media only screen and (max-width: 576px) {
+  .katex {
+    font-size: 20px;
+  }
+}
+
+#basic-robert {
+  margin-top: 50px;
+}
+
+#basic-robert p {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+#basic-robert table {
+  width: 200px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+#basic-robert table,
+#basic-robert small {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+hr {
+  border: 2px solid #2c3e50;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 /* HIDE RADIO */
@@ -20,17 +65,76 @@
 
 /* CHECKED STYLES */
 .hidden-radio [type='radio']:checked + img {
-  border: 2px solid red;
+  border: 2px solid #e74c3c;
 }
 
-.canvas-robert canvas {
-  display: none;
+#main .choose-image {
+  width: 220px;
+  height: 50px;
 }
 
-#canvasProcess {
-  display: none;
+#main .input-group {
+  width: 400px;
 }
 
-.table-robert {
-  display: none;
+#main .process {
+  width: 200px;
+  height: 50px;
 }
+
+#main table,
+#main th,
+#main td {
+  border: 2px solid rgba(180, 188, 194, 0.75);
+}
+
+#main .current-process {
+  width: 500px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  background-color: #3498db;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main .current-process span {
+  color: #fff;
+}
+
+#main button.start,
+#main button.next,
+#main button.stop {
+  border-radius: 55%;
+}
+
+#main i {
+  padding: 10px;
+  font-size: 60px;
+}
+
+#main .result img {
+  width: 400px;
+}
+
+/* @media only screen and (min-width: 992px) {
+  .choose-image,
+  .upload-image {
+    margin-left: 5px;
+  }
+} */
+
+/* .canvas-robert canvas {
+  display: none;
+} */
+
+/* #canvasProcess {
+  display: none;
+} */
+
+/* .table-robert {
+  display: none;
+} */
