@@ -2,27 +2,6 @@
   font-size: 30px;
 }
 
-@media only screen and (max-width: 1400px) {
-}
-
-@media only screen and (max-width: 1200px) {
-}
-
-@media only screen and (max-width: 992px) {
-}
-
-@media only screen and (max-width: 769px) {
-  .katex {
-    font-size: 25px;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .katex {
-    font-size: 20px;
-  }
-}
-
 #basic-robert {
   margin-top: 50px;
 }
@@ -42,6 +21,18 @@
 #basic-robert small {
   margin-left: auto;
   margin-right: auto;
+}
+
+#basic-robert .remove-bg {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: #fff;
+}
+
+#basic-robert table,
+#basic-robert th,
+#basic-robert td {
+  border: 2px solid rgba(88, 90, 92, 0.75);
 }
 
 hr {
@@ -105,36 +96,46 @@ hr {
   color: #fff;
 }
 
-#main button.start,
-#main button.next,
-#main button.stop {
-  border-radius: 55%;
-}
-
 #main i {
-  padding: 10px;
-  font-size: 60px;
+  font-size: 50px;
 }
 
 #main .result img {
   width: 400px;
 }
 
-/* @media only screen and (min-width: 992px) {
-  .choose-image,
-  .upload-image {
-    margin-left: 5px;
+@media only screen and (max-width: 1400px) {
+}
+
+@media only screen and (max-width: 1200px) {
+}
+
+@media only screen and (max-width: 992px) {
+  #main .current-process {
+    width: 300px;
   }
-} */
+}
 
-/* .canvas-robert canvas {
-  display: none;
-} */
+@media only screen and (max-width: 769px) {
+  .katex {
+    font-size: 25px;
+  }
 
-/* #canvasProcess {
-  display: none;
-} */
+  #main .current-process {
+    width: 250px;
+  }
+}
 
-/* .table-robert {
+@media only screen and (max-width: 576px) {
+  .katex {
+    font-size: 20px;
+  }
+
+  #main .current-process {
+    width: 220px;
+  }
+}
+
+.result canvas {
   display: none;
-} */
+}

@@ -104,15 +104,22 @@
           penentuan arah dalam penghitungan nilai gradien, sehingga sering
           disebut dengan operator silang.
         </p>
-        <div class="row">
+        <div class="row align-items-center">
           <div class="col-xxl-4 col-xl-4 col-md-4 col-sm-12 col-12 text-center">
             <table class="table table-hover text-center">
               <tbody>
+                <tr>
+                  <td class="remove-bg"></td>
+                  <td class="remove-bg">x</td>
+                  <td class="remove-bg">x+1</td>
+                </tr>
                 <tr class="table-dark">
+                  <td class="remove-bg">y</td>
                   <td>\[z_1\]</td>
                   <td>\[z_2\]</td>
                 </tr>
                 <tr class="table-dark">
+                  <td class="remove-bg">y+1</td>
                   <td>\[z_3\]</td>
                   <td>\[z_1\]</td>
                 </tr>
@@ -161,7 +168,7 @@
     <!-- Main -->
     <section id="main">
       <div class="container">
-        <div class="d-flex justify-content-evenly flex-wrap">
+        <div class="d-flex justify-content-evenly flex-wrap gap-3">
           <button
             class="btn btn-primary choose-image p-2"
             type="button"
@@ -220,12 +227,7 @@
                 />
               </label>
               <label>
-                <input
-                  type="radio"
-                  name="image"
-                  class="radio-choose-image"
-                  checked
-                />
+                <input type="radio" name="image" class="radio-choose-image" />
                 <img
                   src="../src/img/instagram.png"
                   class="rounded mx-2 my-2"
@@ -292,8 +294,13 @@
                 </tr>
               </tbody>
             </table>
+            <p>
+              Hasil konversi citra rgb menjadi citra grayscale berukuran 6x6
+            </p>
           </div>
-          <div class="col-xxl-6 col-xl-6 col-md-12 col-sm-12 col-12">
+          <div
+            class="col-xxl-6 col-xl-6 col-md-12 col-sm-12 col-12 mt-xxl-0 mt-xl-0 mt-lg-4 mt-md-4 mt-sm-4 mt-4"
+          >
             <div class="current-process"><span>Proses saat ini</span></div>
             <p>\[r(y,x)=\sqrt{(z_1-z_4)^2 + (z_3-z_2)^2}\]</p>
             <p>\[r(y,x)=\sqrt{(z_1-z_4)^2 + (z_3-z_2)^2}\]</p>
@@ -312,10 +319,11 @@
           </button>
         </div>
         <div
-          class="container result d-flex flex-column align-items-center mt-5"
+          class="container result d-flex flex-wrap justify-content-evenly my-5 gap-5"
         >
-          <img src="../src/img/Hero.jpg" alt="" class="img-fluid" />
-          <p class="h2">Hasil</p>
+          <canvas id="canvasOriginal"></canvas>
+          <canvas id="canvasGreyScale"></canvas>
+          <canvas id="canvasResult"></canvas>
         </div>
       </div>
     </section>
