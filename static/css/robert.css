@@ -59,6 +59,10 @@ hr {
   border: 2px solid #e74c3c;
 }
 
+#main .robert-process {
+  display: none;
+}
+
 #main .choose-image {
   width: 220px;
   height: 50px;
@@ -104,6 +108,14 @@ hr {
   width: 400px;
 }
 
+/* #main #hidden {
+  display: block;
+} */
+
+#main .result canvas {
+  display: none;
+}
+
 @media only screen and (max-width: 1400px) {
 }
 
@@ -134,8 +146,4 @@ hr {
   #main .current-process {
     width: 220px;
   }
-}
-
-.result canvas {
-  display: none;
 }

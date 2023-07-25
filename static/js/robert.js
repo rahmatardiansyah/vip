@@ -50,13 +50,16 @@ function process() {
   const canvasGrayscale = document.getElementById('canvasGreyScale');
   const canvasResult = document.getElementById('canvasResult');
 
+  const canvasProcess = document.getElementById('hidden');
+
   const contextOriginal = canvasOriginal.getContext('2d');
   const contextGreyscale = canvasGrayscale.getContext('2d');
   const contextResult = canvasResult.getContext('2d');
 
+  const contextProcess = canvasProcess.getContext('2d');
+
   const image = new Image();
   image.src = getImage();
-
   // Menentukan ukuran gambar minimum dan maksimum
   const minSize = 100;
   const maxSize = 900;
@@ -74,7 +77,7 @@ function process() {
     canvasOriginal.width = width;
     canvasOriginal.height = height;
 
-    contextOriginal.drawImage(image, 0, 0, width, height);
+    contextOriginal.drawImage(image, 0, 0, width, width);
 
     // RBG to Grayscale
     const imageDataGreyScale = contextOriginal.getImageData(
@@ -129,6 +132,47 @@ function process() {
 
     imageDataRobert.data.set(output);
     contextResult.putImageData(imageDataRobert, 0, 0);
+
+    const robertProcessEl = document.querySelector('.robert-process');
+    robertProcessEl.style.display = 'block';
+
+    canvasProcess.width = 7;
+    canvasProcess.height = 7;
+    contextProcess.drawImage(image, 0, 0, 7, 7);
+    const grayscaleArray = [];
+
+    const imageDataProcess = contextProcess.getImageData(0, 0, 7, 7);
+
+    const pixelsProcess = imageDataProcess.data;
+
+    for (let i = 0; i < pixelsProcess.length; i += 4) {
+      let grayscale =
+        (pixelsProcess[i] + pixelsProcess[i + 1] + pixelsProcess[i + 2]) / 3;
+      pixelsProcess[i] = grayscale;
+      pixelsProcess[i + 1] = grayscale;
+      pixelsProcess[i + 2] = grayscale;
+      grayscaleArray.push(Math.floor(grayscale));
+    }
+
+    contextProcess.putImageData(imageDataProcess, 0, 0);
+
+    const tableGrayscaleEl = document.querySelector('.table-grayscale');
+
+    tableGrayscaleEl.innerHTML = '';
+
+    // Hitung jumlah baris dan kolom tabel
+    const numRows = 7;
+    const numCols = 7;
+
+    let index = 0;
+    for (let i = 0; i < numRows; i++) {
+      let row = tableGrayscaleEl.insertRow();
+      for (let j = 0; j < numCols; j++) {
+        let cell = row.insertCell();
+        cell.textContent = grayscaleArray[index];
+        index++;
+      }
+    }
 
     // Show canvas
     const canvasEl = document.querySelectorAll('.result canvas');
