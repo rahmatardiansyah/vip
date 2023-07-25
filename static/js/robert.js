@@ -77,7 +77,7 @@ function process() {
     canvasOriginal.width = width;
     canvasOriginal.height = height;
 
-    contextOriginal.drawImage(image, 0, 0, width, width);
+    contextOriginal.drawImage(image, 0, 0, width, height);
 
     // RBG to Grayscale
     const imageDataGreyScale = contextOriginal.getImageData(
@@ -136,12 +136,12 @@ function process() {
     const robertProcessEl = document.querySelector('.robert-process');
     robertProcessEl.style.display = 'block';
 
-    canvasProcess.width = 7;
-    canvasProcess.height = 7;
-    contextProcess.drawImage(image, 0, 0, 7, 7);
+    canvasProcess.width = 10;
+    canvasProcess.height = 10;
+    contextProcess.drawImage(image, 0, 0, image.width, image.height);
     const grayscaleArray = [];
 
-    const imageDataProcess = contextProcess.getImageData(0, 0, 7, 7);
+    const imageDataProcess = contextProcess.getImageData(0, 0, 10, 10);
 
     const pixelsProcess = imageDataProcess.data;
 
@@ -161,8 +161,8 @@ function process() {
     tableGrayscaleEl.innerHTML = '';
 
     // Hitung jumlah baris dan kolom tabel
-    const numRows = 7;
-    const numCols = 7;
+    const numRows = 10;
+    const numCols = 10;
 
     let index = 0;
     for (let i = 0; i < numRows; i++) {
