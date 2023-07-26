@@ -27,36 +27,109 @@ function hideCollapse() {
   }
 }
 
-function getImageData(image) {
+function resizeImage(img, newWidth, newHeight) {
   const canvas = document.createElement('canvas');
-  canvas.width = image.width;
-  canvas.height = image.height;
+  canvas.width = newWidth;
+  canvas.height = newHeight;
 
-  const context = canvas.getContext('2d');
-  context.drawImage(image, 0, 0);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
-  // Dapatkan imageData dari canvas dan kembalikan nilainya
-  return context.getImageData(0, 0, canvas.width, canvas.height);
+  return canvas;
+}
+
+const img = new Image();
+
+function handleImage() {
+  const file = inputFileEl.files[0];
+  const reader = new FileReader();
+  reader.onload = function () {
+    img.onload = function () {
+      const newWidth = 7;
+      const newHeight = 7;
+
+      const resizedImg = resizeImage(img, newWidth, newHeight);
+
+      const canvas = document.createElement('canvas');
+
+      canvas.style.display = 'none';
+      canvas.width = resizedImg.width;
+      canvas.height = resizedImg.height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(resizedImg, 0, 0);
+
+      const imageData = ctx.getImageData(
+        0,
+        0,
+        resizedImg.width,
+        resizedImg.height
+      );
+      const pixelData = imageData.data;
+
+      const grayscaleArray = [];
+
+      for (let i = 0; i < pixelData.length; i += 4) {
+        let grayscale =
+          (pixelData[i] + pixelData[i + 1] + pixelData[i + 2]) / 3;
+        pixelData[i] = grayscale;
+        pixelData[i + 1] = grayscale;
+        pixelData[i + 2] = grayscale;
+        grayscaleArray.push(Math.floor(grayscale));
+      }
+      const tableGrayscaleEl = document.querySelector('.table-grayscale');
+
+      tableGrayscaleEl.innerHTML = '';
+
+      // Hitung jumlah baris dan kolom tabel
+      const numRows = 7;
+      const numCols = 7;
+
+      let index = 0;
+      for (let i = 0; i < numRows; i++) {
+        let row = tableGrayscaleEl.insertRow();
+        for (let j = 0; j < numCols; j++) {
+          let cell = row.insertCell();
+          cell.textContent = grayscaleArray[index];
+          index++;
+        }
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+      const robertProcessEl = document.querySelector('.robert-process');
+      robertProcessEl.style.display = 'block';
+
+      // Show canvas
+      // const canvasEl = document.querySelectorAll('.result canvas');
+      // canvasEl.forEach(i => {
+      //   i.style.display = 'block';
+      // });
+    };
+    if (file) {
+      img.src = reader.result;
+    } else {
+      img.src = Array.from(document.getElementsByName('image')).find(
+        r => r.checked
+      ).nextElementSibling.src;
+    }
+  };
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    reader.readAsDataURL(new Blob());
+  }
 }
 
 const processButtonEl = document.querySelector('.process');
 
-processButtonEl.addEventListener('click', process);
+processButtonEl.addEventListener('click', test);
+
+function test() {
+  handleImage();
+}
 
 function process() {
   hideCollapse();
-
-  const canvasOriginal = document.getElementById('canvasOriginal');
-  const canvasGrayscale = document.getElementById('canvasGreyScale');
-  const canvasResult = document.getElementById('canvasResult');
-
-  const canvasProcess = document.getElementById('hidden');
-
-  const contextOriginal = canvasOriginal.getContext('2d');
-  const contextGreyscale = canvasGrayscale.getContext('2d');
-  const contextResult = canvasResult.getContext('2d');
-
-  const contextProcess = canvasProcess.getContext('2d');
 
   const image = new Image();
   image.src = getImage();
@@ -65,6 +138,18 @@ function process() {
   const maxSize = 900;
 
   image.onload = function () {
+    const canvasOriginal = document.getElementById('canvasOriginal');
+    const canvasGrayscale = document.getElementById('canvasGreyScale');
+    const canvasResult = document.getElementById('canvasResult');
+
+    const canvasProcess = document.getElementById('hidden');
+
+    const contextOriginal = canvasOriginal.getContext('2d');
+    const contextGreyscale = canvasGrayscale.getContext('2d');
+    const contextResult = canvasResult.getContext('2d');
+
+    const contextProcess = canvasProcess.getContext('2d');
+
     const ratio = image.width / image.height;
     let width = Math.min(maxSize, Math.max(minSize, canvasOriginal.width));
     let height = width / ratio;
@@ -138,13 +223,14 @@ function process() {
 
     canvasProcess.width = 10;
     canvasProcess.height = 10;
-    contextProcess.drawImage(image, 0, 0, image.width, image.height);
+    contextProcess.drawImage(image, 0, 0, 10, 10);
     const grayscaleArray = [];
 
     const imageDataProcess = contextProcess.getImageData(0, 0, 10, 10);
 
     const pixelsProcess = imageDataProcess.data;
 
+    console.log(pixels);
     for (let i = 0; i < pixelsProcess.length; i += 4) {
       let grayscale =
         (pixelsProcess[i] + pixelsProcess[i + 1] + pixelsProcess[i + 2]) / 3;
