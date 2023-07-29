@@ -108,14 +108,6 @@ hr {
   width: 400px;
 }
 
-/* #main #hidden {
-  display: block;
-} */
-
-#main .result canvas {
-  display: none;
-}
-
 @media only screen and (max-width: 1400px) {
 }
 

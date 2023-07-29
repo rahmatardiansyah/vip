@@ -241,14 +241,9 @@
                   />
                 </label>
                 <label>
-                  <input
-                    type="radio"
-                    name="image"
-                    class="radio-choose-image"
-                    checked
-                  />
+                  <input type="radio" name="image" class="radio-choose-image" />
                   <img
-                    src="../src/img/blackWhite.png"
+                    src="../src/img/blackwhite.png"
                     class="rounded mx-2 my-2"
                     alt="..."
                     width="150"
@@ -256,7 +251,12 @@
                   />
                 </label>
                 <label>
-                  <input type="radio" name="image" class="radio-choose-image" />
+                  <input
+                    type="radio"
+                    name="image"
+                    class="radio-choose-image"
+                    checked
+                  />
                   <img
                     src="../src/img/1000x1000px.jpg"
                     class="rounded mx-2 my-2"
@@ -365,13 +365,12 @@
                 <i class="las la-stop"></i>
               </button>
             </div>
+            <div class="text-center mt-5">
+              <button class="btn btn-info show-result">Tampilkan Hasil</button>
+            </div>
             <div
               class="container result d-flex flex-wrap justify-content-evenly my-5 gap-5"
-            >
-              <canvas id="canvasOriginal"></canvas>
-              <canvas id="canvasGreyScale"></canvas>
-              <canvas id="canvasResult"></canvas>
-            </div>
+            ></div>
           </div>
         </div>
       </section>
