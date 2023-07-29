@@ -75,20 +75,15 @@ function getImageDataPromise() {
       img.onload = function () {
         const canvasProses = document.createElement('canvas');
 
-        const resizedImg = resizeImage(img, 7, 7);
+        // const resizedImg = resizeImage(img, 7, 7);
         canvasProses.style.display = 'none';
-        canvasProses.width = resizedImg.width;
-        canvasProses.height = resizedImg.height;
+        canvasProses.width = 7;
+        canvasProses.height = 7;
 
         const ctx = canvasProses.getContext('2d');
-        ctx.drawImage(resizedImg, 0, 0);
+        ctx.drawImage(img, 0, 0, 7, 7);
 
-        const imageData = ctx.getImageData(
-          0,
-          0,
-          resizedImg.width,
-          resizedImg.height
-        ).data;
+        const imageData = ctx.getImageData(0, 0, 7, 7).data;
         resolve(imageData);
       };
       img.onerror = function () {
