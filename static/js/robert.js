@@ -77,13 +77,13 @@ function getImageDataPromise() {
 
         // const resizedImg = resizeImage(img, 7, 7);
         canvasProses.style.display = 'none';
-        canvasProses.width = 7;
-        canvasProses.height = 7;
+        canvasProses.width = 10;
+        canvasProses.height = 10;
 
         const ctx = canvasProses.getContext('2d');
-        ctx.drawImage(img, 0, 0, 7, 7);
+        ctx.drawImage(img, 0, 0, 10, 10);
 
-        const imageData = ctx.getImageData(0, 0, 7, 7).data;
+        const imageData = ctx.getImageData(0, 0, 10, 10).data;
         resolve(imageData);
       };
       img.onerror = function () {
@@ -116,8 +116,8 @@ async function processImageData() {
     tableGrayscaleEl.innerHTML = '';
 
     // Total column and row
-    const numRows = 7;
-    const numCols = 7;
+    const numRows = 10;
+    const numCols = 10;
 
     let index = 0;
     for (let i = 0; i < numRows; i++) {
