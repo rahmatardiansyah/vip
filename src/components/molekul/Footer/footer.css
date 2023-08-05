@@ -1,0 +1,13 @@
+footer svg {
+  width: 25px;
+  animation: react infinite 20s linear;
+}
+
+@keyframes react {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
