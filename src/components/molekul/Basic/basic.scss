@@ -1,0 +1,31 @@
+.basic-section {
+  margin-top: 300px;
+  h2 {
+    margin-bottom: 30px;
+  }
+  .number {
+    width: 310px;
+    text-align: center;
+    font-size: 4rem;
+    padding: 0 10px 10px 10px;
+  }
+  .basic-info {
+    .basic-title {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .basic-section {
+    .number {
+      width: 310px;
+      text-align: center;
+      font-size: 3rem;
+      padding: 0 10px 10px 10px;
+    }
+  }
+}
