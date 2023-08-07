@@ -7,6 +7,7 @@ nav {
     font-size: 2.5rem;
     cursor: pointer;
   }
+
   .navbar-brand:hover {
     color: #fff;
   }
@@ -17,7 +18,7 @@ nav {
     cursor: pointer;
   }
 
-  .navbar-nav li:not(:nth-child(5)) {
+  .navbar-nav li.nav-item:nth-child(n + 1):nth-child(-n + 4) {
     margin-right: 50px;
   }
 
@@ -27,13 +28,5 @@ nav {
 
   .navbar-nav li a:hover {
     color: #fff;
-  }
-
-  .dropdown-toggle {
-    margin-right: 20px;
-  }
-
-  .dropdown-toggle::after {
-    margin-left: 10px;
   }
 }
