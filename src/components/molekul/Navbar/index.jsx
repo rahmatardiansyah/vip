@@ -12,8 +12,8 @@ const CustomNavbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg">
-      <div className="container-fluid">
+    <nav className="navbar navbar-expand-lg sticky-top">
+      <div className="container">
         <a
           className="navbar-brand"
           onClick={() => {
@@ -91,7 +91,7 @@ const CustomNavbar = () => {
               >
                 {algorithm}
               </a>
-              <ul className="dropdown-menu">
+              <ul className="dropdown-menu dropdown-menu-end">
                 <li>
                   <a
                     className="dropdown-item"
