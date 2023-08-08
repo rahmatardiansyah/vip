@@ -1,0 +1,24 @@
+.robert-section {
+  padding-top: 50px;
+  .katex {
+    font-size: 2rem;
+  }
+  .robert-table {
+    tr:nth-child(1) {
+      border-top: 1px solid transparent;
+      border-right: 1px solid transparent;
+    }
+    .rm-border-top {
+      border-top: 1px solid transparent;
+    }
+    .rm-border-right {
+      border-right: 1px solid transparent;
+    }
+    .rm-border-left {
+      border-left: 1px solid transparent;
+    }
+    .rm-border-bottom {
+      border-bottom: 1px solid transparent;
+    }
+  }
+}
