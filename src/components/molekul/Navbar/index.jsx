@@ -6,9 +6,14 @@ const CustomNavbar = () => {
   const navigate = useNavigate();
 
   const [algorithm, setAlgorithm] = useState('Pilih Operator');
+  const [activeMenu, setActiveMenu] = useState('home');
 
   const handleClick = e => {
     setAlgorithm(e);
+  };
+
+  const handleMenuClick = menu => {
+    setActiveMenu(menu);
   };
 
   return (
@@ -16,6 +21,7 @@ const CustomNavbar = () => {
       <div className="container">
         <a
           className="navbar-brand"
+          href="#"
           onClick={() => {
             navigate('/');
             handleClick('Pilih Operator');
@@ -38,11 +44,12 @@ const CustomNavbar = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <a
-                className="nav-link"
-                aria-current="page"
+                className={`nav-link ${activeMenu === 'home' ? 'active' : ''}`}
+                href="#home"
                 onClick={() => {
                   navigate('/#home');
                   handleClick('Pilih Operator');
+                  handleMenuClick('home');
                 }}
               >
                 Beranda
@@ -50,10 +57,12 @@ const CustomNavbar = () => {
             </li>
             <li className="nav-item">
               <a
-                className="nav-link"
+                className={`nav-link ${activeMenu === 'basic' ? 'active' : ''}`}
+                href="#basic"
                 onClick={() => {
                   navigate('/#basic');
                   handleClick('Pilih Operator');
+                  handleMenuClick('basic');
                 }}
               >
                 Materi Dasar
@@ -61,10 +70,14 @@ const CustomNavbar = () => {
             </li>
             <li className="nav-item">
               <a
-                className="nav-link"
+                className={`nav-link ${
+                  activeMenu === 'result' ? 'active' : ''
+                }`}
+                href="#result"
                 onClick={() => {
                   navigate('/#result');
                   handleClick('Pilih Operator');
+                  handleMenuClick('result');
                 }}
               >
                 Hasil Proses
@@ -72,10 +85,12 @@ const CustomNavbar = () => {
             </li>
             <li className="nav-item">
               <a
-                className="nav-link"
+                className={`nav-link ${activeMenu === 'about' ? 'active' : ''}`}
+                href="#about"
                 onClick={() => {
                   navigate('/#about');
                   handleClick('Pilih Operator');
+                  handleMenuClick('about');
                 }}
               >
                 Tentang

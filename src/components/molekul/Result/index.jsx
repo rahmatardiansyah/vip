@@ -8,7 +8,7 @@ import './result.scss';
 
 const Result = () => {
   return (
-    <div className="container result-section">
+    <div className="container result-section" id="result">
       <h2>Hasil Proses</h2>
       <Swiper
         slidesPerView={3}

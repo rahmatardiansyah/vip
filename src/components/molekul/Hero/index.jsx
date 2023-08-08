@@ -5,7 +5,7 @@ import './hero.scss';
 
 const Hero = () => {
   return (
-    <div className="container hero-section">
+    <div className="container hero-section" id="home">
       <div className="row">
         <div className="col-xl-6 order-xl-1 order-2">
           <h1 className="title">

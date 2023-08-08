@@ -2,7 +2,7 @@ import './about.scss';
 
 const About = () => {
   return (
-    <div className="container about-section">
+    <div className="container about-section" id="about">
       <h2>Tentang Penggunaan Web</h2>
       <p>
         s simply dummy text of the printing and typesetting industry. Lorem

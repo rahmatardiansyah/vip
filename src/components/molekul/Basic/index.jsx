@@ -2,7 +2,7 @@ import './basic.scss';
 
 const Basic = () => {
   return (
-    <div className="container basic-section">
+    <div className="container basic-section" id="basic">
       <h2>Materi Dasar</h2>
       <div className="row">
         <div className="col-xl-6">
