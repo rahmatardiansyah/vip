@@ -18,8 +18,10 @@ const CustomNavbar = () => {
 
   const hideNavbar = () => {
     const menuToggle = document.getElementById('navbarNavDropdown');
-    const bsCollapse = new bootstrap.Collapse(menuToggle);
-    bsCollapse.toggle();
+    if (window.innerWidth < 992) {
+      const bsCollapse = new bootstrap.Collapse(menuToggle);
+      bsCollapse.toggle();
+    }
   };
 
   return (
