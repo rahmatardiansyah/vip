@@ -16,6 +16,12 @@ const CustomNavbar = () => {
     setActiveMenu(menu);
   };
 
+  const hideNavbar = () => {
+    const menuToggle = document.getElementById('navbarNavDropdown');
+    const bsCollapse = new bootstrap.Collapse(menuToggle);
+    bsCollapse.toggle();
+  };
+
   return (
     <nav className="navbar navbar-expand-lg sticky-top">
       <div className="container">
@@ -50,6 +56,7 @@ const CustomNavbar = () => {
                   navigate('/#home');
                   handleClick('Pilih Operator');
                   handleMenuClick('home');
+                  hideNavbar();
                 }}
               >
                 Beranda
@@ -63,6 +70,7 @@ const CustomNavbar = () => {
                   navigate('/#basic');
                   handleClick('Pilih Operator');
                   handleMenuClick('basic');
+                  hideNavbar();
                 }}
               >
                 Materi Dasar
@@ -78,6 +86,7 @@ const CustomNavbar = () => {
                   navigate('/#result');
                   handleClick('Pilih Operator');
                   handleMenuClick('result');
+                  hideNavbar();
                 }}
               >
                 Hasil Proses
@@ -91,6 +100,7 @@ const CustomNavbar = () => {
                   navigate('/#about');
                   handleClick('Pilih Operator');
                   handleMenuClick('about');
+                  hideNavbar();
                 }}
               >
                 Tentang
@@ -113,6 +123,7 @@ const CustomNavbar = () => {
                     onClick={() => {
                       navigate('/robert');
                       handleClick('Operator Robert');
+                      hideNavbar();
                     }}
                   >
                     Operator Robert
@@ -124,6 +135,7 @@ const CustomNavbar = () => {
                     onClick={() => {
                       navigate('/prewitt');
                       handleClick('Operator Prewitt');
+                      hideNavbar();
                     }}
                   >
                     Operator Prewitt
