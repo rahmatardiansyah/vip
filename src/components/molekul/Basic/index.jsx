@@ -9,7 +9,7 @@ const Basic = () => {
           <div className="d-flex">
             <div className="number">01</div>
             <div className="basic-info">
-              <div className="basic-title">Image Enhancement</div>
+              <div className="basic-title">Image Acquicition</div>
               <p>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
                 Quaerat voluptas illo inventore non iusto aliquid tempora

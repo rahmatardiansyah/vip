@@ -1,0 +1,60 @@
+.result-section {
+  color: #b4bcc2;
+  h2 {
+    margin-bottom: 40px;
+  }
+  .result {
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    width: 400px;
+    color: #fff;
+    padding: 20px;
+    border: 2px solid #b4bcc2;
+    transition: 0.5s;
+    .overlay {
+      padding: 32px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transition: all 0.4s ease-in-out;
+      opacity: 0;
+      transform: translateY(60px);
+
+      a {
+        text-decoration: none;
+        color: #fff;
+      }
+    }
+  }
+  .result:hover {
+    transition: 0.5s;
+    border: 2px solid #fff;
+    .overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .mySwiper {
+    .swiper-pagination-bullet {
+      background-color: #aaaaaa;
+      bottom: 0;
+    }
+
+    .swiper-pagination-bullet-active {
+      background-color: #fff;
+    }
+    .swiper-divider {
+      height: 40px;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .result-section {
+    .result {
+      width: 300px;
+    }
+  }
+}

@@ -1,11 +1,18 @@
-import { Hero, Basic } from '../../components/molekul';
+import { Hero, Basic, Result } from '../../components/molekul';
 import './home.scss';
 
 const Home = () => {
   return (
-    <div>
-      <Hero />
-      <Basic />
+    <div className="scroll-container">
+      <div className="hero-wrapper">
+        <Hero />
+      </div>
+      <div className="basic-wrapper">
+        <Basic />
+      </div>
+      <div className="result-wrapper">
+        <Result />
+      </div>
     </div>
   );
 };

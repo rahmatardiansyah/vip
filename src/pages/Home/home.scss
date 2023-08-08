@@ -1,0 +1,12 @@
+.hero-wrapper,
+.basic-wrapper,
+.result-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.scroll-container {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
