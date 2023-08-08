@@ -125,6 +125,7 @@ const CustomNavbar = () => {
                     onClick={() => {
                       navigate('/robert');
                       handleClick('Operator Robert');
+                      handleMenuClick('');
                       hideNavbar();
                     }}
                   >
@@ -137,6 +138,7 @@ const CustomNavbar = () => {
                     onClick={() => {
                       navigate('/prewitt');
                       handleClick('Operator Prewitt');
+                      handleMenuClick('');
                       hideNavbar();
                     }}
                   >
