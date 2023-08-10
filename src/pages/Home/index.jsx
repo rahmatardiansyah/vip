@@ -1,4 +1,4 @@
-import { Hero, Basic, Result, About } from '../../components/molekul';
+import { Hero, Basic, Result, About } from '../../components';
 import './home.scss';
 
 const Home = () => {

@@ -1,3 +1,3 @@
 import Button from './Button';
-
-export { Button };
+import Katex from './Katex';
+export { Button, Katex };

@@ -6,7 +6,7 @@ const CustomNavbar = () => {
   const navigate = useNavigate();
 
   const [algorithm, setAlgorithm] = useState('Pilih Operator');
-  const [activeMenu, setActiveMenu] = useState('home');
+  const [activeMenu, setActiveMenu] = useState('');
 
   const handleClick = e => {
     setAlgorithm(e);
