@@ -3,7 +3,7 @@ import { MainApp } from '../../pages';
 
 const myRoutes = () => {
   return (
-    <Router basename="/">
+    <Router basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="*" element={<MainApp />} />
       </Routes>
