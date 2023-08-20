@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import { Hero, Basic, Result, About } from '../../components';
 import './home.scss';
 
 const Home = () => {
+  useEffect(() => {
+    document.title = 'Beranda Visualize Image Processing';
+  }, []);
   return (
     <div className="scroll-container">
       <div className="hero-wrapper">

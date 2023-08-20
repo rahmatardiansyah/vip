@@ -1,5 +1,5 @@
 import { TableRobert, Button, Katex } from '../../components';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Image1, Image2, Image3, Image4, Image5 } from '../../assets';
 import {
   FaCircleChevronRight,
@@ -26,6 +26,9 @@ const Robert = () => {
     const bsCollapse = new bootstrap.Collapse(menuToggle);
     bsCollapse.toggle();
   };
+  useEffect(() => {
+    document.title = 'Robert Algoritma';
+  }, []);
   return (
     <div className=" robert-section">
       <div className="container">
@@ -242,9 +245,11 @@ const Robert = () => {
           </div>
           <div className="col-xl-5 current-process">
             <div className="current-process-title">Current Process</div>
-            <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
-            <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
-            <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
+            <div className="d-flex flex-column gap-4">
+              <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
+              <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
+              <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
+            </div>
           </div>
         </div>
       </div>
