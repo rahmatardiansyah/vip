@@ -56,9 +56,6 @@ const Robert = () => {
     try {
       const res = await Axios.post(`${API}/v1/robert/post`, formData);
       if (res.status === 201) {
-        console.log(`${API}${res.data.data.image}`);
-        console.log(`${API}${res.data.data['image-grayscale']}`);
-        console.log(`${API}${res.data.data['image-robert']}`);
         setImage({
           image: `${API}${res.data.data.image}`,
           imageGrayscale: `${API}${res.data.data['image-grayscale']}`,
