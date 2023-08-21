@@ -41,7 +41,7 @@ jobs:
       - name: create env file
         run: |
           touch .env
-          echo BASE_URL=${{ secrets.VITE_APP_API }} >> .env
+          echo VITE_APP_API=${{ secrets.VITE_APP_API }} >> .env
       - name: Build
         run: npm run build
       - name: Setup Pages
