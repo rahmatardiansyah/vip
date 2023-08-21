@@ -1,5 +1,5 @@
 import { TableRobert, Button, Katex } from '../../components';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Image1, Image2, Image3, Image4, Image5 } from '../../assets';
 import {
   FaCircleChevronRight,
@@ -8,23 +8,66 @@ import {
   FaCircleStop
 } from 'react-icons/fa6';
 import './robert.scss';
+import Axios from 'axios';
+const API = import.meta.env.VITE_APP_API;
 
 const Robert = () => {
   const inputRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [image, setImage] = useState({
+    imageOri: `https://images.unsplash.com/photo-1682695794947-17061dc284dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80`,
+    imageGrayscale:
+      'https://images.unsplash.com/photo-1682685797661-9e0c87f59c60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+    imageRobert:
+      'https://images.unsplash.com/photo-1692545115562-7353d6047b41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80'
+  });
 
   const handleFileChange = event => {
     const fileObj = event.target.files[0];
+    setSelectedImage(fileObj);
     if (!fileObj) {
       return;
     }
   };
   const resetFileInput = () => {
     inputRef.current.value = null;
+    setSelectedImage(null);
   };
-  const process = () => {
+
+  const onProcess = async () => {
     const menuToggle = document.getElementById('collapseExample');
-    const bsCollapse = new bootstrap.Collapse(menuToggle);
-    bsCollapse.toggle();
+    if (menuToggle.classList.contains('show')) {
+      new bootstrap.Collapse(menuToggle).toggle();
+    }
+
+    const formData = new FormData();
+
+    if (selectedImage) {
+      formData.append('image', selectedImage);
+    } else {
+      const selectedRadioButton = [...document.getElementsByName('image')].find(
+        r => r.checked
+      ).nextElementSibling.src;
+      if (selectedRadioButton) {
+        formData.append('image', selectedRadioButton);
+      }
+    }
+
+    try {
+      const res = await Axios.post(`${API}/v1/robert/post`, formData);
+      if (res.status === 201) {
+        console.log(`${API}${res.data.data.image}`);
+        console.log(`${API}${res.data.data['image-grayscale']}`);
+        console.log(`${API}${res.data.data['image-robert']}`);
+        setImage({
+          image: `${API}${res.data.data.image}`,
+          imageGrayscale: `${API}${res.data.data['image-grayscale']}`,
+          imageRobert: `${API}${res.data.data['image-robert']}`
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     document.title = 'Robert Algoritma';
@@ -78,7 +121,7 @@ const Robert = () => {
           <Button
             text="Proses"
             className="btn btn-success process"
-            onClick={process}
+            onClick={onProcess}
           />
         </div>
         <div className="collapse" id="collapseExample">
@@ -89,6 +132,7 @@ const Robert = () => {
                   type="radio"
                   name="image"
                   className="radio-choose-image"
+                  defaultChecked
                 />
                 <img
                   src={Image1}
@@ -153,9 +197,14 @@ const Robert = () => {
           </div>
         </div>
         <div className="d-flex justify-content-evenly flex-wrap gap-4 my-5">
-          <img src={Image1} className="img-fluid" width="300" alt="..." />
           <img
-            src={Image1}
+            src={`${image.imageOri}`}
+            className="img-fluid"
+            width="300"
+            alt="..."
+          />
+          <img
+            src={`${image.imageGrayscale}`}
             className="img-fluid robert-result"
             width="300"
             alt="..."
@@ -163,7 +212,7 @@ const Robert = () => {
             data-bs-target="#exampleModal"
           />
           <img
-            src={Image1}
+            src={`${image.imageRobert}`}
             className="img-fluid robert-result"
             width="300"
             alt="..."
