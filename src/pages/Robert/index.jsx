@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fa6';
 import './robert.scss';
 import Axios from 'axios';
+import { SyncLoader } from 'react-spinners';
 const API = import.meta.env.VITE_APP_API;
 
 const Robert = () => {
@@ -19,6 +20,8 @@ const Robert = () => {
     imageGrayscale: `${API}/images/grayscale.jpg`,
     imageRobert: `${API}/images/robert.jpg`
   });
+  const [loading, setLoading] = useState(true);
+  const [modalImage, setModalImage] = useState('');
 
   const handleFileChange = event => {
     const fileObj = event.target.files[0];
@@ -32,7 +35,12 @@ const Robert = () => {
     setSelectedImage(null);
   };
 
+  const modalImageClick = e => {
+    setModalImage(e.target.src);
+  };
+
   const onProcess = async () => {
+    setLoading(true);
     const menuToggle = document.getElementById('collapseExample');
     if (menuToggle.classList.contains('show')) {
       new bootstrap.Collapse(menuToggle).toggle();
@@ -191,6 +199,11 @@ const Robert = () => {
             </div>
           </div>
         </div>
+        {loading && (
+          <div className="text-center my-5">
+            <SyncLoader color="#b4bcc2" margin={5} size={16} />
+          </div>
+        )}
         <div className="d-flex justify-content-evenly flex-wrap gap-4 my-5">
           <img
             src={`${image.imageOriginal}`}
@@ -199,6 +212,9 @@ const Robert = () => {
             alt="..."
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
+            onLoad={() => setLoading(false)}
+            style={{ display: loading ? 'none' : 'block' }}
+            onClick={e => modalImageClick(e)}
           />
           <img
             src={`${image.imageGrayscale}`}
@@ -207,6 +223,9 @@ const Robert = () => {
             alt="..."
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
+            onLoad={() => setLoading(false)}
+            style={{ display: loading ? 'none' : 'block' }}
+            onClick={e => modalImageClick(e)}
           />
           <img
             src={`${image.imageRobert}`}
@@ -215,6 +234,9 @@ const Robert = () => {
             alt="..."
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
+            onLoad={() => setLoading(false)}
+            style={{ display: loading ? 'none' : 'block' }}
+            onClick={e => modalImageClick(e)}
           />
         </div>
       </div>
@@ -316,7 +338,7 @@ const Robert = () => {
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content p-2">
-            <img src={`${image.imageRobert}`} alt="" />
+            <img src={modalImage} alt="..." />
           </div>
         </div>
       </div>
