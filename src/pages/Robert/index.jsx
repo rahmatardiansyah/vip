@@ -15,7 +15,9 @@ const Robert = () => {
   const inputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState({
-    imageRobert: `${API}/images/robert.png`
+    imageOriginal: `${API}/images/original.jpg`,
+    imageGrayscale: `${API}/images/grayscale.jpg`,
+    imageRobert: `${API}/images/robert.jpg`
   });
 
   const handleFileChange = event => {
@@ -53,7 +55,9 @@ const Robert = () => {
       const res = await Axios.post(`${API}/v1/robert/post`, formData);
       if (res.status === 201) {
         setImage({
-          imageRobert: `${API}${res.data.data['image-robert']}`
+          imageOriginal: `${res.data.data['image']}`,
+          imageGrayscale: `${res.data.data['image-grayscale']}`,
+          imageRobert: `${res.data.data['image-robert']}`
         });
       }
     } catch (err) {
@@ -188,6 +192,22 @@ const Robert = () => {
           </div>
         </div>
         <div className="d-flex justify-content-evenly flex-wrap gap-4 my-5">
+          <img
+            src={`${image.imageOriginal}`}
+            className="img-fluid robert-result"
+            width="300"
+            alt="..."
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          />
+          <img
+            src={`${image.imageGrayscale}`}
+            className="img-fluid robert-result"
+            width="300"
+            alt="..."
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          />
           <img
             src={`${image.imageRobert}`}
             className="img-fluid robert-result"
