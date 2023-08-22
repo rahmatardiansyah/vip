@@ -39,9 +39,7 @@ jobs:
       - name: install Dependencies
         run: npm install
       - name: create env file
-        run: |
-          touch .env
-          echo VITE_APP_API=${{ secrets.VITE_APP_API }} >> .env
+        run: echo VITE_APP_API=${{ secrets.API }} >> .env
       - name: Build
         run: npm run build
       - name: Setup Pages

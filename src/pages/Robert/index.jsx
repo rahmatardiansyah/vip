@@ -15,11 +15,7 @@ const Robert = () => {
   const inputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState({
-    imageOri: `https://images.unsplash.com/photo-1682695794947-17061dc284dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80`,
-    imageGrayscale:
-      'https://images.unsplash.com/photo-1682685797661-9e0c87f59c60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    imageRobert:
-      'https://images.unsplash.com/photo-1692545115562-7353d6047b41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80'
+    imageRobert: `${API}/images/robert.png`
   });
 
   const handleFileChange = event => {
@@ -57,8 +53,6 @@ const Robert = () => {
       const res = await Axios.post(`${API}/v1/robert/post`, formData);
       if (res.status === 201) {
         setImage({
-          image: `${API}${res.data.data.image}`,
-          imageGrayscale: `${API}${res.data.data['image-grayscale']}`,
           imageRobert: `${API}${res.data.data['image-robert']}`
         });
       }
@@ -70,7 +64,7 @@ const Robert = () => {
     document.title = 'Robert Algoritma';
   }, []);
   return (
-    <div className=" robert-section">
+    <div className="robert-section">
       <div className="container">
         <h3>Robert</h3>
         <p>
@@ -195,20 +189,6 @@ const Robert = () => {
         </div>
         <div className="d-flex justify-content-evenly flex-wrap gap-4 my-5">
           <img
-            src={`${image.imageOri}`}
-            className="img-fluid"
-            width="300"
-            alt="..."
-          />
-          <img
-            src={`${image.imageGrayscale}`}
-            className="img-fluid robert-result"
-            width="300"
-            alt="..."
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          />
-          <img
             src={`${image.imageRobert}`}
             className="img-fluid robert-result"
             width="300"
@@ -316,7 +296,7 @@ const Robert = () => {
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content p-2">
-            <img src={Image5} alt="" />
+            <img src={`${image.imageRobert}`} alt="" />
           </div>
         </div>
       </div>
