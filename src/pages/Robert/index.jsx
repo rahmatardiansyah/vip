@@ -1,29 +1,34 @@
 import { TableRobert, Button, Katex } from '../../components';
 import { useRef, useEffect, useState } from 'react';
-import { Image1, Image2, Image3, Image4, Image5 } from '../../assets';
+import { imageDataRadio } from './imageData';
 import {
   FaCircleChevronRight,
   FaCirclePlay,
   FaCirclePause,
-  FaCircleStop
+  FaCircleStop,
 } from 'react-icons/fa6';
 import './robert.scss';
 import Axios from 'axios';
 import { SyncLoader } from 'react-spinners';
 const API = import.meta.env.VITE_APP_API;
 
+const { image1, image2, image3, image4, image5 } = imageDataRadio;
+const rows = [];
+
 const Robert = () => {
   const inputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState({
-    imageOriginal: `${API}/images/original.jpg`,
-    imageGrayscale: `${API}/images/grayscale.jpg`,
-    imageRobert: `${API}/images/robert.jpg`
+    imageOriginal: image1.original,
+    imageGrayscale: image1.grayscale,
+    imageRobert: image1.robert,
   });
+
+  const [imageDataTable, setImageDataTable] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalImage, setModalImage] = useState('');
 
-  const handleFileChange = event => {
+  const handleFileChange = (event) => {
     const fileObj = event.target.files[0];
     setSelectedImage(fileObj);
     if (!fileObj) {
@@ -35,7 +40,7 @@ const Robert = () => {
     setSelectedImage(null);
   };
 
-  const modalImageClick = e => {
+  const modalImageClick = (e) => {
     setModalImage(e.target.src);
   };
 
@@ -51,12 +56,17 @@ const Robert = () => {
     if (selectedImage) {
       formData.append('image', selectedImage);
     } else {
-      const selectedRadioButton = [...document.getElementsByName('image')].find(
-        r => r.checked
-      ).nextElementSibling.src;
-      if (selectedRadioButton) {
-        formData.append('image', selectedRadioButton);
-      }
+      const selectedImageRadio = JSON.parse(
+        [...document.getElementsByName('image')].find((r) => r.checked).value
+      );
+      setImage({
+        imageOriginal: selectedImageRadio.original,
+        imageGrayscale: selectedImageRadio.grayscale,
+        imageRobert: selectedImageRadio.robert,
+      });
+      setImageDataTable(selectedImageRadio.imageData);
+      setLoading(false);
+      return;
     }
 
     try {
@@ -65,8 +75,13 @@ const Robert = () => {
         setImage({
           imageOriginal: `${res.data.data['image']}`,
           imageGrayscale: `${res.data.data['image-grayscale']}`,
-          imageRobert: `${res.data.data['image-robert']}`
+          imageRobert: `${res.data.data['image-robert']}`,
         });
+        const newArr = [];
+        for (let i = 1; i < res.data.dataImage.grayscaleRgb.length; i += 3) {
+          newArr.push(res.data.dataImage.grayscaleRgb[i]);
+        }
+        setImageDataTable(newArr);
       }
     } catch (err) {
       console.log(err);
@@ -75,6 +90,10 @@ const Robert = () => {
   useEffect(() => {
     document.title = 'Robert Algoritma';
   }, []);
+  rows.splice(0, rows.length); // empty array
+  for (let i = 0; i < imageDataTable.length; i += 7) {
+    rows.push(imageDataTable.slice(i, i + 7));
+  }
   return (
     <div className="robert-section">
       <div className="container">
@@ -135,10 +154,11 @@ const Robert = () => {
                   type="radio"
                   name="image"
                   className="radio-choose-image"
+                  value={JSON.stringify(image1)}
                   defaultChecked
                 />
                 <img
-                  src={Image1}
+                  src={image1.original}
                   className="rounded mx-2 my-2"
                   alt="Apel"
                   width="200"
@@ -149,9 +169,10 @@ const Robert = () => {
                   type="radio"
                   name="image"
                   className="radio-choose-image"
+                  value={JSON.stringify(image2)}
                 />
                 <img
-                  src={Image2}
+                  src={image2.original}
                   className="rounded mx-2 my-2"
                   alt="Kok"
                   width="200"
@@ -162,9 +183,10 @@ const Robert = () => {
                   type="radio"
                   name="image"
                   className="radio-choose-image"
+                  value={JSON.stringify(image3)}
                 />
                 <img
-                  src={Image3}
+                  src={image3.original}
                   className="rounded mx-2 my-2"
                   alt="Daun"
                   width="200"
@@ -175,9 +197,10 @@ const Robert = () => {
                   type="radio"
                   name="image"
                   className="radio-choose-image"
+                  value={JSON.stringify(image4)}
                 />
                 <img
-                  src={Image4}
+                  src={image4.original}
                   className="rounded mx-2 my-2"
                   alt="Burung Hantu"
                   width="200"
@@ -188,9 +211,10 @@ const Robert = () => {
                   type="radio"
                   name="image"
                   className="radio-choose-image"
+                  value={JSON.stringify(image5)}
                 />
                 <img
-                  src={Image5}
+                  src={image5.original}
                   className="rounded mx-2 my-2"
                   alt="Jam"
                   width="200"
@@ -213,8 +237,10 @@ const Robert = () => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             onLoad={() => setLoading(false)}
-            style={{ display: loading ? 'none' : 'block' }}
-            onClick={e => modalImageClick(e)}
+            style={{
+              display: loading ? 'none' : 'block',
+            }}
+            onClick={(e) => modalImageClick(e)}
           />
           <img
             src={`${image.imageGrayscale}`}
@@ -224,8 +250,10 @@ const Robert = () => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             onLoad={() => setLoading(false)}
-            style={{ display: loading ? 'none' : 'block' }}
-            onClick={e => modalImageClick(e)}
+            style={{
+              display: loading ? 'none' : 'block',
+            }}
+            onClick={(e) => modalImageClick(e)}
           />
           <img
             src={`${image.imageRobert}`}
@@ -235,8 +263,10 @@ const Robert = () => {
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             onLoad={() => setLoading(false)}
-            style={{ display: loading ? 'none' : 'block' }}
-            onClick={e => modalImageClick(e)}
+            style={{
+              display: loading ? 'none' : 'block',
+            }}
+            onClick={(e) => modalImageClick(e)}
           />
         </div>
       </div>
@@ -245,69 +275,13 @@ const Robert = () => {
           <div className="col-xl-7">
             <table className="table table-bordered text-center">
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
+                {rows.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.map((value, columnIndex) => (
+                      <td key={columnIndex}>{value}</td>
+                    ))}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
