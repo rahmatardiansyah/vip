@@ -24,7 +24,7 @@ const Robert = () => {
     imageRobert: image1.robert,
   });
 
-  const [imageDataTable, setImageDataTable] = useState([]);
+  const [imageDataTable, setImageDataTable] = useState(image1.imageData);
   const [loading, setLoading] = useState(true);
   const [modalImage, setModalImage] = useState('');
 
