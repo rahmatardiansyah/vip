@@ -128,7 +128,7 @@ const Robert = () => {
               id="inputGroupFile04"
               aria-describedby="inputGroupFileAddon04"
               aria-label="Upload"
-              accept="image/*"
+              accept="image/png, image/jpg, image/jpeg"
               ref={inputRef}
               onChange={handleFileChange}
             />
