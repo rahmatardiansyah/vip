@@ -17,6 +17,7 @@ const rows = [];
 
 const Robert = () => {
   const inputRef = useRef(null);
+  const tableRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState({
     imageOriginal: image1.original,
@@ -28,6 +29,10 @@ const Robert = () => {
   const [loading, setLoading] = useState(true);
   const [modalImage, setModalImage] = useState('');
 
+  const [diagonal1, setDiagonal1] = useState('');
+  const [diagonal2, setDiagonal2] = useState('');
+  const [resultRobert, setResultRobert] = useState('');
+
   const handleFileChange = (event) => {
     const fileObj = event.target.files[0];
     setSelectedImage(fileObj);
@@ -35,6 +40,7 @@ const Robert = () => {
       return;
     }
   };
+
   const resetFileInput = () => {
     inputRef.current.value = null;
     setSelectedImage(null);
@@ -87,9 +93,120 @@ const Robert = () => {
       console.log(err);
     }
   };
+
+  const getTrTd = () => {
+    const table = document.getElementById('TableRobert');
+    const tdElements = table.querySelectorAll('td');
+
+    const tableData = [];
+    for (let i = 0; i < 7; i++) {
+      const row = [];
+      for (let j = 0; j < 7; j++) {
+        row.push(tdElements[i * 7 + j]);
+      }
+      tableData.push(row);
+    }
+
+    return tableData;
+  };
+
+  const setColor = (element, color) => {
+    element.style.transition = '0.4s';
+    element.style.backgroundColor = color;
+  };
+
+  const playAnimation = () => {
+    const tableDataRobert = getTrTd();
+
+    const robertsX = [
+      [1, 0],
+      [0, -1],
+    ];
+    const robertsY = [
+      [0, 1],
+      [-1, 0],
+    ];
+
+    // Inisialisasi index
+    let i = 0;
+    let j = 0;
+
+    const changeCellColor = () => {
+      if (i < tableDataRobert.length - 1) {
+        const gxd1 = tableDataRobert[i][j].textContent;
+        const gxd2 = tableDataRobert[i][j + 1].textContent;
+        const gxd3 = tableDataRobert[i + 1][j].textContent;
+        const gxd4 = tableDataRobert[i + 1][j + 1].textContent;
+
+        setColor(tableDataRobert[i][j], '#e74c3c');
+        setColor(tableDataRobert[i][j + 1], '#f39c12');
+        setColor(tableDataRobert[i + 1][j], '#f39c12');
+        setColor(tableDataRobert[i + 1][j + 1], '#f39c12');
+
+        const gx = Math.abs(
+          gxd1 * robertsX[0][0] +
+            gxd2 * robertsX[0][1] +
+            gxd3 * robertsX[1][0] +
+            gxd4 * robertsX[1][1]
+        );
+        const gy = Math.abs(
+          gxd1 * robertsY[0][0] +
+            gxd2 * robertsY[0][1] +
+            gxd3 * robertsY[1][0] +
+            gxd4 * robertsY[1][1]
+        );
+        setDiagonal1(
+          `d_1 = |(1*${gxd1})+(0*${gxd2})+(0*${gxd3})+(-1*${gxd4})| = ${gx}`
+        );
+        setDiagonal2(
+          `d_2 = |(0*${gxd1})+(1*${gxd2})+(-1*${gxd3})+(0*${gxd4})| = ${gy}`
+        );
+        const gradientResult = `Hasil = \\sqrt{${gx}^2+${gy}^2} = `;
+        setResultRobert(gradientResult);
+        setTimeout(function () {
+          // Lakukan deteksi tepi Robert
+          const gradient = Math.round(Math.sqrt(gx * gx + gy * gy));
+
+          setResultRobert(gradientResult + gradient);
+          // Set nilai sel dengan hasil deteksi tepi
+          tableDataRobert[i][j].innerHTML = gradient;
+
+          j++;
+          // Pindah Baris Baru
+          if (j >= tableDataRobert[i].length - 1) {
+            j = 0;
+            i++;
+          }
+          // Panggil kembali fungsi changeCellColor setelah 2 detik
+          setTimeout(changeCellColor, 1000);
+        }, 1000);
+        if (j >= 1) {
+          setColor(tableDataRobert[i][j - 1], '#212529');
+          setColor(tableDataRobert[i + 1][j - 1], '#212529');
+        }
+        if (i > 0 && j == 0) {
+          setColor(tableDataRobert[i][j + 5], '#212529');
+          setColor(tableDataRobert[i][j + 6], '#212529');
+          setColor(tableDataRobert[i - 1][j + 5], '#212529');
+          setColor(tableDataRobert[i - 1][j + 6], '#212529');
+        }
+      }
+      if (i == 6 && j == 0) {
+        setColor(tableDataRobert[i][j + 5], '#212529');
+        setColor(tableDataRobert[i][j + 6], '#212529');
+        setColor(tableDataRobert[i - 1][j + 5], '#212529');
+        setColor(tableDataRobert[i - 1][j + 6], '#212529');
+      }
+    };
+
+    // Mulai proses dengan memanggil fungsi changeCellColor
+    changeCellColor();
+  };
+
   useEffect(() => {
     document.title = 'Robert Algoritma';
   }, []);
+
   rows.splice(0, rows.length); // empty array
   for (let i = 0; i < imageDataTable.length; i += 7) {
     rows.push(imageDataTable.slice(i, i + 7));
@@ -273,7 +390,11 @@ const Robert = () => {
       <div className="container">
         <div className="row">
           <div className="col-xl-7">
-            <table className="table table-bordered text-center">
+            <table
+              className="table table-bordered text-center"
+              id="TableRobert"
+              ref={tableRef}
+            >
               <tbody>
                 {rows.map((row, rowIndex) => (
                   <tr key={rowIndex}>
@@ -286,11 +407,11 @@ const Robert = () => {
             </table>
           </div>
           <div className="col-xl-5 current-process">
-            <div className="current-process-title">Current Process</div>
+            <div className="current-process-title">Proses saat ini</div>
             <div className="d-flex flex-column gap-4">
-              <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
-              <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
-              <Katex mathExpression="\sqrt{(1-2)^2 + (1-2)^2} = 1" />
+              <Katex mathExpression={diagonal1} />
+              <Katex mathExpression={diagonal2} />
+              <Katex mathExpression={resultRobert} />
             </div>
           </div>
         </div>
@@ -298,7 +419,7 @@ const Robert = () => {
       <div className="container">
         <div className="d-flex justify-content-evenly flex-wrap my-5 animation-button">
           <FaCircleChevronRight size={80} />
-          <FaCirclePlay size={80} />
+          <FaCirclePlay size={80} onClick={playAnimation} />
           <FaCirclePause size={80} />
           <FaCircleStop size={80} />
         </div>
