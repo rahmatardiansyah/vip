@@ -6,5 +6,15 @@ import Result from './Result';
 import About from './About';
 
 import TableRobert from './Robert/TableRobert';
+import AboutRobert from './Robert/AboutRobert';
 
-export { CustomNavbar, CustomFooter, Hero, Basic, Result, About, TableRobert };
+export {
+  CustomNavbar,
+  CustomFooter,
+  Hero,
+  Basic,
+  Result,
+  About,
+  TableRobert,
+  AboutRobert,
+};

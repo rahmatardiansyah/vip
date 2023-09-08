@@ -1,4 +1,4 @@
-import { TableRobert, Button, Katex } from '../../components';
+import { AboutRobert, Button, Katex } from '../../components';
 import { useRef, useEffect, useState } from 'react';
 import { imageDataRadio } from './imageData';
 import {
@@ -32,6 +32,8 @@ const Robert = () => {
   const [diagonal1, setDiagonal1] = useState('');
   const [diagonal2, setDiagonal2] = useState('');
   const [resultRobert, setResultRobert] = useState('');
+
+  const [isPlayed, setIsPlayed] = useState(false);
 
   const handleFileChange = (event) => {
     const fileObj = event.target.files[0];
@@ -110,12 +112,14 @@ const Robert = () => {
     return tableData;
   };
 
-  const setColor = (element, color) => {
+  const setColor = (element, bgColor, txColor) => {
     element.style.transition = '0.4s';
-    element.style.backgroundColor = color;
+    element.style.backgroundColor = bgColor;
+    element.style.color = txColor;
   };
 
   const playAnimation = () => {
+    setIsPlayed(true);
     const tableDataRobert = getTrTd();
 
     const robertsX = [
@@ -138,10 +142,10 @@ const Robert = () => {
         const gxd3 = tableDataRobert[i + 1][j].textContent;
         const gxd4 = tableDataRobert[i + 1][j + 1].textContent;
 
-        setColor(tableDataRobert[i][j], '#e74c3c');
-        setColor(tableDataRobert[i][j + 1], '#f39c12');
-        setColor(tableDataRobert[i + 1][j], '#f39c12');
-        setColor(tableDataRobert[i + 1][j + 1], '#f39c12');
+        setColor(tableDataRobert[i][j], '#ACC8E5', '#112A46');
+        setColor(tableDataRobert[i][j + 1], '#CBDDF1', '#1D781D');
+        setColor(tableDataRobert[i + 1][j], '#CBDDF1', '#E00000');
+        setColor(tableDataRobert[i + 1][j + 1], '#CBDDF1', '#5A4586');
 
         const gx = Math.abs(
           gxd1 * robertsX[0][0] +
@@ -156,19 +160,24 @@ const Robert = () => {
             gxd4 * robertsY[1][1]
         );
         setDiagonal1(
-          `d_1 = |(1*${gxd1})+(0*${gxd2})+(0*${gxd3})+(-1*${gxd4})| = ${gx}`
+          `d_1 = |(1*\\colorbox{#ACC8E5}{\\textcolor{#112A46}{${gxd1}}})+(0*\\colorbox{#CBDDF1}{\\textcolor{#1D781D}{${gxd2}}})+(0*\\colorbox{#CBDDF1}{\\textcolor{#E00000}{${gxd3}}})+(-1*\\colorbox{#CBDDF1}{\\textcolor{#5A4586}{${gxd4}}})| = \\colorbox{#87AFDD}{\\textcolor{#800080}{${gx}}}`
         );
         setDiagonal2(
-          `d_2 = |(0*${gxd1})+(1*${gxd2})+(-1*${gxd3})+(0*${gxd4})| = ${gy}`
+          `d_2 = |(0*\\colorbox{#ACC8E5}{\\textcolor{#112A46}{${gxd1}}})+(1*\\colorbox{#CBDDF1}{\\textcolor{#1D781D}{${gxd2}}})+(-1*\\colorbox{#CBDDF1}{\\textcolor{#E00000}{${gxd3}}})+(0*\\colorbox{#CBDDF1}{\\textcolor{#5A4586}{${gxd4}}})| = \\colorbox{#87AFDD}{\\textcolor{#34515E}{${gy}}}`
         );
-        const gradientResult = `Hasil = \\sqrt{${gx}^2+${gy}^2} = `;
+        const gradientResult = `Hasil = \\sqrt{\\colorbox{#87AFDD}{\\textcolor{#800080}{${gx}}}^2+\\colorbox{#87AFDD}{\\textcolor{#34515E}{${gy}}}^2} = `;
         setResultRobert(gradientResult);
-        setTimeout(function () {
+
+        timeout2 = setTimeout(function () {
           // Lakukan deteksi tepi Robert
           const gradient = Math.round(Math.sqrt(gx * gx + gy * gy));
 
-          setResultRobert(gradientResult + gradient);
+          setResultRobert(
+            gradientResult +
+              `\\colorbox{#ffffff}{\\textcolor{#000000}{${gradient}}}`
+          );
           // Set nilai sel dengan hasil deteksi tepi
+          setColor(tableDataRobert[i][j], '#ffffff', '#000000');
           tableDataRobert[i][j].innerHTML = gradient;
 
           j++;
@@ -177,30 +186,37 @@ const Robert = () => {
             j = 0;
             i++;
           }
-          // Panggil kembali fungsi changeCellColor setelah 2 detik
-          setTimeout(changeCellColor, 1000);
+
+          timeout1 = setTimeout(changeCellColor, 1000);
         }, 1000);
         if (j >= 1) {
-          setColor(tableDataRobert[i][j - 1], '#212529');
-          setColor(tableDataRobert[i + 1][j - 1], '#212529');
+          setColor(tableDataRobert[i][j - 1], '#212529', '#DEE2E6');
+          setColor(tableDataRobert[i + 1][j - 1], '#212529', '#DEE2E6');
         }
         if (i > 0 && j == 0) {
-          setColor(tableDataRobert[i][j + 5], '#212529');
-          setColor(tableDataRobert[i][j + 6], '#212529');
-          setColor(tableDataRobert[i - 1][j + 5], '#212529');
-          setColor(tableDataRobert[i - 1][j + 6], '#212529');
+          setColor(tableDataRobert[i][j + 5], '#212529', '#DEE2E6');
+          setColor(tableDataRobert[i][j + 6], '#212529', '#DEE2E6');
+          setColor(tableDataRobert[i - 1][j + 5], '#212529', '#DEE2E6');
+          setColor(tableDataRobert[i - 1][j + 6], '#212529', '#DEE2E6');
         }
       }
       if (i == 6 && j == 0) {
-        setColor(tableDataRobert[i][j + 5], '#212529');
-        setColor(tableDataRobert[i][j + 6], '#212529');
-        setColor(tableDataRobert[i - 1][j + 5], '#212529');
-        setColor(tableDataRobert[i - 1][j + 6], '#212529');
+        setColor(tableDataRobert[i][j + 5], '#212529', '#DEE2E6');
+        setColor(tableDataRobert[i][j + 6], '#212529', '#DEE2E6');
+        setColor(tableDataRobert[i - 1][j + 5], '#212529', '#DEE2E6');
+        setColor(tableDataRobert[i - 1][j + 6], '#212529', '#DEE2E6');
       }
     };
 
-    // Mulai proses dengan memanggil fungsi changeCellColor
     changeCellColor();
+  };
+
+  let timeout1 = null;
+  let timeout2 = null;
+
+  const pauseAnimation = () => {
+    clearTimeout(timeout1);
+    clearTimeout(timeout2);
   };
 
   useEffect(() => {
@@ -211,21 +227,10 @@ const Robert = () => {
   for (let i = 0; i < imageDataTable.length; i += 7) {
     rows.push(imageDataTable.slice(i, i + 7));
   }
+
   return (
     <div className="robert-section">
-      <div className="container">
-        <h3>Robert</h3>
-        <p>
-          Operator yang berbasis gradien yang menggunakan dua buah kernel yang
-          berukuran 2x2 piksel. Operator ini mengambil arah diagonal untuk
-          penentuan arah dalam penghitungan nilai gradien, sehingga sering
-          disebut dengan operator silang.
-        </p>
-        <TableRobert />
-        <div className="text-center mt-5">
-          <Katex mathExpression="r(y,x)=\sqrt{(z_1-z_4)^2 + (z_3-z_2)^2}" />
-        </div>
-      </div>
+      <AboutRobert />
       <div className="divider my-5"></div>
       <div className="container">
         <div className="d-flex justify-content-evenly flex-wrap gap-3 mb-5">
@@ -419,8 +424,11 @@ const Robert = () => {
       <div className="container">
         <div className="d-flex justify-content-evenly flex-wrap my-5 animation-button">
           <FaCircleChevronRight size={80} />
-          <FaCirclePlay size={80} onClick={playAnimation} />
-          <FaCirclePause size={80} />
+          {isPlayed ? (
+            <FaCirclePause size={80} onClick={pauseAnimation} />
+          ) : (
+            <FaCirclePlay size={80} onClick={playAnimation} />
+          )}
           <FaCircleStop size={80} />
         </div>
       </div>
