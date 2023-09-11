@@ -7,6 +7,8 @@ import About from './About';
 
 import TableRobert from './Robert/TableRobert';
 import AboutRobert from './Robert/AboutRobert';
+import ImageProsesRobert from './Robert/ImageProsesRobert';
+import ImageResultRobert from './Robert/ImageResultRobert';
 
 export {
   CustomNavbar,
@@ -17,4 +19,6 @@ export {
   About,
   TableRobert,
   AboutRobert,
+  ImageProsesRobert,
+  ImageResultRobert,
 };

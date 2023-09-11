@@ -4,7 +4,7 @@ import { Katex } from '../../atoms';
 const AboutRobert = () => {
   return (
     <div className="container">
-      <h3>Roberto</h3>
+      <h3>Robert</h3>
       <p>
         Operator yang berbasis gradien yang menggunakan dua buah kernel yang
         berukuran 2x2 piksel. Operator ini mengambil arah diagonal untuk
