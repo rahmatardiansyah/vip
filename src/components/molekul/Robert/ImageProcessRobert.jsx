@@ -70,7 +70,6 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
           imageGrayscale: `${res.data.data['image-grayscale']}`,
           imageRobert: `${res.data.data['image-robert']}`,
         });
-        console.log(res.data.dataImage.grayscaleRgb);
         const newRows = [];
         for (let i = 0; i < 7; i++) {
           const row = [];
@@ -136,7 +135,13 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
                 value={JSON.stringify(image1)}
                 defaultChecked
               />
-              <img src={image1.original} className="rounded mx-2 my-2" alt="Apel" width="200" />
+              <img
+                src={image1.original}
+                className="rounded mx-2 my-2"
+                alt="Apel"
+                width="200"
+                height="100%"
+              />
             </label>
             <label>
               <input
@@ -145,7 +150,13 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
                 className="radio-choose-image"
                 value={JSON.stringify(image2)}
               />
-              <img src={image2.original} className="rounded mx-2 my-2" alt="Kok" width="200" />
+              <img
+                src={image2.original}
+                className="rounded mx-2 my-2"
+                alt="Kok"
+                width="200"
+                height="100%"
+              />
             </label>
             <label>
               <input
@@ -154,7 +165,13 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
                 className="radio-choose-image"
                 value={JSON.stringify(image3)}
               />
-              <img src={image3.original} className="rounded mx-2 my-2" alt="Daun" width="200" />
+              <img
+                src={image3.original}
+                className="rounded mx-2 my-2"
+                alt="Daun"
+                width="200"
+                height="100%"
+              />
             </label>
             <label>
               <input
@@ -168,6 +185,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
                 className="rounded mx-2 my-2"
                 alt="Burung Hantu"
                 width="200"
+                height="100%"
               />
             </label>
             <label>
@@ -177,7 +195,13 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
                 className="radio-choose-image"
                 value={JSON.stringify(image5)}
               />
-              <img src={image5.original} className="rounded mx-2 my-2" alt="Jam" width="200" />
+              <img
+                src={image5.original}
+                className="rounded mx-2 my-2"
+                alt="Jam"
+                width="200"
+                height="100%"
+              />
             </label>
           </div>
         </div>

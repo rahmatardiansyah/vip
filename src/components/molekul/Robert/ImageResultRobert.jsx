@@ -14,6 +14,7 @@ const ImageResultRobert = ({ image, loading, setLoading }) => {
           src={image.imageOriginal}
           className="img-fluid robert-result"
           width="300"
+          height="100%"
           alt="..."
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
@@ -26,6 +27,7 @@ const ImageResultRobert = ({ image, loading, setLoading }) => {
           src={`${image.imageGrayscale}`}
           className="img-fluid robert-result"
           width="300"
+          height="100%"
           alt="..."
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
@@ -38,6 +40,7 @@ const ImageResultRobert = ({ image, loading, setLoading }) => {
           src={`${image.imageRobert}`}
           className="img-fluid robert-result"
           width="300"
+          height="100%"
           alt="..."
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
