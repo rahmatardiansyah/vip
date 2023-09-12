@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const API = import.meta.env.VITE_APP_API;
 
-const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
+const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) => {
   const { image1, image2, image3, image4, image5 } = imageDataRadio;
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -43,7 +43,22 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
         imageGrayscale: selectedImageRadio.grayscale,
         imageRobert: selectedImageRadio.robert,
       });
-      // setImageDataTable(selectedImageRadio.imageData);
+
+      const newRows = [];
+      for (let i = 0; i < 7; i++) {
+        let row = [];
+        for (let j = 0; j < 7; j++) {
+          const dataIndex = i * 7 + j;
+          if (dataIndex < selectedImageRadio.imageData.length) {
+            row.push(<td key={dataIndex}>{selectedImageRadio.imageData[dataIndex]}</td>);
+          } else {
+            row.push(<td key={dataIndex}></td>);
+          }
+        }
+        newRows.push(<tr key={i}>{row}</tr>);
+      }
+      setRows(newRows);
+      setLoading(false);
       return;
     }
 
@@ -55,11 +70,22 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
           imageGrayscale: `${res.data.data['image-grayscale']}`,
           imageRobert: `${res.data.data['image-robert']}`,
         });
-        const newArr = [];
-        for (let i = 1; i < res.data.dataImage.grayscaleRgb.length; i += 3) {
-          newArr.push(res.data.dataImage.grayscaleRgb[i]);
+        console.log(res.data.dataImage.grayscaleRgb);
+        const newRows = [];
+        for (let i = 0; i < 7; i++) {
+          const row = [];
+          for (let j = 0; j < 7; j++) {
+            const dataIndex = i * 7 + j;
+            if (dataIndex < res.data.dataImage.grayscaleRgb.length) {
+              row.push(<td key={dataIndex}>{res.data.dataImage.grayscaleRgb[dataIndex]}</td>);
+            } else {
+              row.push(<td key={dataIndex}></td>);
+            }
+          }
+          newRows.push(<tr key={i}>{row}</tr>);
         }
-        // setImageDataTable(newArr);
+        setRows(newRows);
+        setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -97,11 +123,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
             onClick={handleClearFile}
           />
         </div>
-        <Button
-          text="Proses"
-          className="btn btn-success process"
-          onClick={onProcess}
-        />
+        <Button text="Proses" className="btn btn-success process" onClick={onProcess} />
       </div>
       <div className="collapse" id="collapseExample">
         <div className="card card-body ">
@@ -114,12 +136,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
                 value={JSON.stringify(image1)}
                 defaultChecked
               />
-              <img
-                src={image1.original}
-                className="rounded mx-2 my-2"
-                alt="Apel"
-                width="200"
-              />
+              <img src={image1.original} className="rounded mx-2 my-2" alt="Apel" width="200" />
             </label>
             <label>
               <input
@@ -128,12 +145,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
                 className="radio-choose-image"
                 value={JSON.stringify(image2)}
               />
-              <img
-                src={image2.original}
-                className="rounded mx-2 my-2"
-                alt="Kok"
-                width="200"
-              />
+              <img src={image2.original} className="rounded mx-2 my-2" alt="Kok" width="200" />
             </label>
             <label>
               <input
@@ -142,12 +154,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
                 className="radio-choose-image"
                 value={JSON.stringify(image3)}
               />
-              <img
-                src={image3.original}
-                className="rounded mx-2 my-2"
-                alt="Daun"
-                width="200"
-              />
+              <img src={image3.original} className="rounded mx-2 my-2" alt="Daun" width="200" />
             </label>
             <label>
               <input
@@ -170,12 +177,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading }) => {
                 className="radio-choose-image"
                 value={JSON.stringify(image5)}
               />
-              <img
-                src={image5.original}
-                className="rounded mx-2 my-2"
-                alt="Jam"
-                width="200"
-              />
+              <img src={image5.original} className="rounded mx-2 my-2" alt="Jam" width="200" />
             </label>
           </div>
         </div>
@@ -188,6 +190,7 @@ ImageRobertProses.propTypes = {
   imageDataRadio: PropTypes.object,
   setImage: PropTypes.func,
   setLoading: PropTypes.func,
+  setRows: PropTypes.func,
 };
 
 export default ImageRobertProses;

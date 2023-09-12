@@ -7,7 +7,7 @@ import About from './About';
 
 import TableRobert from './Robert/TableRobert';
 import AboutRobert from './Robert/AboutRobert';
-import ImageProsesRobert from './Robert/ImageProsesRobert';
+import ImageProcessRobert from './Robert/ImageProcessRobert';
 import ImageResultRobert from './Robert/ImageResultRobert';
 
 export {
@@ -19,6 +19,6 @@ export {
   About,
   TableRobert,
   AboutRobert,
-  ImageProsesRobert,
+  ImageProcessRobert,
   ImageResultRobert,
 };
