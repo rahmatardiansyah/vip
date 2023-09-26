@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import { SyncLoader } from 'react-spinners';
 
-const ImageResultRobert = ({ image, loading, setLoading }) => {
+const ImageResultRobert = ({ image, loading, setLoading, modalImage, setModalImage }) => {
+  const modalImageClick = (e) => {
+    setModalImage(e.target.src);
+  };
   return (
     <div>
       {loading && (
@@ -14,7 +17,6 @@ const ImageResultRobert = ({ image, loading, setLoading }) => {
           src={image.imageOriginal}
           className="img-fluid robert-result"
           width="300"
-          height="100%"
           alt="..."
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
@@ -22,12 +24,12 @@ const ImageResultRobert = ({ image, loading, setLoading }) => {
           style={{
             display: loading ? 'none' : 'block',
           }}
+          onClick={(e) => modalImageClick(e)}
         />
         <img
           src={`${image.imageGrayscale}`}
           className="img-fluid robert-result"
           width="300"
-          height="100%"
           alt="..."
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
@@ -35,12 +37,12 @@ const ImageResultRobert = ({ image, loading, setLoading }) => {
           style={{
             display: loading ? 'none' : 'block',
           }}
+          onClick={(e) => modalImageClick(e)}
         />
         <img
           src={`${image.imageRobert}`}
           className="img-fluid robert-result"
           width="300"
-          height="100%"
           alt="..."
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
@@ -48,7 +50,22 @@ const ImageResultRobert = ({ image, loading, setLoading }) => {
           style={{
             display: loading ? 'none' : 'block',
           }}
+          onClick={(e) => modalImageClick(e)}
         />
+      </div>
+
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content p-2">
+            <img src={modalImage} alt="..." />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -58,6 +75,8 @@ ImageResultRobert.propTypes = {
   image: PropTypes.object,
   loading: PropTypes.bool,
   setLoading: PropTypes.func,
+  modalImage: PropTypes.string,
+  setModalImage: PropTypes.func,
 };
 
 export default ImageResultRobert;

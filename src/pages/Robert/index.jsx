@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import { AboutRobert, ImageProcessRobert, ImageResultRobert } from '../../components';
+import {
+  AboutRobert,
+  ImageProcessRobert,
+  ImageResultRobert,
+  TableProcessRobert,
+  ButtonProcessRobert,
+} from '../../components';
 import './robert.scss';
 import { imageDataRadio } from './imageData';
-import TableProcessRobert from '../../components/molekul/Robert/TableProcessRobert';
 
 const Robert = () => {
   const [image, setImage] = useState({
@@ -12,6 +17,7 @@ const Robert = () => {
   });
 
   const [loading, setLoading] = useState(true);
+  const [modalImage, setModalImage] = useState('');
   const [rows, setRows] = useState([]);
   const [d1, setD1] = useState('');
   const [d2, setD2] = useState('');
@@ -27,7 +33,13 @@ const Robert = () => {
         setLoading={setLoading}
         setRows={setRows}
       />
-      <ImageResultRobert image={image} loading={loading} setLoading={setLoading} />
+      <ImageResultRobert
+        image={image}
+        loading={loading}
+        setLoading={setLoading}
+        modalImage={modalImage}
+        setModalImage={setModalImage}
+      />
       <TableProcessRobert
         rows={rows}
         setRows={setRows}
@@ -36,6 +48,7 @@ const Robert = () => {
         d2={d2}
         resultRobert={resultRobert}
       />
+      <ButtonProcessRobert />
     </div>
   );
 };

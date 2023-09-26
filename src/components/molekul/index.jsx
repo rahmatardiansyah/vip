@@ -9,6 +9,8 @@ import TableRobert from './Robert/TableRobert';
 import AboutRobert from './Robert/AboutRobert';
 import ImageProcessRobert from './Robert/ImageProcessRobert';
 import ImageResultRobert from './Robert/ImageResultRobert';
+import TableProcessRobert from './Robert/TableProcessRobert';
+import ButtonProcessRobert from './Robert/ButtonProcessRobert';
 
 export {
   CustomNavbar,
@@ -21,4 +23,6 @@ export {
   AboutRobert,
   ImageProcessRobert,
   ImageResultRobert,
+  TableProcessRobert,
+  ButtonProcessRobert,
 };
