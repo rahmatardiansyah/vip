@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { Button } from '../../../components';
 import axios from 'axios';
-
 import PropTypes from 'prop-types';
 
 const API = import.meta.env.VITE_APP_API;
@@ -44,20 +43,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
         imageRobert: selectedImageRadio.robert,
       });
 
-      const newRows = [];
-      for (let i = 0; i < 7; i++) {
-        let row = [];
-        for (let j = 0; j < 7; j++) {
-          const dataIndex = i * 7 + j;
-          if (dataIndex < selectedImageRadio.imageData.length) {
-            row.push(<td key={dataIndex}>{selectedImageRadio.imageData[dataIndex]}</td>);
-          } else {
-            row.push(<td key={dataIndex}></td>);
-          }
-        }
-        newRows.push(<tr key={i}>{row}</tr>);
-      }
-      setRows(newRows);
+      setRows(selectedImageRadio.imageData);
       setLoading(false);
       return;
     }
@@ -70,20 +56,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
           imageGrayscale: `${res.data.data['image-grayscale']}`,
           imageRobert: `${res.data.data['image-robert']}`,
         });
-        const newRows = [];
-        for (let i = 0; i < 7; i++) {
-          const row = [];
-          for (let j = 0; j < 7; j++) {
-            const dataIndex = i * 7 + j;
-            if (dataIndex < res.data.dataImage.grayscaleRgb.length) {
-              row.push(<td key={dataIndex}>{res.data.dataImage.grayscaleRgb[dataIndex]}</td>);
-            } else {
-              row.push(<td key={dataIndex}></td>);
-            }
-          }
-          newRows.push(<tr key={i}>{row}</tr>);
-        }
-        setRows(newRows);
+        setRows(res.data.dataImage.grayscaleRgb);
         setLoading(false);
       }
     } catch (err) {

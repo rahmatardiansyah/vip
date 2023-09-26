@@ -1,6 +1,7 @@
 .robert-section {
   padding-top: 50px;
   .katex {
+    font-display: swap;
     font-size: 1.6rem;
   }
   .robert-table {
@@ -45,6 +46,16 @@
     border: 2px solid #e74c3c;
   }
 
+  .hidden-radio img {
+    width: 200px;
+    height: auto;
+  }
+
+  img.robert-result {
+    width: 300px;
+    height: auto;
+  }
+
   .divider {
     height: 2px;
     width: 100%;
@@ -61,6 +72,8 @@
 
   .modal-content {
     background-color: #2c3e50;
+    width: 500px;
+    height: auto;
   }
 
   .current-process {

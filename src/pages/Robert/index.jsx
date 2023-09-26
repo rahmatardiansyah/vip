@@ -18,7 +18,7 @@ const Robert = () => {
 
   const [loading, setLoading] = useState(true);
   const [modalImage, setModalImage] = useState('');
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(imageDataRadio.image1.imageData);
   const [d1, setD1] = useState('');
   const [d2, setD2] = useState('');
   const [resultRobert, setResultRobert] = useState('');

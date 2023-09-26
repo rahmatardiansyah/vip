@@ -3,12 +3,35 @@ import { Katex } from '../../../components';
 import PropTypes from 'prop-types';
 
 const TableProcessRobert = ({ rows, setRows, imageData, d1, d2, resultRobert }) => {
+  const totalRows = 7;
+  const totalCols = 7;
+  const tableData = [];
+  let dataIndex = 0;
+  for (let i = 0; i < totalRows; i++) {
+    const rowData = [];
+    for (let j = 0; j < totalCols; j++) {
+      if (dataIndex < rows.length) {
+        rowData.push(rows[dataIndex]);
+        dataIndex++;
+      }
+    }
+    tableData.push(rowData);
+  }
+
+  const tableRows = tableData.map((rowData, rowIndex) => (
+    <tr key={rowIndex}>
+      {rowData.map((cellData, colIndex) => (
+        <td key={colIndex}>{cellData}</td>
+      ))}
+    </tr>
+  ));
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-xl-7">
           <table className="table table-bordered text-center" id="TableRobert">
-            <tbody></tbody>
+            <tbody>{tableRows}</tbody>
           </table>
         </div>
         <div className="col-xl-5 current-process">
