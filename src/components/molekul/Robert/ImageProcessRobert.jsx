@@ -40,7 +40,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
       setImage({
         imageOriginal: selectedImageRadio.original,
         imageGrayscale: selectedImageRadio.grayscale,
-        imageRobert: selectedImageRadio.robert,
+        imageRobert: selectedImageRadio.robert
       });
 
       setRows(selectedImageRadio.imageData);
@@ -54,7 +54,7 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
         setImage({
           imageOriginal: `${res.data.data['image']}`,
           imageGrayscale: `${res.data.data['image-grayscale']}`,
-          imageRobert: `${res.data.data['image-robert']}`,
+          imageRobert: `${res.data.data['image-robert']}`
         });
         setRows(res.data.dataImage.grayscaleRgb);
         setLoading(false);
@@ -162,7 +162,7 @@ ImageRobertProses.propTypes = {
   imageDataRadio: PropTypes.object,
   setImage: PropTypes.func,
   setLoading: PropTypes.func,
-  setRows: PropTypes.func,
+  setRows: PropTypes.func
 };
 
 export default ImageRobertProses;

@@ -11,9 +11,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Image Acquicition</div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>
@@ -22,9 +21,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Image Enhancement</div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>
@@ -33,9 +31,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Image Restoration </div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>
@@ -44,9 +41,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Pemrosesan Gambar Berwarna</div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>
@@ -57,9 +53,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Multi-Resolution Processing</div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>
@@ -68,9 +63,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Compression</div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>
@@ -79,9 +73,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Morphological Processing</div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>
@@ -90,9 +83,8 @@ const Basic = () => {
             <div className="basic-info">
               <div className="basic-title">Segmentation</div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Quaerat voluptas illo inventore non iusto aliquid tempora
-                molestias similique qui et?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
+                inventore non iusto aliquid tempora molestias similique qui et?
               </p>
             </div>
           </div>

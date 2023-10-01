@@ -1,8 +1,7 @@
-import { useEffect, useCallback } from 'react';
 import { Katex } from '../../../components';
 import PropTypes from 'prop-types';
 
-const TableProcessRobert = ({ rows, setRows, imageData, d1, d2, resultRobert }) => {
+const TableProcessRobert = ({ rows, d1, d2, resultRobert }) => {
   const totalRows = 7;
   const totalCols = 7;
   const tableData = [];
