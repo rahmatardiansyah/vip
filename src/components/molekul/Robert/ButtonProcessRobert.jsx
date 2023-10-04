@@ -1,9 +1,19 @@
 import { useState } from 'react';
-import { FaCircleChevronRight, FaCirclePlay, FaCirclePause, FaCircleStop } from 'react-icons/fa6';
+import {
+  FaCircleChevronRight,
+  FaCirclePlay,
+  FaCirclePause,
+  FaCircleStop,
+  FaCircleXmark
+} from 'react-icons/fa6';
 
 const ButtonProcessRobert = () => {
   const [isPlayed, setIsPlayed] = useState(false);
+  const [isPause, setIsPause] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+
+  const [indexI, setIndexI] = useState(0);
+  const [indexJ, setIndexJ] = useState(0);
 
   const getTable = () => {
     const dataTable = document.getElementById('TableRobert');
@@ -23,17 +33,8 @@ const ButtonProcessRobert = () => {
   };
 
   const changeColor = (dataTd) => {
-    const robertsX = [
-      [1, 0],
-      [0, -1]
-    ];
-    const robertsY = [
-      [0, 1],
-      [-1, 0]
-    ];
-
-    let i = 0;
-    let j = 0;
+    let i = indexI;
+    let j = indexJ;
 
     const startInterval = setInterval(() => {
       setIsPlayed(true);
@@ -63,9 +64,13 @@ const ButtonProcessRobert = () => {
 
       j++;
 
+      setIndexJ(j);
       if (j >= 6) {
         j = 0;
+        setIndexJ(j);
+
         i++;
+        setIndexI(i);
       }
 
       if (i == 6 && j == 0) {
@@ -74,6 +79,8 @@ const ButtonProcessRobert = () => {
           dataTd[5][6].style.backgroundColor = '#212529';
           dataTd[6][5].style.backgroundColor = '#212529';
           dataTd[6][6].style.backgroundColor = '#212529';
+          setIndexI(0);
+          setIndexJ(0);
         }, 500);
       }
     }, 500);
@@ -83,6 +90,7 @@ const ButtonProcessRobert = () => {
   const playAnimation = () => {
     const dataTd = getTable();
     if (!isPlayed) {
+      setIsPause(false);
       changeColor(dataTd);
     }
   };
@@ -93,6 +101,9 @@ const ButtonProcessRobert = () => {
       clearInterval(intervalId);
       setIntervalId(null);
       setIsPlayed(false);
+      setIsPause(false);
+      setIndexI(0);
+      setIndexJ(0);
       dataTd.map((item) => {
         item.map((i) => {
           i.style.backgroundColor = '#212529';
@@ -101,13 +112,28 @@ const ButtonProcessRobert = () => {
     }
   };
 
+  const pauseAnimation = () => {
+    const dataTd = getTable();
+    if (!isPlayed) return;
+    if (!isPause) {
+      setIsPause(true);
+      clearInterval(intervalId);
+      setIndexI(indexI);
+      setIndexJ(indexJ);
+    } else {
+      changeColor(dataTd);
+      setIsPause(false);
+    }
+  };
+
   return (
     <div className="container">
       <div className="d-flex justify-content-evenly flex-wrap my-5 animation-button">
         <FaCircleChevronRight size={80} />
-        <FaCirclePause size={80} />
+        {!isPause && <FaCirclePause size={80} onClick={pauseAnimation} />}
+        {isPause && <FaCirclePlay size={80} onClick={pauseAnimation} />}
         {!isPlayed && <FaCirclePlay size={80} onClick={playAnimation} />}
-        {isPlayed && <FaCircleStop size={80} onClick={stopAnimation} />}
+        {isPlayed && <FaCircleXmark size={80} onClick={stopAnimation} />}
       </div>
     </div>
   );
