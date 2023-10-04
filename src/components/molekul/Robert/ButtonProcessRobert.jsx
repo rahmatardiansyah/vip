@@ -3,6 +3,7 @@ import { FaCircleChevronRight, FaCirclePlay, FaCirclePause, FaCircleStop } from 
 
 const ButtonProcessRobert = () => {
   const [isPlayed, setIsPlayed] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
 
   const getTable = () => {
     const dataTable = document.getElementById('TableRobert');
@@ -34,7 +35,7 @@ const ButtonProcessRobert = () => {
     let i = 0;
     let j = 0;
 
-    const interval = setInterval(() => {
+    const startInterval = setInterval(() => {
       setIsPlayed(true);
       dataTd[i][j].style.backgroundColor = '#f25f67';
       dataTd[i][j + 1].style.backgroundColor = '#f25f67';
@@ -56,7 +57,7 @@ const ButtonProcessRobert = () => {
       }
 
       if (i == 5 && j == 5) {
-        clearInterval(interval);
+        clearInterval(startInterval);
         setIsPlayed(false);
       }
 
@@ -76,6 +77,7 @@ const ButtonProcessRobert = () => {
         }, 500);
       }
     }, 500);
+    setIntervalId(startInterval);
   };
 
   const playAnimation = () => {
@@ -85,13 +87,27 @@ const ButtonProcessRobert = () => {
     }
   };
 
+  const stopAnimation = () => {
+    if (intervalId) {
+      const dataTd = getTable();
+      clearInterval(intervalId);
+      setIntervalId(null);
+      setIsPlayed(false);
+      dataTd.map((item) => {
+        item.map((i) => {
+          i.style.backgroundColor = '#212529';
+        });
+      });
+    }
+  };
+
   return (
     <div className="container">
       <div className="d-flex justify-content-evenly flex-wrap my-5 animation-button">
         <FaCircleChevronRight size={80} />
         <FaCirclePause size={80} />
-        <FaCirclePlay size={80} onClick={playAnimation} />
-        <FaCircleStop size={80} />
+        {!isPlayed && <FaCirclePlay size={80} onClick={playAnimation} />}
+        {isPlayed && <FaCircleStop size={80} onClick={stopAnimation} />}
       </div>
     </div>
   );
