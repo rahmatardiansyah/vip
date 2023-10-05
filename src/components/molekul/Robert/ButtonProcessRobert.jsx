@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-  FaCircleChevronRight,
-  FaCirclePlay,
-  FaCirclePause,
-  FaCircleStop,
-  FaCircleXmark
-} from 'react-icons/fa6';
+import { FaCircleChevronRight, FaCirclePlay, FaCirclePause, FaCircleXmark } from 'react-icons/fa6';
 
 const ButtonProcessRobert = () => {
   const [isPlayed, setIsPlayed] = useState(false);
@@ -32,7 +26,7 @@ const ButtonProcessRobert = () => {
     return dataTd;
   };
 
-  const changeColor = (dataTd) => {
+  const changeColor = (dataTd, bool = false) => {
     let i = indexI;
     let j = indexJ;
 
@@ -63,14 +57,18 @@ const ButtonProcessRobert = () => {
       }
 
       j++;
-
       setIndexJ(j);
+
       if (j >= 6) {
         j = 0;
         setIndexJ(j);
 
         i++;
         setIndexI(i);
+      }
+
+      if (bool == true) {
+        clearInterval(startInterval);
       }
 
       if (i == 6 && j == 0) {
@@ -96,42 +94,61 @@ const ButtonProcessRobert = () => {
   };
 
   const stopAnimation = () => {
-    if (intervalId) {
-      const dataTd = getTable();
-      clearInterval(intervalId);
-      setIntervalId(null);
-      setIsPlayed(false);
-      setIsPause(false);
-      setIndexI(0);
-      setIndexJ(0);
-      dataTd.map((item) => {
-        item.map((i) => {
-          i.style.backgroundColor = '#212529';
-        });
+    // Clear Interval and reset useState
+    clearInterval(intervalId);
+    setIntervalId(null);
+    setIsPlayed(false);
+    setIsPause(false);
+
+    // reset index
+    setIndexI(0);
+    setIndexJ(0);
+
+    // Change to default color
+    const dataTd = getTable();
+    dataTd.map((item) => {
+      item.map((i) => {
+        i.style.backgroundColor = '#212529';
       });
-    }
+    });
   };
 
   const pauseAnimation = () => {
-    const dataTd = getTable();
     if (!isPlayed) return;
-    if (!isPause) {
+    if (isPlayed && !isPause) {
       setIsPause(true);
       clearInterval(intervalId);
-      setIndexI(indexI);
-      setIndexJ(indexJ);
-    } else {
-      changeColor(dataTd);
-      setIsPause(false);
+    }
+  };
+
+  const resumeAnimation = () => {
+    const dataTd = getTable();
+    changeColor(dataTd);
+    setIsPause(false);
+  };
+
+  const playOneStep = () => {
+    if (isPlayed && !isPause) {
+      pauseAnimation();
+    }
+
+    // Play but just one step
+    const dataTd = getTable();
+    if (isPlayed && isPause) {
+      changeColor(dataTd, true);
     }
   };
 
   return (
     <div className="container">
       <div className="d-flex justify-content-evenly flex-wrap my-5 animation-button">
-        <FaCircleChevronRight size={80} />
-        {!isPause && <FaCirclePause size={80} onClick={pauseAnimation} />}
-        {isPause && <FaCirclePlay size={80} onClick={pauseAnimation} />}
+        <FaCircleChevronRight size={80} onClick={playOneStep} />
+        {isPause ? (
+          <FaCirclePlay size={80} onClick={resumeAnimation} />
+        ) : (
+          <FaCirclePause size={80} onClick={pauseAnimation} />
+        )}
+
         {!isPlayed && <FaCirclePlay size={80} onClick={playAnimation} />}
         {isPlayed && <FaCircleXmark size={80} onClick={stopAnimation} />}
       </div>
