@@ -27,7 +27,7 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
     return dataTd;
   };
 
-  const changeColor = (dataTd, bool = false, time = 2000) => {
+  const changeColor = (dataTd, bool = false, time = 2000, first = false) => {
     const robertsX = [
       [1, 0],
       [0, -1]
@@ -40,12 +40,24 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
     let i = indexI;
     let j = indexJ;
 
+    if (first) {
+      dataTd[i][j].style.backgroundColor = '#f25f67';
+      dataTd[i][j + 1].style.backgroundColor = '#f25f67';
+      dataTd[i + 1][j].style.backgroundColor = '#f25f67';
+      dataTd[i + 1][j + 1].style.backgroundColor = '#f25f67';
+    }
+
     const startInterval = setInterval(() => {
       setIsPlayed(true);
       dataTd[i][j].style.backgroundColor = '#f25f67';
       dataTd[i][j + 1].style.backgroundColor = '#f25f67';
       dataTd[i + 1][j].style.backgroundColor = '#f25f67';
       dataTd[i + 1][j + 1].style.backgroundColor = '#f25f67';
+
+      dataTd[i][j].style.transition = 500 + 'ms';
+      dataTd[i][j + 1].style.transition = 500 + 'ms';
+      dataTd[i + 1][j].style.transition = 500 + 'ms';
+      dataTd[i + 1][j + 1].style.transition = 500 + 'ms';
 
       const gxd1 = dataTd[i][j].textContent;
       const gxd2 = dataTd[i][j + 1].textContent;
@@ -75,6 +87,7 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
       setTimeout(function () {
         setResultRobert(gradientResult + `${gradient}`);
         dataTd[i][j].innerHTML = gradient;
+        dataTd[i][j].style.backgroundColor = '#f53267';
 
         j++;
         setIndexJ(j);
@@ -128,7 +141,7 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
     const dataTd = getTable();
     if (!isPlayed) {
       setIsPause(false);
-      changeColor(dataTd);
+      changeColor(dataTd, false, 2000, true);
     }
   };
 

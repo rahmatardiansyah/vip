@@ -69,31 +69,34 @@ const ImageRobertProses = ({ imageDataRadio, setImage, setLoading, setRows }) =>
       <div className="d-flex justify-content-evenly flex-wrap gap-3 mb-5">
         <Button
           text="Pilih Gambar"
-          className="btn btn-primary"
+          className="btn btn-primary choose-image"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample"
           aria-expanded="false"
           aria-controls="collapseExample"
         />
-        <div className="input-group p-2">
-          <input
-            type="file"
-            className="form-control"
-            id="inputGroupFile04"
-            aria-describedby="inputGroupFileAddon04"
-            aria-label="Upload"
-            accept="image/png, image/jpg, image/jpeg"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-          />
-          <Button
-            className="btn btn-outline-danger"
-            text="X"
-            type="button"
-            id="inputGroupFileAddon04"
-            onClick={handleClearFile}
-          />
+        <div>
+          <div className="input-group p-2">
+            <input
+              type="file"
+              className="form-control"
+              id="inputGroupFile04"
+              aria-describedby="inputGroupFileAddon04"
+              aria-label="Upload"
+              accept="image/png, image/jpg, image/jpeg"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+            <Button
+              className="btn btn-outline-danger"
+              text="X"
+              type="button"
+              id="inputGroupFileAddon04"
+              onClick={handleClearFile}
+            />
+          </div>
+          <div className="text-center">Upload hanya: png, jpg, jpeg</div>
         </div>
         <Button text="Proses" className="btn btn-success process" onClick={onProcess} />
       </div>
