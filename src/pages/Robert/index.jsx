@@ -4,7 +4,7 @@ import {
   ImageProcessRobert,
   ImageResultRobert,
   TableProcessRobert,
-  ButtonProcessRobert,
+  ButtonProcessRobert
 } from '../../components';
 import './robert.scss';
 import { imageDataRadio } from './imageData';
@@ -13,7 +13,7 @@ const Robert = () => {
   const [image, setImage] = useState({
     imageOriginal: imageDataRadio.image1.original,
     imageGrayscale: imageDataRadio.image1.grayscale,
-    imageRobert: imageDataRadio.image1.robert,
+    imageRobert: imageDataRadio.image1.robert
   });
 
   const [loading, setLoading] = useState(true);
@@ -48,7 +48,7 @@ const Robert = () => {
         d2={d2}
         resultRobert={resultRobert}
       />
-      <ButtonProcessRobert />
+      <ButtonProcessRobert setD1={setD1} setD2={setD2} setResultRobert={setResultRobert} />
     </div>
   );
 };

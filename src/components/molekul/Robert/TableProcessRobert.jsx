@@ -52,7 +52,7 @@ TableProcessRobert.propTypes = {
   imageData: PropTypes.array,
   d1: PropTypes.string,
   d2: PropTypes.string,
-  resultRobert: PropTypes.string,
+  resultRobert: PropTypes.string
 };
 
 export default TableProcessRobert;
