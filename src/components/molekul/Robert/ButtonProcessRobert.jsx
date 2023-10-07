@@ -6,6 +6,8 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
   const [isPlayed, setIsPlayed] = useState(false);
   const [isPause, setIsPause] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [indexI, setIndexI] = useState(0);
   const [indexJ, setIndexJ] = useState(0);
@@ -17,12 +19,12 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
     const dataTd = [];
     let dataIndex = 0;
     for (let i = 0; i < 7; i++) {
-      const rows = [];
+      const row = [];
       for (let j = 0; j < 7; j++) {
-        rows.push(tdElements[dataIndex]);
+        row.push(tdElements[dataIndex]);
         dataIndex++;
       }
-      dataTd.push(rows);
+      dataTd.push(row);
     }
     return dataTd;
   };
@@ -49,6 +51,7 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
 
     const startInterval = setInterval(() => {
       setIsPlayed(true);
+      if (isDisabled) return;
       dataTd[i][j].style.backgroundColor = '#f25f67';
       dataTd[i][j + 1].style.backgroundColor = '#f25f67';
       dataTd[i + 1][j].style.backgroundColor = '#f25f67';
@@ -84,7 +87,7 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
 
       const gradient = Math.round(Math.sqrt(gx * gx + gy * gy));
 
-      setTimeout(function () {
+      const timeout1 = setTimeout(() => {
         setResultRobert(gradientResult + `${gradient}`);
         dataTd[i][j].innerHTML = gradient;
         dataTd[i][j].style.backgroundColor = '#f53267';
@@ -110,7 +113,9 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
             setIndexJ(0);
           }, 1000);
         }
+        setIsDisabled(false);
       }, 1000);
+      setTimeoutId(timeout1);
 
       if (j > 0) {
         dataTd[i][j - 1].style.backgroundColor = '#212529';
@@ -133,6 +138,8 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
         setIsPause(false);
         setIsPlayed(false);
       }
+
+      setIsDisabled(true);
     }, time);
     setIntervalId(startInterval);
   };
@@ -148,7 +155,9 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
   const stopAnimation = () => {
     // Clear Interval and reset useState
     clearInterval(intervalId);
+    clearTimeout(timeoutId);
     setIntervalId(null);
+    setTimeoutId(null);
     setIsPlayed(false);
     setIsPause(false);
 
@@ -156,7 +165,6 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
     setIndexI(0);
     setIndexJ(0);
 
-    // Change to default color
     const dataTd = getTable();
     dataTd.map((item) => {
       item.map((i) => {

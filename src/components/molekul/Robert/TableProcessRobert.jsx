@@ -32,6 +32,7 @@ const TableProcessRobert = ({ rows, d1, d2, resultRobert }) => {
           <table className="table table-bordered text-center" id="TableRobert">
             <tbody>{tableRows}</tbody>
           </table>
+          <small>Table citra grayscale yang diresize sebesar 7x7 pixel</small>
         </div>
         <div className="col-xl-5 current-process">
           <div className="current-process-title">Proses saat ini</div>

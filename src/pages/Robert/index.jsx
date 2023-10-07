@@ -42,13 +42,18 @@ const Robert = () => {
       />
       <TableProcessRobert
         rows={rows}
-        setRows={setRows}
         imageData={imageDataRadio.image1.imageData}
         d1={d1}
         d2={d2}
         resultRobert={resultRobert}
       />
-      <ButtonProcessRobert setD1={setD1} setD2={setD2} setResultRobert={setResultRobert} />
+      <ButtonProcessRobert
+        setD1={setD1}
+        setD2={setD2}
+        setResultRobert={setResultRobert}
+        rows={rows}
+        setRows={setRows}
+      />
     </div>
   );
 };
