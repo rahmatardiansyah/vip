@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaCircleChevronRight, FaCirclePlay, FaCirclePause, FaCircleXmark } from 'react-icons/fa6';
 import PropTypes from 'prop-types';
 
-const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
+const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
   const [isPlayed, setIsPlayed] = useState(false);
   const [isPause, setIsPause] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
@@ -166,11 +166,12 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
     setIndexJ(0);
 
     const dataTd = getTable();
-    dataTd.map((item) => {
-      item.map((i) => {
-        i.style.backgroundColor = '#212529';
-      });
-    });
+    for (let i = 0; i < 7; i++) {
+      for (let j = 0; j < 7; j++) {
+        dataTd[i][j].style.backgroundColor = '#212529';
+        dataTd[i][j].textContent = rows[i * 7 + j];
+      }
+    }
   };
 
   const pauseAnimation = () => {
@@ -227,7 +228,8 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert }) => {
 ButtonProcessRobert.propTypes = {
   setD1: PropTypes.func,
   setD2: PropTypes.func,
-  setResultRobert: PropTypes.func
+  setResultRobert: PropTypes.func,
+  rows: PropTypes.array
 };
 
 export default ButtonProcessRobert;
