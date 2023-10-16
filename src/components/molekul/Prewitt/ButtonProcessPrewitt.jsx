@@ -2,18 +2,18 @@ import { useState } from 'react';
 import { FaCircleChevronRight, FaCirclePlay, FaCirclePause, FaCircleXmark } from 'react-icons/fa6';
 import PropTypes from 'prop-types';
 
-const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
+const ButtonProcessPrewitt = ({ setD1, setD2, setResultPrewitt, rows }) => {
   const [isPlayed, setIsPlayed] = useState(false);
   const [isPause, setIsPause] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const [indexI, setIndexI] = useState(0);
-  const [indexJ, setIndexJ] = useState(0);
+  const [indexI, setIndexI] = useState(1);
+  const [indexJ, setIndexJ] = useState(1);
 
   const getTable = () => {
-    const dataTable = document.getElementById('TableRobert');
+    const dataTable = document.getElementById('TablePrewitt');
     const tdElements = dataTable.getElementsByTagName('td');
 
     const dataTd = [];
@@ -30,21 +30,28 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
   };
 
   const changeColor = (dataTd, bool = false, time = 2000, first = false) => {
-    const robertsX = [
-      [1, 0],
-      [0, -1]
+    const prewittX = [
+      [-1, 0, 1],
+      [-1, 0, 1],
+      [-1, 0, 1]
     ];
-    const robertsY = [
-      [0, 1],
-      [-1, 0]
+    const prewittY = [
+      [-1, -1, -1],
+      [0, 0, 0],
+      [1, 1, 1]
     ];
 
     let i = indexI;
     let j = indexJ;
 
     if (first) {
+      dataTd[i - 1][j - 1].style.backgroundColor = '#f25f67';
+      dataTd[i - 1][j].style.backgroundColor = '#f25f67';
+      dataTd[i - 1][j + 1].style.backgroundColor = '#f25f67';
+      dataTd[i][j - 1].style.backgroundColor = '#f25f67';
       dataTd[i][j].style.backgroundColor = '#f25f67';
       dataTd[i][j + 1].style.backgroundColor = '#f25f67';
+      dataTd[i + 1][j - 1].style.backgroundColor = '#f25f67';
       dataTd[i + 1][j].style.backgroundColor = '#f25f67';
       dataTd[i + 1][j + 1].style.backgroundColor = '#f25f67';
     }
@@ -52,43 +59,67 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
     const startInterval = setInterval(() => {
       setIsPlayed(true);
       if (isDisabled) return;
+      dataTd[i - 1][j - 1].style.backgroundColor = '#f25f67';
+      dataTd[i - 1][j].style.backgroundColor = '#f25f67';
+      dataTd[i - 1][j + 1].style.backgroundColor = '#f25f67';
+      dataTd[i][j - 1].style.backgroundColor = '#f25f67';
       dataTd[i][j].style.backgroundColor = '#f25f67';
       dataTd[i][j + 1].style.backgroundColor = '#f25f67';
+      dataTd[i + 1][j - 1].style.backgroundColor = '#f25f67';
       dataTd[i + 1][j].style.backgroundColor = '#f25f67';
       dataTd[i + 1][j + 1].style.backgroundColor = '#f25f67';
 
+      dataTd[i - 1][j - 1].style.transition = 500 + 'ms';
+      dataTd[i - 1][j].style.transition = 500 + 'ms';
+      dataTd[i - 1][j + 1].style.transition = 500 + 'ms';
+      dataTd[i][j - 1].style.transition = 500 + 'ms';
       dataTd[i][j].style.transition = 500 + 'ms';
       dataTd[i][j + 1].style.transition = 500 + 'ms';
+      dataTd[i + 1][j - 1].style.transition = 500 + 'ms';
       dataTd[i + 1][j].style.transition = 500 + 'ms';
       dataTd[i + 1][j + 1].style.transition = 500 + 'ms';
 
-      const gxd1 = dataTd[i][j].textContent;
-      const gxd2 = dataTd[i][j + 1].textContent;
-      const gxd3 = dataTd[i + 1][j].textContent;
-      const gxd4 = dataTd[i + 1][j + 1].textContent;
+      const gxd1 = dataTd[i - 1][j - 1].textContent;
+      const gxd2 = dataTd[i - 1][j].textContent;
+      const gxd3 = dataTd[i - 1][j + 1].textContent;
+      const gxd4 = dataTd[i][j - 1].textContent;
+      const gxd5 = dataTd[i][j].textContent;
+      const gxd6 = dataTd[i][j + 1].textContent;
+      const gxd7 = dataTd[i + 1][j - 1].textContent;
+      const gxd8 = dataTd[i + 1][j].textContent;
+      const gxd9 = dataTd[i + 1][j + 1].textContent;
 
       const gx = Math.abs(
-        gxd1 * robertsX[0][0] +
-          gxd2 * robertsX[0][1] +
-          gxd3 * robertsX[1][0] +
-          gxd4 * robertsX[1][1]
+        gxd1 * prewittX[0][0] +
+          gxd3 * prewittX[0][2] +
+          gxd4 * prewittX[1][0] +
+          gxd6 * prewittX[0][2] +
+          gxd7 * prewittX[2][0] +
+          gxd9 * prewittX[0][2]
       );
+
       const gy = Math.abs(
-        gxd1 * robertsY[0][0] +
-          gxd2 * robertsY[0][1] +
-          gxd3 * robertsY[1][0] +
-          gxd4 * robertsY[1][1]
+        gxd1 * prewittY[0][0] +
+          gxd2 * prewittY[0][1] +
+          gxd3 * prewittY[0][2] +
+          gxd7 * prewittY[2][0] +
+          gxd8 * prewittY[2][1] +
+          gxd9 * prewittY[2][2]
       );
 
-      setD1(`d_1 = |(1*${gxd1})+(0*${gxd2})+(0*${gxd3})+(-1*${gxd4})| = ${gx}`);
-      setD2(`d_2 = |(0*${gxd1})+(1*${gxd2})+(-1*${gxd3})+(0*${gxd4})| = ${gy}`);
-      const gradientResult = `Hasil = \\sqrt{{${gx}^2}+{${gy}^2}} = `;
-      setResultRobert(gradientResult);
+      setD1(
+        `d_1 = |(1*${gxd1})+(-1*${gxd3})+(1*${gxd4})+(-1*${gxd6})+(1*${gxd7})+(-1*${gxd9})| = ${gx}`
+      );
+      setD2(
+        `d_2 = |(-1*${gxd1})+(-1*${gxd2})+(-1*${gxd3})+(1*${gxd7})+(1*${gxd8})+(1*${gxd9})| = ${gy}`
+      );
 
+      const gradientResult = `Hasil = \\sqrt{{${gx}^2}+{${gy}^2}} = `;
+      setResultPrewitt(gradientResult);
       const gradient = Math.round(Math.sqrt(gx * gx + gy * gy));
 
       const timeout1 = setTimeout(() => {
-        setResultRobert(gradientResult + `${gradient}`);
+        setResultPrewitt(gradientResult + `${gradient}`);
         dataTd[i][j].innerHTML = gradient;
         dataTd[i][j].style.backgroundColor = '#f53267';
 
@@ -96,17 +127,22 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
         setIndexJ(j);
 
         if (j >= 6) {
-          j = 0;
+          j = 1;
           setIndexJ(j);
 
           i++;
           setIndexI(i);
         }
 
-        if (i == 6 && j == 0) {
+        if (i == 6 && j == 1) {
           setTimeout(() => {
+            dataTd[4][4].style.backgroundColor = '#212529';
+            dataTd[4][5].style.backgroundColor = '#212529';
+            dataTd[4][6].style.backgroundColor = '#212529';
+            dataTd[5][4].style.backgroundColor = '#212529';
             dataTd[5][5].style.backgroundColor = '#212529';
             dataTd[5][6].style.backgroundColor = '#212529';
+            dataTd[6][4].style.backgroundColor = '#212529';
             dataTd[6][5].style.backgroundColor = '#212529';
             dataTd[6][6].style.backgroundColor = '#212529';
             stopAnimation();
@@ -116,16 +152,24 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
       }, 1000);
       setTimeoutId(timeout1);
 
-      if (j > 0) {
-        dataTd[i][j - 1].style.backgroundColor = '#212529';
-        dataTd[i + 1][j - 1].style.backgroundColor = '#212529';
+      // console.log(i, j);
+      // reset color
+      if (j > 1) {
+        dataTd[i - 1][j - 2].style.backgroundColor = '#212529';
+        dataTd[i][j - 2].style.backgroundColor = '#212529';
+        dataTd[i + 1][j - 2].style.backgroundColor = '#212529';
       }
 
-      if (i > 0 && j == 0) {
-        dataTd[i][5].style.backgroundColor = '#212529';
-        dataTd[i][6].style.backgroundColor = '#212529';
+      if (i > 1 && j == 1) {
+        dataTd[i - 2][4].style.backgroundColor = '#212529';
+        dataTd[i - 2][5].style.backgroundColor = '#212529';
+        dataTd[i - 2][6].style.backgroundColor = '#212529';
+        dataTd[i - 1][4].style.backgroundColor = '#212529';
         dataTd[i - 1][5].style.backgroundColor = '#212529';
         dataTd[i - 1][6].style.backgroundColor = '#212529';
+        dataTd[i][4].style.backgroundColor = '#212529';
+        dataTd[i][5].style.backgroundColor = '#212529';
+        dataTd[i][6].style.backgroundColor = '#212529';
       }
 
       if (bool == true) {
@@ -161,8 +205,8 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
     setIsPause(false);
 
     // reset index
-    setIndexI(0);
-    setIndexJ(0);
+    setIndexI(1);
+    setIndexJ(1);
 
     const dataTd = getTable();
     for (let i = 0; i < 7; i++) {
@@ -224,11 +268,11 @@ const ButtonProcessRobert = ({ setD1, setD2, setResultRobert, rows }) => {
   );
 };
 
-ButtonProcessRobert.propTypes = {
+ButtonProcessPrewitt.propTypes = {
   setD1: PropTypes.func,
   setD2: PropTypes.func,
-  setResultRobert: PropTypes.func,
+  setResultPrewitt: PropTypes.func,
   rows: PropTypes.array
 };
 
-export default ButtonProcessRobert;
+export default ButtonProcessPrewitt;

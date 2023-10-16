@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const API = import.meta.env.VITE_APP_API;
 
-const ImageProcessRobert = ({ imageDataRadio, setImage, setLoading, setRows }) => {
+const ImageProcessSobel = ({ imageDataRadio, setImage, setLoading, setRows }) => {
   const { image1, image2, image3, image4, image5 } = imageDataRadio;
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -40,7 +40,7 @@ const ImageProcessRobert = ({ imageDataRadio, setImage, setLoading, setRows }) =
       setImage({
         imageOriginal: selectedImageRadio.original,
         imageGrayscale: selectedImageRadio.grayscale,
-        imageRobert: selectedImageRadio.robert
+        imageSobel: selectedImageRadio.sobel
       });
 
       setRows(selectedImageRadio.imageData);
@@ -49,12 +49,12 @@ const ImageProcessRobert = ({ imageDataRadio, setImage, setLoading, setRows }) =
     }
 
     try {
-      const res = await axios.post(`${API}/v1/robert/post`, formData);
+      const res = await axios.post(`${API}/v1/sobel/post`, formData);
       if (res.status === 201) {
         setImage({
           imageOriginal: `${res.data.data['image']}`,
           imageGrayscale: `${res.data.data['image-grayscale']}`,
-          imageRobert: `${res.data.data['image-robert']}`
+          imageSobel: `${res.data.data['image-sobel']}`
         });
         setRows(res.data.dataImage.grayscaleRgb);
         setLoading(false);
@@ -161,11 +161,11 @@ const ImageProcessRobert = ({ imageDataRadio, setImage, setLoading, setRows }) =
   );
 };
 
-ImageProcessRobert.propTypes = {
+ImageProcessSobel.propTypes = {
   imageDataRadio: PropTypes.object,
   setImage: PropTypes.func,
   setLoading: PropTypes.func,
   setRows: PropTypes.func
 };
 
-export default ImageProcessRobert;
+export default ImageProcessSobel;

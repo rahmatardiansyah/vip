@@ -8,11 +8,11 @@ const CustomNavbar = () => {
   const [algorithm, setAlgorithm] = useState('Pilih Operator');
   const [activeMenu, setActiveMenu] = useState('');
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     setAlgorithm(e);
   };
 
-  const handleMenuClick = menu => {
+  const handleMenuClick = (menu) => {
     setActiveMenu(menu);
   };
 
@@ -80,9 +80,7 @@ const CustomNavbar = () => {
             </li>
             <li className="nav-item">
               <a
-                className={`nav-link ${
-                  activeMenu === 'result' ? 'active' : ''
-                }`}
+                className={`nav-link ${activeMenu === 'result' ? 'active' : ''}`}
                 href="#result"
                 onClick={() => {
                   navigate('/#result');
@@ -143,6 +141,19 @@ const CustomNavbar = () => {
                     }}
                   >
                     Operator Prewitt
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => {
+                      navigate('/sobel');
+                      handleClick('Operator Sobel');
+                      handleMenuClick('');
+                      hideNavbar();
+                    }}
+                  >
+                    Operator Sobel
                   </a>
                 </li>
               </ul>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   AboutRobert,
   ImageProcessRobert,
@@ -7,7 +7,7 @@ import {
   ButtonProcessRobert
 } from '../../components';
 import './robert.scss';
-import { imageDataRadio } from './imageData';
+import { imageDataRadio } from '../../components/molekul/imageData';
 
 const Robert = () => {
   const [image, setImage] = useState({
@@ -15,6 +15,10 @@ const Robert = () => {
     imageGrayscale: imageDataRadio.image1.grayscale,
     imageRobert: imageDataRadio.image1.robert
   });
+
+  useEffect(() => {
+    document.title = 'Robert Algoritma';
+  }, []);
 
   const [loading, setLoading] = useState(true);
   const [modalImage, setModalImage] = useState('');
