@@ -4,7 +4,8 @@ import {
   AboutSobel,
   ImageProcessSobel,
   ImageResultSobel,
-  TableProcessSobel
+  TableProcessSobel,
+  ButtonProcessSobel
 } from '../../components';
 import { imageDataRadio } from '../../components/molekul/imageData';
 
@@ -42,6 +43,7 @@ const Sobel = () => {
         setModalImage={setModalImage}
       />
       <TableProcessSobel rows={rows} d1={d1} d2={d2} resultSobel={resultSobel} />
+      <ButtonProcessSobel setD1={setD1} setD2={setD2} setResultSobel={setResultSobel} rows={rows} />
     </div>
   );
 };

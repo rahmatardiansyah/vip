@@ -24,6 +24,7 @@ import AboutSobel from './Sobel/AboutSobel';
 import ImageProcessSobel from './Sobel/ImageProcessSobel';
 import ImageResultSobel from './Sobel/ImageResultSobel';
 import TableProcessSobel from './Sobel/TableProcessSobel';
+import ButtonProcessSobel from './Sobel/ButtonProcessSobel';
 
 export {
   CustomNavbar,
@@ -48,5 +49,6 @@ export {
   AboutSobel,
   ImageProcessSobel,
   ImageResultSobel,
-  TableProcessSobel
+  TableProcessSobel,
+  ButtonProcessSobel
 };
