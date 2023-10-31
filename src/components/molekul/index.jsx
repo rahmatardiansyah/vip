@@ -24,6 +24,11 @@ import AboutSobel from './Sobel/AboutSobel';
 import ImageProcessSobel from './Sobel/ImageProcessSobel';
 import ImageResultSobel from './Sobel/ImageResultSobel';
 import TableProcessSobel from './Sobel/TableProcessSobel';
+import ButtonProcessSobel from './Sobel/ButtonProcessSobel';
+
+import TableLaplacian from './Laplacian/TableLaplacian';
+import AboutLaplacian from './Laplacian/AboutLaplacian';
+import ImageProcessLaplacian from './Laplacian/ImageProcessLaplacian';
 
 export {
   CustomNavbar,
@@ -48,5 +53,9 @@ export {
   AboutSobel,
   ImageProcessSobel,
   ImageResultSobel,
-  TableProcessSobel
+  TableProcessSobel,
+  ButtonProcessSobel,
+  TableLaplacian,
+  AboutLaplacian,
+  ImageProcessLaplacian
 };
