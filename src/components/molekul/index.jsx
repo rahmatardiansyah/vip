@@ -26,6 +26,10 @@ import ImageResultSobel from './Sobel/ImageResultSobel';
 import TableProcessSobel from './Sobel/TableProcessSobel';
 import ButtonProcessSobel from './Sobel/ButtonProcessSobel';
 
+import TableLaplacian from './Laplacian/TableLaplacian';
+import AboutLaplacian from './Laplacian/AboutLaplacian';
+import ImageProcessLaplacian from './Laplacian/ImageProcessLaplacian';
+
 export {
   CustomNavbar,
   CustomFooter,
@@ -50,5 +54,8 @@ export {
   ImageProcessSobel,
   ImageResultSobel,
   TableProcessSobel,
-  ButtonProcessSobel
+  ButtonProcessSobel,
+  TableLaplacian,
+  AboutLaplacian,
+  ImageProcessLaplacian
 };

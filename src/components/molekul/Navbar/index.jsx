@@ -156,6 +156,19 @@ const CustomNavbar = () => {
                     Operator Sobel
                   </a>
                 </li>
+                <li>
+                  <a
+                    className="dropdown-item"
+                    onClick={() => {
+                      navigate('/laplacian');
+                      handleClick('Operator Laplacian');
+                      handleMenuClick('');
+                      hideNavbar();
+                    }}
+                  >
+                    Operator Laplacian
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>
