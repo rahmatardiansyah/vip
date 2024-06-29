@@ -6,6 +6,8 @@ import ImageToGrayscale from './ImageToGrayscale';
 import GrayscaleToNegation from './GrayscaleToNegation';
 import ImageBrightness from './ImageBrightness';
 import ImageTreshold from './ImageThreshold';
+import ImageBlending from './ImageBlending';
+import ImageSubstraction from './ImageSubstraction';
 import Basic from './Basic';
 import Result from './Result';
 import About from './About';
@@ -45,6 +47,8 @@ export {
   GrayscaleToNegation,
   ImageBrightness,
   ImageTreshold,
+  ImageBlending,
+  ImageSubstraction,
   Result,
   About,
   TableRobert,
