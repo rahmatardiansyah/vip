@@ -168,10 +168,9 @@ const index = () => {
         </Operation>
         <Formula formula={brightnessFormula} />
         <Case>
-          Diketahui citra grayscale 256 warna dengan ukuran 5x5 piksel akan dilkuakn operasi
+          Diketahui citra grayscale 256 warna dengan ukuran 5x5 piksel akan dilakukan operasi
           kecerahan dengan konstanta 10.
         </Case>
-
         <div className="my-10 px-4">
           <h2 className="text-xl font-semibold">Pilih Gambar</h2>
           <div className="flex justify-around flex-wrap gap-4 mt-8">

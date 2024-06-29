@@ -5,6 +5,7 @@ import Topics from './Topics';
 import ImageToGrayscale from './ImageToGrayscale';
 import GrayscaleToNegation from './GrayscaleToNegation';
 import ImageBrightness from './ImageBrightness';
+import ImageTreshold from './ImageThreshold';
 import Basic from './Basic';
 import Result from './Result';
 import About from './About';
@@ -43,6 +44,7 @@ export {
   ImageToGrayscale,
   GrayscaleToNegation,
   ImageBrightness,
+  ImageTreshold,
   Result,
   About,
   TableRobert,
