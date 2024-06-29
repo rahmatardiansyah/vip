@@ -1,4 +1,4 @@
-import { Case, Formula, Operation } from '../../components';
+import { Case, Formula, ImageToGrayscale, Operation } from '../../components';
 import Image from '../../components/Image';
 import data from '../../data/data.json';
 import pikachu from '../../assets/images/pikachu.jpeg';
@@ -9,7 +9,7 @@ import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { HiMiniPlayPause } from 'react-icons/hi2';
 import { BlockMath } from 'react-katex';
 import { TbReload } from 'react-icons/tb';
-import { ImageToGrayscale } from '../../components';
+
 const Grayscale = () => {
   const grayscaleFormula = `
     f_o(x,y) = \\frac{f_i^R(x,y) + f_i^G(x,y) + f_i^B(x,y)}{3}
@@ -34,6 +34,7 @@ const Grayscale = () => {
     setResultData(Array(5).fill(Array(5).fill(null)));
     setTextareaValue(JSON.stringify(selectedData.imageData));
     setError(null);
+    stopAnimation();
   };
 
   const handleTextareaChange = (e) => {
@@ -130,7 +131,7 @@ const Grayscale = () => {
     if (isAnimating) {
       intervalRef.current = setInterval(() => {
         playStep();
-      }, 1000);
+      }, 100);
     } else {
       clearInterval(intervalRef.current);
     }

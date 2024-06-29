@@ -3,6 +3,7 @@ import CustomFooter from './Footer';
 import Hero from './Hero';
 import Topics from './Topics';
 import ImageToGrayscale from './ImageToGrayscale';
+import GrayscaleToNegation from './GrayscaleToNegation';
 import Basic from './Basic';
 import Result from './Result';
 import About from './About';
@@ -39,6 +40,7 @@ export {
   CustomFooter,
   Hero,
   ImageToGrayscale,
+  GrayscaleToNegation,
   Result,
   About,
   TableRobert,
