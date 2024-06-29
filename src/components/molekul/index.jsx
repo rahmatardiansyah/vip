@@ -4,6 +4,7 @@ import Hero from './Hero';
 import Topics from './Topics';
 import ImageToGrayscale from './ImageToGrayscale';
 import GrayscaleToNegation from './GrayscaleToNegation';
+import ImageBrightness from './ImageBrightness';
 import Basic from './Basic';
 import Result from './Result';
 import About from './About';
@@ -41,6 +42,7 @@ export {
   Hero,
   ImageToGrayscale,
   GrayscaleToNegation,
+  ImageBrightness,
   Result,
   About,
   TableRobert,

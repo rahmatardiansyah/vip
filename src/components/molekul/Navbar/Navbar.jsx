@@ -25,6 +25,7 @@ const Navbar = () => {
     if (pathname.pathname === '/grayscale') setMenuText('Grayscale');
     if (pathname.pathname === '/brightness') setMenuText('Brightness');
     if (pathname.pathname === '/negation') setMenuText('Negation');
+    if (pathname.pathname === '/threshold') setMenuText('Threshold');
 
     const dropdownHandler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
@@ -89,6 +90,9 @@ const Navbar = () => {
                 </li>
                 <li>
                   <a href="/brightness">Brightness</a>
+                </li>
+                <li>
+                  <a href="/threshold">Threshold</a>
                 </li>
               </ul>
             </div>

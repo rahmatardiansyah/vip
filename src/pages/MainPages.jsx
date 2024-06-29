@@ -3,7 +3,7 @@ import { Navbar, CustomFooter } from '../components';
 import '../global.css';
 
 import Home from './Home';
-import Brightness from './Brighness';
+import Brightness from './Brightness';
 import Grayscale from './Grayscale';
 import Negation from './Negation';
 import Threshold from './Threshold';
