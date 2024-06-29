@@ -1,96 +1,19 @@
-import './basic.scss';
+import Accordion from '../../atoms/Accordion';
 
 const Basic = () => {
   return (
-    <div className="container basic-section" id="basic">
-      <h2>Materi Dasar</h2>
-      <div className="row">
-        <div className="col-xl-6">
-          <div className="d-flex">
-            <div className="number">01</div>
-            <div className="basic-info">
-              <div className="basic-title">Image Acquicition</div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="number">02</div>
-            <div className="basic-info">
-              <div className="basic-title">Image Enhancement</div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="number">03</div>
-            <div className="basic-info">
-              <div className="basic-title">Image Restoration </div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="number">04</div>
-            <div className="basic-info">
-              <div className="basic-title">Pemrosesan Gambar Berwarna</div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="col-xl-6">
-          <div className="d-flex">
-            <div className="number">05</div>
-            <div className="basic-info">
-              <div className="basic-title">Multi-Resolution Processing</div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="number">06</div>
-            <div className="basic-info">
-              <div className="basic-title">Compression</div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="number">07</div>
-            <div className="basic-info">
-              <div className="basic-title">Morphological Processing</div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="number">08</div>
-            <div className="basic-info">
-              <div className="basic-title">Segmentation</div>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat voluptas illo
-                inventore non iusto aliquid tempora molestias similique qui et?
-              </p>
-            </div>
-          </div>
-        </div>
+    <section className="max-w-screen-xl bg-no-repeat bg-cover mx-auto my-20" id="basic">
+      <p className="text-4xl text-center">Teori</p>
+      <div className="p-4 bg-gray-100 mt-20 rounded shadow-xl border border-black">
+        <Accordion title="There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form?">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, aperiam!
+        </Accordion>
+        <Accordion title="Ini item baru">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta aspernatur aliquam expedita
+          enim asperiores quam molestiae incidunt doloribus consectetur nobis.
+        </Accordion>
       </div>
-    </div>
+    </section>
   );
 };
 

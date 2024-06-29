@@ -1,25 +1,16 @@
 import { useEffect } from 'react';
-import { Hero, Basic, Result, About } from '../../components';
-import './home.scss';
+import { Hero, Topics, Basic, About } from '../../components';
 
 const Home = () => {
   useEffect(() => {
-    document.title = 'Beranda Visualize Image Processing';
+    document.title = 'Beranda - Visualize Image Processing';
   }, []);
   return (
-    <div className="scroll-container">
-      <div className="hero-wrapper">
-        <Hero />
-      </div>
-      <div className="basic-wrapper">
-        <Basic />
-      </div>
-      <div className="result-wrapper">
-        <Result />
-      </div>
-      <div className="about-warpper">
-        <About />
-      </div>
+    <div className="">
+      <Hero />
+      <Topics />
+      <Basic />
+      <About />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import ReactLogo from './icons/react.svg';
+import ToggleNavbar from './icons/toggle.svg';
 import HeroImage from './images/hero.jpg';
 
 import Image1 from './images/image1.jpg';
@@ -33,6 +34,7 @@ import Image5Sobel from './images/image5Sobel.jpg';
 
 export {
   ReactLogo,
+  ToggleNavbar,
   HeroImage,
   Image1,
   Image2,

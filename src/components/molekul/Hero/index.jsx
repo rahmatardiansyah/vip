@@ -1,31 +1,39 @@
-import React from 'react';
-import { HeroImage } from '../../../assets';
-import { Button } from '../../atoms';
+import HeroImg from '../../../assets/images/hero.png';
 import './hero.scss';
 
 const Hero = () => {
   return (
-    <div className="container hero-section" id="home">
-      <div className="row">
-        <div className="col-xl-6 order-xl-1 order-2">
-          <h1 className="title">
-            <span>V</span>isualize <span>I</span>mage <span>P</span>rocessing
-            Menggunakan Website.
-          </h1>
-          <p>
-            Jelajahi pengalaman belajar yang mendalam melalui simulasi, animasi,
-            dan visualisasi pada pengolahan citra digital. Website ini membuat
-            pengolahan citra menjadi menyenangkan dan mudah dipahami.
-          </p>
-          <Button text="Coba Sekarang" className="btn btn-primary" />
-        </div>
-        <div className="col-xl-6 order-xl-1 order-1">
-          <div className="hero-image">
-            <img src={HeroImage} className="img-fluid" alt="Hero" />
-          </div>
+    <section
+      className="max-w-screen-xl mx-auto flex justify-between flex-col-reverse md:flex-row sm:my-20 my-8 pr-8"
+      id="home"
+    >
+      <div className="flex flex-col mx-8 justify-center">
+        <p className="text-4xl sm:text-6xl text-[#3FBCF1] font-semibold">Visualize</p>
+        <p className="text-4xl sm:text-6xl">Image Processing</p>
+        <p className="text-xl sm:text-2xl font-light mt-4">
+          Belajar pengolahan citra digital menggunakan website interaktif
+        </p>
+        <div className="flex mt-4 gap-4">
+          <a
+            href="/brightness"
+            className="bg-[#3FBCF1] hover:bg-[#37a5d1] px-2 py-2 border-black border-2 rounded sm:text-xl"
+          >
+            Change Brightness
+          </a>
+          <a
+            href="/grayscale"
+            className="bg-gray-300 hover:bg-gray-400 px-2 py-2 border-black border-2 rounded sm:text-xl"
+          >
+            RGB to Grayscale
+          </a>
         </div>
       </div>
-    </div>
+      <img
+        src={HeroImg}
+        alt="Hero Image"
+        className="scale-[0.6] sm:scale-[0.7] md:scale-[0.8] lg:scale-[1]"
+      />
+    </section>
   );
 };
 

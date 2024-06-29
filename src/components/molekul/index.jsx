@@ -1,6 +1,8 @@
-import CustomNavbar from './Navbar';
+import Navbar from './Navbar/Navbar';
 import CustomFooter from './Footer';
 import Hero from './Hero';
+import Topics from './Topics';
+import ImageToGrayscale from './ImageToGrayscale';
 import Basic from './Basic';
 import Result from './Result';
 import About from './About';
@@ -31,10 +33,12 @@ import AboutLaplacian from './Laplacian/AboutLaplacian';
 import ImageProcessLaplacian from './Laplacian/ImageProcessLaplacian';
 
 export {
-  CustomNavbar,
+  Navbar,
+  Topics,
+  Basic,
   CustomFooter,
   Hero,
-  Basic,
+  ImageToGrayscale,
   Result,
   About,
   TableRobert,

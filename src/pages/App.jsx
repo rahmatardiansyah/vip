@@ -1,10 +1,13 @@
-import { Routes } from '../config';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainPages from './MainPages';
 
 function App() {
   return (
-    <>
-      <Routes />
-    </>
+    <Router basename="/">
+      <Routes>
+        <Route path="*" element={<MainPages />} />
+      </Routes>
+    </Router>
   );
 }
 
