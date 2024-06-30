@@ -126,7 +126,7 @@ const index = () => {
     if (isAnimating) {
       intervalRef.current = setInterval(() => {
         playStep();
-      }, 300);
+      }, 2000);
     } else {
       clearInterval(intervalRef.current);
     }
@@ -186,7 +186,7 @@ const index = () => {
                   onChange={handleTextareaChange}
                   cols={40}
                   rows={5}
-                  className="border-2 border-black text-xl w-full sm:w-auto"
+                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
                   disabled={isAnimating}
                 />
               )}

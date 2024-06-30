@@ -131,7 +131,7 @@ const Grayscale = () => {
     if (isAnimating) {
       intervalRef.current = setInterval(() => {
         playStep();
-      }, 100);
+      }, 2000);
     } else {
       clearInterval(intervalRef.current);
     }

@@ -141,7 +141,7 @@ F_0(x,y) =
     if (isAnimating) {
       intervalRef.current = setInterval(() => {
         playStep();
-      }, 300);
+      }, 2000);
     } else {
       clearInterval(intervalRef.current);
     }
