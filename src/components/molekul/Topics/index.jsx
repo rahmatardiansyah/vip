@@ -25,10 +25,10 @@ const index = () => {
           </a>
         </li>
         <li>
-          <a href="/negation">
+          <a href="/invert">
             <div className="bg-white hover:bg-gray-100 border rounded shadow p-4 size-40 cursor-pointer flex flex-col items-center">
               <MdOutlineInvertColors size={80} />
-              <p className="mt-2">Negation</p>
+              <p className="mt-2">Invert</p>
             </div>
           </a>
         </li>
