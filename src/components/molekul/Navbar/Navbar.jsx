@@ -24,7 +24,7 @@ const Navbar = () => {
     if (pathname.pathname === '/') setMenuText('Algoritma');
     if (pathname.pathname === '/grayscale') setMenuText('Grayscale');
     if (pathname.pathname === '/brightness') setMenuText('Brightness');
-    if (pathname.pathname === '/negation') setMenuText('Negation');
+    if (pathname.pathname === '/invert') setMenuText('Invert');
     if (pathname.pathname === '/threshold') setMenuText('Threshold');
     if (pathname.pathname === '/blending') setMenuText('Blending');
     if (pathname.pathname === '/substraction') setMenuText('Substraction');
@@ -88,7 +88,7 @@ const Navbar = () => {
                   <a href="/grayscale">Grayscale</a>
                 </li>
                 <li>
-                  <a href="/negation">Negation</a>
+                  <a href="/invert">Invert</a>
                 </li>
                 <li>
                   <a href="/brightness">Brightness</a>

@@ -263,7 +263,8 @@ const index = () => {
                   onChange={handleTextareaChange}
                   cols={40}
                   rows={5}
-                  className="border-2 border-black text-xl w-full sm:w-auto"
+                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
+                  disabled={isAnimating}
                 />
               )}
               {error && (
@@ -281,7 +282,7 @@ const index = () => {
                   onChange={handleTextareaChange2}
                   cols={40}
                   rows={5}
-                  className="border-2 border-black text-xl w-full sm:w-auto"
+                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
                   disabled={isAnimating}
                 />
               )}

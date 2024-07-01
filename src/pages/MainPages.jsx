@@ -5,7 +5,7 @@ import '../global.css';
 import Home from './Home';
 import Brightness from './Brightness';
 import Grayscale from './Grayscale';
-import Negation from './Negation';
+import Invert from './Invert';
 import Threshold from './Threshold';
 import Blending from './Blending';
 import Substraction from './Substraction';
@@ -21,7 +21,7 @@ const MainApp = () => {
           <Route path="/" element={<Home />} />
           <Route path="/grayscale" element={<Grayscale />} />
           <Route path="/brightness" element={<Brightness />} />
-          <Route path="/negation" element={<Negation />} />
+          <Route path="/invert" element={<Invert />} />
           <Route path="/threshold" element={<Threshold />} />
           <Route path="/blending" element={<Blending />} />
           <Route path="/substraction" element={<Substraction />} />

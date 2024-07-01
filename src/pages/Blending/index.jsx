@@ -252,7 +252,8 @@ const index = () => {
                   onChange={handleTextareaChange}
                   cols={40}
                   rows={5}
-                  className="border-2 border-black text-xl w-full sm:w-auto"
+                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
+                  disabled={isAnimating}
                 />
               )}
               {error && (
@@ -270,7 +271,7 @@ const index = () => {
                   onChange={handleTextareaChange2}
                   cols={40}
                   rows={5}
-                  className="border-2 border-black text-xl w-full sm:w-auto"
+                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
                   disabled={isAnimating}
                 />
               )}
@@ -288,7 +289,7 @@ const index = () => {
                   value={wA}
                   onChange={handleInputWA}
                   id="WA"
-                  className="border-2 border-black rounded w-20 h-10 p-2"
+                  className={`border-2 border-black rounded w-20 h-10 p-2 ${isAnimating && 'cursor-not-allowed'}`}
                   disabled={isAnimating}
                 />
                 <label htmlFor="WA">wA</label>
@@ -365,12 +366,12 @@ const index = () => {
                 <div className="flex items-center gap-4 sm:ml-10 flex-col">
                   <div>
                     <BlockMath math={`wA = ${wA} `} />
-                    <BlockMath math={`wB = 1 - ${wA} = ${1 - wA} `} />
+                    <BlockMath math={`wB = 1 - ${wA} = ${(1 - wA).toFixed(1)}`} />
                   </div>
                   <div className="flex gap-4">
                     {animationStage >= 0 && (
                       <BlockMath
-                        math={`(${currentGrayscale} * ${wA})+(${currentGrayscale2} * ${1 - wA}) = `}
+                        math={`(${currentGrayscale} * ${wA})+(${currentGrayscale2} * ${(1 - wA).toFixed(1)}) = `}
                       />
                     )}
                     {animationStage >= 1 && <BlockMath math={`${blendingValue}`} />}
