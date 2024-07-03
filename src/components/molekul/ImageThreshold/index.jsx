@@ -35,9 +35,9 @@ const Index = ({ value }) => {
 
           // BrightnessImage conversion
           for (let i = 0; i < data.length; i += 4) {
-            data[i] = data[i] + value; // Red
-            data[i + 1] = data[i + 1] + value; // Green
-            data[i + 2] = data[i + 2] + value; // Blue
+            data[i] = data[i] >= value ? 255 : 0; // Red
+            data[i + 1] = data[i + 1] >= value ? 255 : 0; // Green
+            data[i + 2] = data[i + 2] >= value ? 255 : 0; // Blue
           }
           ctx.putImageData(imageData, 0, 0);
           setThresholdImage(canvas.toDataURL());

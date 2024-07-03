@@ -9,7 +9,7 @@ import Invert from './Invert';
 import Threshold from './Threshold';
 import Blending from './Blending';
 import Substraction from './Substraction';
-import Convolution from './Convolution';
+import Correlation from './Correlation';
 import Robert from './Robert';
 
 const MainApp = () => {
@@ -25,7 +25,7 @@ const MainApp = () => {
           <Route path="/threshold" element={<Threshold />} />
           <Route path="/blending" element={<Blending />} />
           <Route path="/substraction" element={<Substraction />} />
-          <Route path="/convolution" element={<Convolution />} />
+          <Route path="/correlation" element={<Correlation />} />
           <Route path="/Robert" element={<Robert />} />
         </Routes>
       </div>

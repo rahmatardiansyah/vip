@@ -28,6 +28,7 @@ const Navbar = () => {
     if (pathname.pathname === '/threshold') setMenuText('Threshold');
     if (pathname.pathname === '/blending') setMenuText('Blending');
     if (pathname.pathname === '/substraction') setMenuText('Substraction');
+    if (pathname.pathname === '/correlation') setMenuText('Correlation');
 
     const dropdownHandler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
@@ -101,6 +102,9 @@ const Navbar = () => {
                 </li>
                 <li>
                   <a href="/substraction">Substraction</a>
+                </li>
+                <li>
+                  <a href="/correlation">Correlation</a>
                 </li>
               </ul>
             </div>

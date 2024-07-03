@@ -8,6 +8,7 @@ import ImageBrightness from './ImageBrightness';
 import ImageTreshold from './ImageThreshold';
 import ImageBlending from './ImageBlending';
 import ImageSubstraction from './ImageSubstraction';
+import ImageCorrelation from './ImageCorrelation';
 import Basic from './Basic';
 import Result from './Result';
 import About from './About';
@@ -49,6 +50,7 @@ export {
   ImageTreshold,
   ImageBlending,
   ImageSubstraction,
+  ImageCorrelation,
   Result,
   About,
   TableRobert,
