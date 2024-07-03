@@ -44,12 +44,12 @@ const SubtractImages = () => {
             subtracted[i] = Math.max(0, dataA[i] - dataB[i]);
             subtracted[i + 1] = Math.max(0, dataA[i + 1] - dataB[i + 1]);
             subtracted[i + 2] = Math.max(0, dataA[i + 2] - dataB[i + 2]);
-            subtracted[i + 3] = 255; // Set alpha to fully opaque
+            subtracted[i + 3] = 255;
 
             // Normalization for negative values
-            subtracted[i] = (255 + subtracted[i]) / 2;
-            subtracted[i + 1] = (255 + subtracted[i + 1]) / 2;
-            subtracted[i + 2] = (255 + subtracted[i + 2]) / 2;
+            // subtracted[i] = (255 + subtracted[i]) / 2;
+            // subtracted[i + 1] = (255 + subtracted[i + 1]) / 2;
+            // subtracted[i + 2] = (255 + subtracted[i + 2]) / 2;
           }
           ctx.putImageData(subtractedData, 0, 0);
           setSubtractedImage(canvas.toDataURL());

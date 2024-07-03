@@ -15,7 +15,11 @@ import { TbReload } from 'react-icons/tb';
 
 const index = () => {
   const substractionFormula = `
-???
+I_{\\text{subtracted}}(x, y) = I_1(x, y) - I_2(x, y)
+`;
+
+  const substractionNormalizeFormula = `
+I_{\\text{normalized}}(x, y) = \\max(0, \\min(255, I_{\\text{subtracted}}(x, y) + 255))
 `;
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -180,7 +184,7 @@ const index = () => {
     if (isAnimating) {
       intervalRef.current = setInterval(() => {
         playStep();
-      }, 2000);
+      }, 1000);
     } else {
       clearInterval(intervalRef.current);
     }
@@ -224,6 +228,9 @@ const index = () => {
       <div className="max-w-screen-xl mx-auto">
         <Operation title="Pengurangan Citra">Pengurangan citra???</Operation>
         <Formula formula={substractionFormula} />
+        <div className="text-xl">
+          <BlockMath math={substractionNormalizeFormula} />
+        </div>
         <Case>
           Diketahui dua buah citra (citra A dan citra B) berukuran 4x5 piksel dengan resolusi
           keabuan L=256
