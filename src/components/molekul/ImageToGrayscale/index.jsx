@@ -36,20 +36,24 @@ const index = () => {
     }
   };
   return (
-    <div className="">
-      <h3 className="font-bold text-xl my-8">Ubah Gambar Sendiri ke Grayscale</h3>
+    <div>
+      <h3 className="font-semibold text-xl my-8">Upload Gambar Anda</h3>
+      <p className="text-base my-4">
+        Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar RGB
+        Anda di sini.
+      </p>
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       <div className="flex gap-10 mt-10 items-center justify-between flex-wrap sm:flex-nowrap">
         {originalImage && (
           <div>
-            <h2 className="text-xl my-4">Original Image</h2>
+            <h2 className="text-xl my-4">Gambar Original</h2>
             <img src={originalImage} alt="Original" width={`80%`} />
           </div>
         )}
         {grayscaleImage && (
           <div>
-            <h2 className="text-xl my-4">Grayscale Image</h2>
+            <h2 className="text-xl my-4">Gambar Grayscale</h2>
             <img src={grayscaleImage} alt="Grayscale" width={`80%`} />
           </div>
         )}

@@ -63,7 +63,7 @@ const Navbar = () => {
             <a href="/">Beranda</a>
           </li>
           <li
-            className={`hover:text-red-400 ${pathname.pathname === '/' && pathname.hash === '#about' && 'text-red-500'}`}
+            className={`hover:text-red-400 ${pathname.pathname === '/' && pathname.hash === '#topics' && 'text-red-500'}`}
             onClick={() => setIsNavOpen(!isNavOpen)}
           >
             <a href="/#topics">Topik</a>
