@@ -63,16 +63,16 @@ const Navbar = () => {
             <a href="/">Beranda</a>
           </li>
           <li
+            className={`hover:text-red-400 ${pathname.pathname === '/' && pathname.hash === '#topics' && 'text-red-500'}`}
+            onClick={() => setIsNavOpen(!isNavOpen)}
+          >
+            <a href="/#topics">Topik</a>
+          </li>
+          <li
             className={`hover:text-red-400 ${pathname.pathname === '/' && pathname.hash === '#basic' && 'text-red-500'}`}
             onClick={() => setIsNavOpen(!isNavOpen)}
           >
             <a href="/#basic">Teori</a>
-          </li>
-          <li
-            className={`hover:text-red-400 ${pathname.pathname === '/' && pathname.hash === '#about' && 'text-red-500'}`}
-            onClick={() => setIsNavOpen(!isNavOpen)}
-          >
-            <a href="/#about">Tentang</a>
           </li>
           <li className="mr-4 relative" ref={dropdownRef}>
             <div

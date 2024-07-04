@@ -1,4 +1,4 @@
-import { Case, Formula, ImageToGrayscale, Operation } from '../../components';
+import { Case, Formula, ImageToGrayscale, Operation, Tooltip } from '../../components';
 import Image from '../../components/Image';
 import data from '../../data/data.json';
 import pikachu from '../../assets/images/pikachu.jpeg';
@@ -12,7 +12,7 @@ import { TbReload } from 'react-icons/tb';
 
 const Grayscale = () => {
   const grayscaleFormula = `
-    f_o(x,y) = \\frac{f_i^R(x,y) + f_i^G(x,y) + f_i^B(x,y)}{3}
+    f_0(x,y) = \\frac{f_i^R(x,y) + f_i^G(x,y) + f_i^B(x,y)}{3}
   `;
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -92,9 +92,7 @@ const Grayscale = () => {
     setAnimationStage(0);
     setCurrentRGB([0, 0, 0]);
     setGrayscaleValue(null);
-    if (!(row === 0 && col === 0)) {
-      setResultData(Array(5).fill(Array(5).fill(null)));
-    }
+    setResultData(Array(5).fill(Array(5).fill(null)));
   };
 
   const pauseAnimation = () => {
@@ -161,7 +159,10 @@ const Grayscale = () => {
   return (
     <div className="max-w-screen-xl mx-auto">
       <Operation title="Operasi RGB ke Grayscale">
-        Mengubah gambar yang berwarna RGB menjadi berwarna hitam dan putih.
+        Grayscale adalah operasi pengolahan citra yang mengubah gambar berwarna (RGB) menjadi gambar
+        hitam putih (grayscale). Proses ini dilakukan dengan mengkombinasikan nilai merah (Red),
+        hijau (Green), dan biru (Blue) dari setiap piksel untuk menghasilkan satu nilai intensitas
+        abu-abu.
       </Operation>
       <Formula formula={grayscaleFormula} />
       <Case>
@@ -170,7 +171,11 @@ const Grayscale = () => {
 
       {/* Choose Image */}
       <div className="my-10 px-4">
-        <h2 className="text-xl font-semibold">Pilih Gambar</h2>
+        <h2 className="text-xl font-semibold">Pilih Gambar RGB</h2>
+        <p className="text-xl">
+          Silakan pilih salah satu gambar RGB yang disediakan di bawah ini untuk melihat proses
+          konversi menjadi grayscale.
+        </p>
         <div className="flex justify-around flex-wrap gap-4 mt-8">
           {images.map((image, index) => (
             <Image
@@ -182,9 +187,12 @@ const Grayscale = () => {
             />
           ))}
         </div>
-        <h3 className="text-base font-bold my-8">Atau ubah nilai pada field dibawah</h3>
         {selectedImage && (
           <div>
+            <p className="text-xl my-4">
+              Setelah memilih gambar, nilai RGB dari gambar tersebut akan muncul di tabel berikut.
+              Anda bisa mengubah nilai RGB tersebut secara manual melalui field di bawah.
+            </p>
             {selectedData && (
               <textarea
                 value={textareaValue}
@@ -207,29 +215,91 @@ const Grayscale = () => {
       {selectedImage && (
         <div className="my-10 px-4">
           <div className="flex flex-wrap gap-8">
-            <div>
-              <h2 className="text-xl font-semibold">Table Citra RGB</h2>
-              <table className="border border-black text-base mt-4">
-                <tbody>
-                  {selectedData.map((rowItem, rowIndex) => (
-                    <tr key={rowIndex}>
-                      {rowItem.map((color, colIndex) => (
-                        <td
-                          key={colIndex}
-                          className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
-                        >
-                          <p>R: {color[0]}</p>
-                          <p>G: {color[1]}</p>
-                          <p>B: {color[2]}</p>
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="flex items-center w-full flex-wrap gap-4">
+              <div>
+                <h2 className="text-xl font-semibold">Table Citra RGB</h2>
+                <p className="w-[60%]">
+                  Tabel citra RGB 5x5 piksel dari gambar yang telah di-resize
+                </p>
+                <table className="border border-black text-base mt-4">
+                  <tbody>
+                    {selectedData.map((rowItem, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {rowItem.map((color, colIndex) => (
+                          <td
+                            key={colIndex}
+                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
+                          >
+                            <p>R: {color[0]}</p>
+                            <p>G: {color[1]}</p>
+                            <p>B: {color[2]}</p>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <div>
+                  <h2 className="text-xl font-semibold">Proses Perhitungan</h2>
+                  <div className="flex gap-4 flex-col items-start">
+                    {animationStage >= 0 && (
+                      <BlockMath
+                        math={`f_0(x,y) = \\frac{f_i^R(${currentRGB[0]}) + f_i^G(${currentRGB[1]}) + f_i^B(${currentRGB[2]})}{3}`}
+                      />
+                    )}
+                    <div className="flex gap-2">
+                      <BlockMath math={`f_0(x,y) =`} />
+                      {animationStage >= 1 && <BlockMath math={`${grayscaleValue}`} />}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mt-4">Kontrol Animasi</h3>
+                  <p>
+                    Gunakan tombol di bawah ini untuk melihat animasi konversi RGB ke grayscale.
+                  </p>
+                  <div className="flex gap-4 items-center mt-4">
+                    {isAnimating ? (
+                      <Tooltip tooltip="pause">
+                        <IoMdPause
+                          size={30}
+                          onClick={pauseAnimation}
+                          className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                        />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip tooltip="play">
+                        <IoMdPlay
+                          size={30}
+                          onClick={playAnimation}
+                          className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                        />
+                      </Tooltip>
+                    )}
+
+                    <Tooltip tooltip="repeat">
+                      <TbReload
+                        size={30}
+                        onClick={stopAnimation}
+                        className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                      />
+                    </Tooltip>
+                    <Tooltip tooltip="step by step">
+                      <HiMiniPlayPause
+                        size={30}
+                        onClick={playStep}
+                        className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                      />
+                    </Tooltip>
+                  </div>
+                </div>
+              </div>
             </div>
             <div>
               <h2 className="text-xl font-semibold">Table Citra Hasil</h2>
+              <p>Tabel citra hasil gambar grayscale</p>
               <table className="border border-black text-base mt-4">
                 <tbody>
                   {resultData.map((rowItem, rowIndex) => (
@@ -249,45 +319,6 @@ const Grayscale = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold">Proses</h2>
-              <div className="flex items-center gap-4 sm:ml-10">
-                {animationStage >= 0 && (
-                  <BlockMath
-                    math={`\\frac{(${currentRGB[0]} + ${currentRGB[1]} + ${currentRGB[2]})}{3} = `}
-                  />
-                )}
-                {animationStage >= 1 && <BlockMath math={`${grayscaleValue}`} />}
-              </div>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold my-8">Animasi</h3>
-            <div className="flex gap-4 items-center">
-              {isAnimating ? (
-                <IoMdPause
-                  size={30}
-                  onClick={pauseAnimation}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-              ) : (
-                <IoMdPlay
-                  size={30}
-                  onClick={playAnimation}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-              )}
-              <TbReload
-                size={30}
-                onClick={stopAnimation}
-                className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-              />
-              <HiMiniPlayPause
-                size={30}
-                onClick={playStep}
-                className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-              />
             </div>
           </div>
           <div className="my-10">

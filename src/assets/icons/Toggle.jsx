@@ -2,7 +2,7 @@ const Toggle = ({ click, isNavOpen }) => {
   return (
     <>
       <svg
-        className={`ham hamRotate ham8 z-30 block sm:hidden ${isNavOpen ? 'active' : ''}`}
+        className={`ham hamRotate ham8 z-40 block sm:hidden ${isNavOpen ? 'active' : ''}`}
         viewBox="0 0 100 100"
         width="60"
         onClick={click}

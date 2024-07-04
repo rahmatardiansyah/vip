@@ -5,7 +5,7 @@ import pikachu from '../../assets/images/pikachu-grayscale.png';
 import panda from '../../assets/images/panda-grayscale.png';
 import doraemon from '../../assets/images/doraemon-grayscale.png';
 import { BlockMath } from 'react-katex';
-import { Case, Formula, GrayscaleToNegation, Operation } from '../../components';
+import { Case, Formula, GrayscaleToNegation, Operation, Tooltip } from '../../components';
 import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { HiMiniPlayPause } from 'react-icons/hi2';
 import { TbReload } from 'react-icons/tb';
@@ -155,17 +155,22 @@ const index = () => {
   return (
     <div>
       <div className="max-w-screen-xl mx-auto">
-        <Operation title="Operasi Negatif">
-          Citra negatif merupakan citra yang nilai pixelnya berkebalikan dengan citra aslinya.
+        <Operation title="Operasi Invert">
+          Operasi invert atau disebut juga dengan operasi negatif adalah proses membalikkan nilai
+          intensitas piksel pada citra, menghasilkan efek negatif.
         </Operation>
         <Formula formula={negationFormula} />
         <Case>
           Diketahui citra grayscale 256 warna dengan ukuran 5x5 piksel akan dilakukan operasi
-          negatif.
+          invert.
         </Case>
 
         <div className="my-10 px-4">
-          <h2 className="text-xl font-semibold">Pilih Gambar</h2>
+          <h2 className="text-xl font-semibold">Pilih Gambar Grayscale</h2>
+          <p className="text-xl">
+            Silakan pilih salah satu gambar grayscale yang disediakan di bawah ini untuk melihat
+            proses konversi menjadi invert.
+          </p>
           <div className="flex justify-around flex-wrap gap-4 mt-8">
             {images.map((image, index) => (
               <Image
@@ -177,9 +182,13 @@ const index = () => {
               />
             ))}
           </div>
-          <h3 className="text-base font-bold my-8">Atau ubah nilai pada field dibawah</h3>
           {selectedImage && (
             <div>
+              <p className="text-xl my-4">
+                Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel
+                berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di
+                bawah.
+              </p>
               {selectedData && (
                 <textarea
                   value={textareaValue}
@@ -202,27 +211,88 @@ const index = () => {
         {selectedImage && (
           <div className="my-10 px-4">
             <div className="flex flex-wrap gap-8">
-              <div>
-                <h2 className="text-xl font-semibold">Table Citra Grayscale</h2>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {selectedData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
-                          >
-                            <p>{color}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="flex items-center w-full flex-wrap gap-4">
+                <div>
+                  <h2 className="text-xl font-semibold">Table Citra Grayscale</h2>
+                  <p className="w-[60%]">
+                    Tabel citra grayscale 5x5 piksel dari gambar yang telah di-resize
+                  </p>
+                  <table className="border border-black text-base mt-4">
+                    <tbody>
+                      {selectedData.map((rowItem, rowIndex) => (
+                        <tr key={rowIndex}>
+                          {rowItem.map((color, colIndex) => (
+                            <td
+                              key={colIndex}
+                              className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
+                            >
+                              <p>{color}</p>
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <div>
+                    <h2 className="text-xl font-semibold">Proses Perhitungan</h2>
+                    <div className="flex gap-4 flex-col items-start">
+                      {animationStage >= 0 && (
+                        <BlockMath math={`f_0(x,y) = 255 - f_i(${currentGrayscale})`} />
+                      )}
+                      <div className="flex gap-2">
+                        <BlockMath math={`f_0(x,y) =`} />
+                        {animationStage >= 1 && <BlockMath math={`${negationValue}`} />}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mt-4">Kontrol Animasi</h3>
+                    <p>
+                      Gunakan tombol di bawah ini untuk melihat animasi konversi grayscale ke
+                      invert.
+                    </p>
+                    <div className="flex gap-4 items-center mt-4">
+                      {isAnimating ? (
+                        <Tooltip tooltip="pause">
+                          <IoMdPause
+                            size={30}
+                            onClick={pauseAnimation}
+                            className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Tooltip tooltip="play">
+                          <IoMdPlay
+                            size={30}
+                            onClick={playAnimation}
+                            className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                          />
+                        </Tooltip>
+                      )}
+
+                      <Tooltip tooltip="repeat">
+                        <TbReload
+                          size={30}
+                          onClick={stopAnimation}
+                          className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                        />
+                      </Tooltip>
+                      <Tooltip tooltip="step by step">
+                        <HiMiniPlayPause
+                          size={30}
+                          onClick={playStep}
+                          className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                        />
+                      </Tooltip>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div>
-                <h2 className="text-xl font-semibold">Table Citra Hasil Negatif</h2>
+                <h2 className="text-xl font-semibold">Tabel Citra Hasil</h2>
+                <p>Tabel citra hasil gambar invert</p>
                 <table className="border border-black text-base mt-4">
                   <tbody>
                     {resultData.map((rowItem, rowIndex) => (
@@ -242,41 +312,6 @@ const index = () => {
                     ))}
                   </tbody>
                 </table>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Proses</h2>
-                <div className="flex items-center gap-4 sm:ml-10">
-                  {animationStage >= 0 && <BlockMath math={`255-${currentGrayscale} = `} />}
-                  {animationStage >= 1 && <BlockMath math={`${negationValue}`} />}
-                </div>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold my-8">Animasi</h3>
-              <div className="flex gap-4 items-center">
-                {isAnimating ? (
-                  <IoMdPause
-                    size={30}
-                    onClick={pauseAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                ) : (
-                  <IoMdPlay
-                    size={30}
-                    onClick={playAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                )}
-                <TbReload
-                  size={30}
-                  onClick={stopAnimation}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-                <HiMiniPlayPause
-                  size={30}
-                  onClick={playStep}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
               </div>
             </div>
             <div className="my-10">

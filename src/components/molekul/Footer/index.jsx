@@ -6,10 +6,10 @@ import Logo from '../../../assets/icons/Logo';
 
 const CustomFooter = () => {
   return (
-    <footer className="h-52 bg-[#C9EDFB]">
+    <footer className="h-52 bg-[#C9EDFB] px-10">
       <hr className="border-1 border-black" />
-      <div className="flex justify-between max-w-screen-xl mx-auto my-20">
-        <div className="ml-4 sm:text-4xl text-2xl">
+      <div className="flex justify-center sm:justify-between max-w-screen-xl mx-auto my-20 flex-wrap sm:gap-0 gap-4">
+        <div className="ml-4 sm:text-4xl text-xl">
           <a href="/" className="flex gap-2 sm:gap-4 items-center">
             <Logo />
             <span>VIP</span>
