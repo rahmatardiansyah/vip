@@ -11,20 +11,20 @@ const Hero = () => {
         <p className="text-4xl sm:text-6xl text-[#3FBCF1] font-semibold">Visualize</p>
         <p className="text-4xl sm:text-6xl">Image Processing</p>
         <p className="text-xl sm:text-2xl font-light mt-4">
-          Belajar pengolahan citra digital menggunakan website interaktif
+          Belajar pengolahan citra digital menggunakan website interaktif.
         </p>
-        <div className="flex mt-4 gap-4">
+        <div className="flex mt-4 gap-4 items-center">
           <a
             href="/brightness"
-            className="bg-[#3FBCF1] hover:bg-[#37a5d1] px-2 py-2 border-black border-2 rounded sm:text-xl"
+            className="bg-[#3FBCF1] hover:bg-[#37a5d1] px-1 py-1 sm:px-2 sm:py-2 border-black border-2 rounded text-base sm:text-xl"
           >
-            Change Brightness
+            Mengubah Brightness
           </a>
           <a
             href="/grayscale"
-            className="bg-gray-300 hover:bg-gray-400 px-2 py-2 border-black border-2 rounded sm:text-xl"
+            className="bg-gray-300 hover:bg-gray-400 px-1 py-1 sm:px-2 sm:py-2 border-black border-2 rounded text-base sm:text-xl"
           >
-            RGB to Grayscale
+            RGB ke Grayscale
           </a>
         </div>
       </div>

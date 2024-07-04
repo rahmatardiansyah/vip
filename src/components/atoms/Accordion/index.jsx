@@ -9,7 +9,7 @@ const Accordion = ({ title, children }) => {
         className="flex justify-between w-full"
         onClick={() => setAccordionOpen(!accordionOpen)}
       >
-        <span>{title}</span>
+        <span className="text-left text-base">{title}</span>
         <svg
           className="fill-[#3FBBF1] shrink-0 ml-8 mt-1"
           width="16"

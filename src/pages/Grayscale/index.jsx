@@ -92,9 +92,7 @@ const Grayscale = () => {
     setAnimationStage(0);
     setCurrentRGB([0, 0, 0]);
     setGrayscaleValue(null);
-    if (!(row === 0 && col === 0)) {
-      setResultData(Array(5).fill(Array(5).fill(null)));
-    }
+    setResultData(Array(5).fill(Array(5).fill(null)));
   };
 
   const pauseAnimation = () => {
