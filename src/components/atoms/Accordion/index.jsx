@@ -35,7 +35,7 @@ const Accordion = ({ title, children }) => {
         </svg>
       </button>
       <div
-        className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-small ${accordionOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+        className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-small text-justify ${accordionOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">{children}</div>
       </div>

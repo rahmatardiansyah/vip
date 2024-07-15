@@ -6,6 +6,37 @@ import { useLocation } from 'react-router-dom';
 
 import './Navbar.css';
 
+const navMenu = [
+  {
+    url: '/grayscale',
+    name: 'Grayscale'
+  },
+  {
+    url: '/invert',
+    name: 'Invert'
+  },
+  {
+    url: '/brightness',
+    name: 'Brightness'
+  },
+  {
+    url: '/threshold',
+    name: 'Threshold'
+  },
+  {
+    url: '/blending',
+    name: 'Blending'
+  },
+  {
+    url: '/substraction',
+    name: 'Substraction'
+  },
+  {
+    url: '/correlation',
+    name: 'Correlation'
+  }
+];
+
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -21,14 +52,11 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (pathname.pathname === '/') setMenuText('Algoritma');
-    if (pathname.pathname === '/grayscale') setMenuText('Grayscale');
-    if (pathname.pathname === '/brightness') setMenuText('Brightness');
-    if (pathname.pathname === '/invert') setMenuText('Invert');
-    if (pathname.pathname === '/threshold') setMenuText('Threshold');
-    if (pathname.pathname === '/blending') setMenuText('Blending');
-    if (pathname.pathname === '/substraction') setMenuText('Substraction');
-    if (pathname.pathname === '/correlation') setMenuText('Correlation');
+    navMenu.map((item) => {
+      if (item.url === pathname.pathname) {
+        setMenuText(item.name);
+      }
+    });
 
     const dropdownHandler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
@@ -85,27 +113,13 @@ const Navbar = () => {
               className={`absolute bottom-16 sm:bottom-auto sm:top-16 sm:right-0 bg-gray-100 rounded border shadow-xl cursor-pointer ${isDropdownOpen ? 'block' : 'hidden'}`}
             >
               <ul className="flex flex-col px-8 py-4 sm:text-xl text-md gap-4">
-                <li>
-                  <a href="/grayscale">Grayscale</a>
-                </li>
-                <li>
-                  <a href="/invert">Invert</a>
-                </li>
-                <li>
-                  <a href="/brightness">Brightness</a>
-                </li>
-                <li>
-                  <a href="/threshold">Threshold</a>
-                </li>
-                <li>
-                  <a href="/blending">Blending</a>
-                </li>
-                <li>
-                  <a href="/substraction">Substraction</a>
-                </li>
-                <li>
-                  <a href="/correlation">Correlation</a>
-                </li>
+                {navMenu.map((item) => {
+                  return (
+                    <li key={item.url}>
+                      <a href={item.url}>{item.name}</a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </li>

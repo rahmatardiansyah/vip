@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 const Index = () => {
   const [grayscaleImage, setGrayscaleImage] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
-  const [negationImage, setNegationImage] = useState(null);
+  const [invertImage, setInvertImage] = useState(null);
   const canvasRef = useRef(null);
 
   const handleImageUpload = (event) => {
@@ -33,14 +33,14 @@ const Index = () => {
           ctx.putImageData(imageData, 0, 0);
           setGrayscaleImage(canvas.toDataURL());
 
-          // Negation conversion
+          // Invert conversion
           for (let i = 0; i < data.length; i += 4) {
             data[i] = 255 - data[i]; // Red
             data[i + 1] = 255 - data[i + 1]; // Green
             data[i + 2] = 255 - data[i + 2]; // Blue
           }
           ctx.putImageData(imageData, 0, 0);
-          setNegationImage(canvas.toDataURL());
+          setInvertImage(canvas.toDataURL());
         };
         img.src = e.target.result;
       };
@@ -51,7 +51,7 @@ const Index = () => {
   return (
     <div>
       <h3 className="font-semibold text-xl my-8">Upload Gambar Anda</h3>
-      <p className="text-base my-4">
+      <p className="text-base my-4 text-justify">
         Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar RGB
         Anda di sini.
       </p>
@@ -70,10 +70,10 @@ const Index = () => {
             <img src={grayscaleImage} alt="Grayscale" width="80%" />
           </div>
         )}
-        {negationImage && (
+        {invertImage && (
           <div>
             <h2 className="text-xl my-4">Gambar Invert</h2>
-            <img src={negationImage} alt="Negative" width="80%" />
+            <img src={invertImage} alt="Negative" width="80%" />
           </div>
         )}
       </div>
