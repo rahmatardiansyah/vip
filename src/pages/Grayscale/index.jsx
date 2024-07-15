@@ -169,7 +169,7 @@ const Grayscale = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto">
-      <Operation title="Operasi RGB ke Grayscale">
+      <Operation title="Operasi Grayscale">
         Grayscale adalah operasi pengolahan citra yang mengubah gambar berwarna (RGB) menjadi gambar
         hitam putih (grayscale). Proses ini dilakukan dengan mengkombinasikan nilai merah (Red),
         hijau (Green), dan biru (Blue) dari setiap piksel untuk menghasilkan satu nilai intensitas
@@ -260,7 +260,7 @@ const Grayscale = () => {
             <ImageToGrayscale />
           </div>
           <AnotherTopicsContainer classes="justify-end">
-            <AnotherTopicsItem name="invert" url="/invert" />
+            <AnotherTopicsItem name="Invert" url="/invert" direction="right" />
           </AnotherTopicsContainer>
         </div>
       )}

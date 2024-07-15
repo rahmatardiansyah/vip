@@ -5,15 +5,24 @@ import pikachu from '../../assets/images/pikachu-grayscale.png';
 import panda from '../../assets/images/panda-grayscale.png';
 import doraemon from '../../assets/images/doraemon-grayscale.png';
 import { BlockMath } from 'react-katex';
-import { Case, Formula, GrayscaleToNegation, Operation, Tooltip } from '../../components';
+import {
+  AnotherTopicsContainer,
+  AnotherTopicsItem,
+  Case,
+  Formula,
+  ImageDataInput,
+  ImageInvert,
+  Operation,
+  SelectImage,
+  Tooltip
+} from '../../components';
 import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { HiMiniPlayPause } from 'react-icons/hi2';
-import { TbBrandNextjs, TbReload } from 'react-icons/tb';
+import { TbReload } from 'react-icons/tb';
 import { PulseLoader } from 'react-spinners';
-import { MdNavigateNext, MdSkipNext, MdSkipPrevious } from 'react-icons/md';
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
 
-const index = () => {
+const Invert = () => {
   const negationFormula = `
     f_0(x,y) = f_{\\text{maksimum}} - f_i(x,y)
   `;
@@ -169,12 +178,10 @@ const index = () => {
         </Case>
 
         <div className="my-10 px-4">
-          <h2 className="text-xl font-semibold">Pilih Gambar Grayscale</h2>
-          <p className="text-xl text-justify">
-            Silakan pilih salah satu gambar grayscale yang disediakan di bawah ini untuk melihat
-            proses konversi menjadi invert.
-          </p>
-          <div className="flex justify-around flex-wrap gap-4 mt-8">
+          <SelectImage
+            title="Pilih Gambar Grayscale"
+            information="Silakan pilih salah satu gambar grayscale yang disediakan di bawah ini untuk melihat proses konversi proses invert."
+          >
             {images.map((image, index) => (
               <Image
                 key={index}
@@ -184,30 +191,16 @@ const index = () => {
                 isSelected={image.name === selectedImage}
               />
             ))}
-          </div>
+          </SelectImage>
           {selectedImage && (
-            <div>
-              <p className="text-xl my-4 text-justify">
-                Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel
-                berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di
-                bawah.
-              </p>
-              {selectedData && (
-                <textarea
-                  value={textareaValue}
-                  onChange={handleTextareaChange}
-                  cols={40}
-                  rows={5}
-                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
-                  disabled={isAnimating}
-                />
-              )}
-              {error && (
-                <div className="p-4 bg-red-400 mt-4 font-semibold w-72 rounded border shadow border-black">
-                  <h3>{error}</h3>
-                </div>
-              )}
-            </div>
+            <ImageDataInput
+              information="Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di bawah."
+              selectedData={selectedData}
+              textareaValue={textareaValue}
+              handleTextareaChange={handleTextareaChange}
+              isAnimating={isAnimating}
+              error={error}
+            />
           )}
         </div>
 
@@ -319,27 +312,12 @@ const index = () => {
               </div>
             </div>
             <div className="my-10">
-              <GrayscaleToNegation />
+              <ImageInvert />
             </div>
-            <div className="my-10">
-              <h2 className="text-xl font-semibold">Topik Lainnya</h2>
-              <div className="flex justify-between items-center mt-4">
-                <a
-                  href="/grayscale"
-                  className="flex gap-2 items-center text-base px-2 py-4 border shadow rounded bg-[#F5BC33] hover:bg-[#d6a32c]"
-                >
-                  <FaLongArrowAltLeft size={15} />
-                  <p>Operasi Grayscale</p>
-                </a>
-                <a
-                  href="/brightness"
-                  className="flex gap-2 items-center text-base px-2 py-4 border shadow rounded bg-[#F5BC33] hover:bg-[#d6a32c]"
-                >
-                  <p>Operasi Brightness</p>
-                  <FaLongArrowAltRight size={15} />
-                </a>
-              </div>
-            </div>
+            <AnotherTopicsContainer classes="justify-between">
+              <AnotherTopicsItem name="Grayscale" url="/grayscale" direction="left" />
+              <AnotherTopicsItem name="Brightness" url="/brightness" direction="right" />
+            </AnotherTopicsContainer>
           </div>
         )}
       </div>
@@ -347,4 +325,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Invert;
