@@ -163,16 +163,23 @@ const index = () => {
   return (
     <div>
       <div className="max-w-screen-xl mx-auto">
-        <Operation title="Operasi Peningkatan Kecerahan">
-          Kecerahan adalah ukuran seberapa terang atau gelap suatu citra keseluruhannya.
+        <Operation title="Operasi Brightness">
+          Operasi brightness dalam pengolahan citra mengacu pada penyesuaian tingkat kecerahan
+          sebuah gambar. Brightness atau kecerahan adalah atribut visual yang menggambarkan seberapa
+          terang atau gelap sebuah citra. Pada dasarnya, operasi ini melibatkan penambahan atau
+          pengurangan nilai intensitas piksel di dalam citra.
         </Operation>
         <Formula formula={brightnessFormula} />
         <Case>
           Diketahui citra grayscale 256 warna dengan ukuran 5x5 piksel akan dilakukan operasi
-          kecerahan dengan konstanta 10.
+          kecerahan dengan konstanta {rangeBrightness}.
         </Case>
         <div className="my-10 px-4">
           <h2 className="text-xl font-semibold">Pilih Gambar</h2>
+          <p className="text-xl">
+            Silakan pilih salah satu gambar RGB yang disediakan di bawah ini untuk melihat proses
+            penyesuaian tingkat kecerahan.
+          </p>
           <div className="flex justify-around flex-wrap gap-4 mt-8">
             {images.map((image, index) => (
               <Image
@@ -184,9 +191,13 @@ const index = () => {
               />
             ))}
           </div>
-          <h3 className="text-base font-bold my-8">Atau ubah nilai pada field dibawah</h3>
           {selectedImage && (
             <div>
+              <p className="text-xl my-4">
+                Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel
+                berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di
+                bawah.
+              </p>
               {selectedData && (
                 <div>
                   <textarea
@@ -197,11 +208,16 @@ const index = () => {
                     className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
                     disabled={isAnimating}
                   />
+
+                  <p className="text-xl my-4">
+                    Anda juga bisa mengubah nilai konstanta yang akan digunakan dalam proses
+                    perhitungan operasi brightness menggunakan slider di bawah.
+                  </p>
                   <div className="flex gap-4 items-center mt-8">
                     <CiBrightnessDown size={30} />
                     <input
                       type="range"
-                      min={1}
+                      min={-100}
                       max={100}
                       step={1}
                       data={rangeBrightness}
@@ -228,6 +244,9 @@ const index = () => {
             <div className="flex flex-wrap gap-8">
               <div>
                 <h2 className="text-xl font-semibold">Table Citra Grayscale</h2>
+                <p className="w-[60%]">
+                  Tabel citra grayscale 5x5 piksel dari gambar yang telah di-resize
+                </p>
                 <table className="border border-black text-base mt-4">
                   <tbody>
                     {selectedData.map((rowItem, rowIndex) => (
@@ -247,6 +266,7 @@ const index = () => {
               </div>
               <div>
                 <h2 className="text-xl font-semibold">Table Citra Hasil Brightness</h2>
+                <p>Tabel citra hasil proses brightness</p>
                 <table className="border border-black text-base mt-4">
                   <tbody>
                     {resultData.map((rowItem, rowIndex) => (
@@ -306,7 +326,7 @@ const index = () => {
               </div>
             </div>
             <div className="my-10">
-              <ImageBrightness value={rangeBrightness} />
+              <ImageBrightness />
             </div>
           </div>
         )}

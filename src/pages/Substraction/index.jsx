@@ -223,6 +223,7 @@ I_{\\text{normalized}}(x, y) = \\max(0, \\min(255, I_{\\text{subtracted}}(x, y) 
     }
   }, [row, col, selectedData, selectedData2, animationStage]);
 
+  console.log(resultData);
   return (
     <div>
       <div className="max-w-screen-xl mx-auto">

@@ -51,7 +51,7 @@ const Index = () => {
   return (
     <div>
       <h3 className="font-semibold text-xl my-8">Upload Gambar Anda</h3>
-      <p className="text-base my-4">
+      <p className="text-base my-4 text-justify">
         Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar RGB
         Anda di sini.
       </p>

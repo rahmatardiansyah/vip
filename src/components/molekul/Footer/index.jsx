@@ -6,8 +6,7 @@ import Logo from '../../../assets/icons/Logo';
 
 const CustomFooter = () => {
   return (
-    <footer className="h-52 bg-[#C9EDFB] px-10">
-      <hr className="border-1 border-black" />
+    <footer className="h-52 bg-[#C9EDFB] px-10 border-t-black border">
       <div className="flex justify-center sm:justify-between max-w-screen-xl mx-auto my-20 flex-wrap sm:gap-0 gap-4">
         <div className="ml-4 sm:text-4xl text-xl">
           <a href="/" className="flex gap-2 sm:gap-4 items-center">

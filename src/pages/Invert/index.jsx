@@ -8,7 +8,10 @@ import { BlockMath } from 'react-katex';
 import { Case, Formula, GrayscaleToNegation, Operation, Tooltip } from '../../components';
 import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { HiMiniPlayPause } from 'react-icons/hi2';
-import { TbReload } from 'react-icons/tb';
+import { TbBrandNextjs, TbReload } from 'react-icons/tb';
+import { PulseLoader } from 'react-spinners';
+import { MdNavigateNext, MdSkipNext, MdSkipPrevious } from 'react-icons/md';
+import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
 
 const index = () => {
   const negationFormula = `
@@ -167,7 +170,7 @@ const index = () => {
 
         <div className="my-10 px-4">
           <h2 className="text-xl font-semibold">Pilih Gambar Grayscale</h2>
-          <p className="text-xl">
+          <p className="text-xl text-justify">
             Silakan pilih salah satu gambar grayscale yang disediakan di bawah ini untuk melihat
             proses konversi menjadi invert.
           </p>
@@ -184,7 +187,7 @@ const index = () => {
           </div>
           {selectedImage && (
             <div>
-              <p className="text-xl my-4">
+              <p className="text-xl my-4 text-justify">
                 Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel
                 berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di
                 bawah.
@@ -241,17 +244,18 @@ const index = () => {
                       {animationStage >= 0 && (
                         <BlockMath math={`f_0(x,y) = 255 - f_i(${currentGrayscale})`} />
                       )}
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 items-center">
                         <BlockMath math={`f_0(x,y) =`} />
                         {animationStage >= 1 && <BlockMath math={`${negationValue}`} />}
+                        {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
                       </div>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mt-4">Kontrol Animasi</h3>
-                    <p>
-                      Gunakan tombol di bawah ini untuk melihat animasi konversi grayscale ke
-                      invert.
+                    <h3 className="text-xl font-semibold mt-4">Kontrol Proses Perhitungan</h3>
+                    <p className="text-justify">
+                      Gunakan tombol (<IoMdPlay size={15} className="inline-block" />) di bawah ini
+                      untuk melihat proses konversi grayscale ke invert.
                     </p>
                     <div className="flex gap-4 items-center mt-4">
                       {isAnimating ? (
@@ -316,6 +320,25 @@ const index = () => {
             </div>
             <div className="my-10">
               <GrayscaleToNegation />
+            </div>
+            <div className="my-10">
+              <h2 className="text-xl font-semibold">Topik Lainnya</h2>
+              <div className="flex justify-between items-center mt-4">
+                <a
+                  href="/grayscale"
+                  className="flex gap-2 items-center text-base px-2 py-4 border shadow rounded bg-[#F5BC33] hover:bg-[#d6a32c]"
+                >
+                  <FaLongArrowAltLeft size={15} />
+                  <p>Operasi Grayscale</p>
+                </a>
+                <a
+                  href="/brightness"
+                  className="flex gap-2 items-center text-base px-2 py-4 border shadow rounded bg-[#F5BC33] hover:bg-[#d6a32c]"
+                >
+                  <p>Operasi Brightness</p>
+                  <FaLongArrowAltRight size={15} />
+                </a>
+              </div>
             </div>
           </div>
         )}

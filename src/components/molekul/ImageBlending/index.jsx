@@ -62,14 +62,14 @@ const BlendImages = ({ value }) => {
           <h2 className="text-xl">Upload Gambar 1</h2>
           <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setImageA)} />
           {imageA && (
-            <img src={imageA} alt="Image A" style={{ maxWidth: '200px', marginTop: '10px' }} />
+            <img src={imageA} alt="Image A" style={{ maxWidth: '300px', marginTop: '10px' }} />
           )}
         </div>
         <div>
           <h2 className="text-xl">Upload Gambar 2</h2>
           <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setImageB)} />
           {imageB && (
-            <img src={imageB} alt="Image B" style={{ maxWidth: '200px', marginTop: '10px' }} />
+            <img src={imageB} alt="Image B" style={{ maxWidth: '300px', marginTop: '10px' }} />
           )}
         </div>
         <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>

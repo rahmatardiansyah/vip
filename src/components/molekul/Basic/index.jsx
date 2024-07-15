@@ -6,7 +6,7 @@ const Basic = () => {
       <p className="text-xl sm:text-2xl md:text-4xl text-center">
         Teori Dasar Pengolahan Citra Digital
       </p>
-      <p className="mt-8 text-xl">
+      <p className="mt-8 text-xl text-justify">
         Pengolahan citra digital adalah disiplin ilmu yang berfokus pada manipulasi gambar digital
         melalui algoritma komputer. Beberapa teori dasar dalam pengolahan citra digital meliputi:
       </p>
