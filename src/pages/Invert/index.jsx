@@ -99,9 +99,7 @@ const Invert = () => {
     setAnimationStage(0);
     setCurrentGrayscale([0, 0, 0]);
     setNegationValue(null);
-    if (!(row === 0 && col === 0)) {
-      setResultData(Array(5).fill(Array(5).fill(null)));
-    }
+    setResultData(Array(5).fill(Array(5).fill(null)));
   };
 
   const pauseAnimation = () => {
