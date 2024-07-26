@@ -1,10 +1,31 @@
 import { useRef, useState } from 'react';
 
-const Index = ({ value }) => {
+const Index = () => {
   const [grayscaleImage, setGrayscaleImage] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
   const [thresholdImage, setThresholdImage] = useState(null);
+  const [thresholdValue, setThresholdValue] = useState(200);
+  const [thresholdValueInput, setThresholdValueInput] = useState(200);
+  const [errorParameterInput, setErrorParameterInput] = useState(null);
   const canvasRef = useRef(null);
+
+  const handleParameter = (e) => {
+    const value = e.target.value;
+    setThresholdValueInput(value);
+    if (value !== '' && !isNaN(value)) {
+      const intValue = parseInt(value);
+      if (intValue > 0 && intValue <= 255) {
+        setThresholdValue(intValue);
+        setErrorParameterInput(null);
+      } else {
+        console.error('Parameter harus diatas 0 dan dibawah 256 !');
+        setErrorParameterInput('Parameter harus diatas 0 dan dibawah 256 !');
+      }
+    } else {
+      console.error('Invalid input paramater');
+      setErrorParameterInput('Invalid input parameter');
+    }
+  };
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -35,9 +56,9 @@ const Index = ({ value }) => {
 
           // BrightnessImage conversion
           for (let i = 0; i < data.length; i += 4) {
-            data[i] = data[i] >= value ? 255 : 0; // Red
-            data[i + 1] = data[i + 1] >= value ? 255 : 0; // Green
-            data[i + 2] = data[i + 2] >= value ? 255 : 0; // Blue
+            data[i] = data[i] >= thresholdValue ? 255 : 0; // Red
+            data[i + 1] = data[i + 1] >= thresholdValue ? 255 : 0; // Green
+            data[i + 2] = data[i + 2] >= thresholdValue ? 255 : 0; // Blue
           }
           ctx.putImageData(imageData, 0, 0);
           setThresholdImage(canvas.toDataURL());
@@ -51,6 +72,25 @@ const Index = ({ value }) => {
   return (
     <div>
       <h3 className="font-bold text-xl my-8">Ubah Gambar Sendiri ke Grayscale dan Negatif</h3>
+      <p className="text-base my-4 text-justify">
+        Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar Anda
+        di sini.
+      </p>
+      <div className="flex gap-4 items-center my-8">
+        <label htmlFor="threshold">Threshold :</label>
+        <input
+          type="number"
+          onChange={handleParameter}
+          id="threshold"
+          value={thresholdValueInput}
+          className={`border-2 border-black p-2 rounded w-32`}
+        />
+      </div>
+      {errorParameterInput && (
+        <div className="p-4 bg-red-400 my-4 font-semibold w-72 rounded border shadow border-black">
+          <p>{errorParameterInput}</p>
+        </div>
+      )}
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       <div className="flex gap-10 mt-10 items-center justify-between flex-wrap sm:flex-nowrap">

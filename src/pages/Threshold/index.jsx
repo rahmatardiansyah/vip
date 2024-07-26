@@ -5,12 +5,50 @@ import pikachu from '../../assets/images/pikachu-grayscale.png';
 import panda from '../../assets/images/panda-grayscale.png';
 import doraemon from '../../assets/images/doraemon-grayscale.png';
 import { BlockMath } from 'react-katex';
-import { Case, Formula, Operation, ImageTreshold } from '../../components';
-import { IoMdPause, IoMdPlay } from 'react-icons/io';
-import { HiMiniPlayPause } from 'react-icons/hi2';
-import { TbReload } from 'react-icons/tb';
+import {
+  Case,
+  Formula,
+  Operation,
+  ImageTreshold,
+  SelectImage,
+  ImageDataInput,
+  CalculationProcess,
+  ProcessControl,
+  ResultTable,
+  AnotherTopicsContainer,
+  AnotherTopicsItem
+} from '../../components';
+import ParameterInputText from '../../components/atoms/ParameterInputText';
+import { PulseLoader } from 'react-spinners';
 
-const index = () => {
+const Threshold = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedData, setSelectedData] = useState(null);
+  const [textareaValue, setTextareaValue] = useState('');
+  const [thresholdInput, setThresholdInput] = useState(200);
+  const [thresholdValueInput, setTreshholdValueInput] = useState(200);
+  const [resultData, setResultData] = useState([]);
+  const [error, setError] = useState(null);
+  const [errorParameterInput, setErrorParameterInput] = useState(null);
+
+  const handleParameter = (e) => {
+    const value = e.target.value;
+    setTreshholdValueInput(value);
+    if (value !== '' && !isNaN(value)) {
+      const intValue = parseInt(value);
+      if (intValue > 0 && intValue <= 255) {
+        setThresholdInput(intValue);
+        setErrorParameterInput(null);
+      } else {
+        console.error('Parameter harus diatas 0 dan dibawah 256 !');
+        setErrorParameterInput('Parameter harus diatas 0 dan dibawah 256 !');
+      }
+    } else {
+      console.error('Invalid input paramater');
+      setErrorParameterInput('Invalid input parameter');
+    }
+  };
+
   const thresholdingFormula = `
 g(x,y) =
 \\left\\{
@@ -24,17 +62,10 @@ g(x,y) =
 F_0(x,y) =
 \\left\\{
 \\begin{array}{ll}
-0, & \\text{jika } f(x,y) < 200 \\\\
-255, & \\text{jika } f(x,y) \\geq 200
+0, & \\text{jika } f(x,y) < ${thresholdInput} \\\\
+255, & \\text{jika } f(x,y) \\geq ${thresholdInput}
 \\end{array}
 \\right\\}`;
-
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedData, setSelectedData] = useState(null);
-  const [textareaValue, setTextareaValue] = useState('');
-  const [thresholdInput, setThresholdInput] = useState(200);
-  const [resultData, setResultData] = useState([]);
-  const [error, setError] = useState(null);
 
   const images = [
     { src: pikachu, name: 'pikachu-grayscale' },
@@ -171,13 +202,13 @@ F_0(x,y) =
   return (
     <div>
       <div className="max-w-screen-xl mx-auto">
-        <Operation title="Operasi Ambang Batas">
+        <Operation title="Operasi Threshold">
           Thresholding merupakan salah satu metode segmentasi citra yang memisahkan antara objek
           dengan background dalam suatu citra berdasarkan pada perbedaan tingkat kecerahannya atau
           gelap terangnya.
         </Operation>
         <Formula formula={thresholdingFormula}>
-          <div className="font-light text-xl mt-2">
+          <div className="font-light mt-2 text-base">
             <p>g(g,x) adalah citra hasil</p>
             <p>F(g,y) adalah citra awal</p>
             <p>T adalah ambang batas yang disyaratkan sesuai kebutuhan.</p>
@@ -188,8 +219,10 @@ F_0(x,y) =
           <BlockMath math={thresholdingCase} />
         </div>
         <div className="my-10 px-4">
-          <h2 className="text-xl font-semibold">Pilih Gambar</h2>
-          <div className="flex justify-around flex-wrap gap-4 mt-8">
+          <SelectImage
+            title="Pilih Gambar Grayscale"
+            information="Silakan pilih salah satu gambar grayscale yang disediakan di bawah ini untuk melihat proses konversi proses threshold."
+          >
             {images.map((image, index) => (
               <Image
                 key={index}
@@ -199,41 +232,25 @@ F_0(x,y) =
                 isSelected={image.name === selectedImage}
               />
             ))}
-          </div>
-          <h3 className="text-base font-bold my-8">Atau ubah nilai pada field dibawah</h3>
+          </SelectImage>
           {selectedImage && (
             <div>
-              {selectedData && (
-                <div>
-                  <textarea
-                    value={textareaValue}
-                    onChange={handleTextareaChange}
-                    cols={40}
-                    rows={5}
-                    className="border-2 border-black text-xl w-full sm:w-auto"
-                    disabled={isAnimating}
-                  />
-                  <div className="flex gap-4 items-center mt-8">
-                    <input
-                      type="number"
-                      min={1}
-                      max={255}
-                      step={1}
-                      value={thresholdInput}
-                      onChange={(e) => setThresholdInput(parseInt(e.target.value))}
-                      id="threshold"
-                      className="border-2 border-black rounded w-20 h-10 p-2"
-                      disabled={isAnimating}
-                    />
-                    <label htmlFor="threshold">T</label>
-                  </div>
-                </div>
-              )}
-              {error && (
-                <div className="p-4 bg-red-400 mt-4 font-semibold w-72 rounded border shadow border-black">
-                  <h3>{error}</h3>
-                </div>
-              )}
+              <ImageDataInput
+                information="Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di bawah."
+                selectedData={selectedData}
+                textareaValue={textareaValue}
+                handleTextareaChange={handleTextareaChange}
+                isAnimating={isAnimating}
+                error={error}
+              />
+              <ParameterInputText
+                information="Anda juga bisa mengubah nilai parameter yang akan digunakan dalam proses perhitungan operasi brightness menggunakan input di bawah."
+                handleParameter={handleParameter}
+                isAnimating={isAnimating}
+                rangeBrightness={thresholdInput}
+                rangeValue={thresholdValueInput}
+                errorParameterInput={errorParameterInput}
+              />
             </div>
           )}
         </div>
@@ -241,96 +258,79 @@ F_0(x,y) =
         {selectedImage && (
           <div className="my-10 px-4">
             <div className="flex flex-wrap gap-8">
-              <div>
-                <h2 className="text-xl font-semibold">Table Citra Grayscale</h2>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {selectedData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
-                          >
-                            <p>{color}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Table Citra Hasil Ambang Batas</h2>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {resultData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col && animationStage === 2
-                                ? 'bg-green-200'
-                                : 'bg-white'
-                              }`}
-                          >
-                            <p>{color !== null ? color : ''}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Proses</h2>
-                <div className="flex items-center gap-4 sm:ml-10 text-xl">
-                  {animationStage >= 0 && (
-                    <BlockMath
-                      math={`F_0(x,y) =
+              <div className="flex items-center w-full flex-wrap gap-4">
+                <div>
+                  <h2 className="text-xl font-semibold">Table Citra Grayscale</h2>
+                  <p className="w-[60%]">
+                    Tabel citra grayscale 5x5 piksel dari gambar yang telah di-resize
+                  </p>
+                  <table className="border border-black text-base mt-4">
+                    <tbody>
+                      {selectedData.map((rowItem, rowIndex) => (
+                        <tr key={rowIndex}>
+                          {rowItem.map((color, colIndex) => (
+                            <td
+                              key={colIndex}
+                              className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
+                            >
+                              <p>{color}</p>
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <CalculationProcess
+                    title="Proses Perhitungan"
+                    classes="flex gap-4 flex-col items-start"
+                  >
+                    {animationStage >= 0 && (
+                      <BlockMath
+                        math={`F_0(x,y) =
 \\left\\{
 \\begin{array}{ll}
 0, & \\text{jika } ${currentGrayscale} < ${thresholdInput} \\\\
 255, & \\text{jika } ${currentGrayscale} \\geq ${thresholdInput}
 \\end{array}
 \\right\\} `}
-                    />
-                  )}
-                  {animationStage >= 1 && <BlockMath math={`${thresholdValue}`} />}
+                      />
+                    )}
+
+                    <div className="flex gap-2 items-center">
+                      <BlockMath math={`F_0(x,y) =`} />
+                      {animationStage >= 1 && <BlockMath math={`${thresholdValue}`} />}
+                      {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
+                    </div>
+                  </CalculationProcess>
+                  <ProcessControl
+                    heading="Kontrol Proses Perhitungan"
+                    information="konversi grayscale ke threshold"
+                    isAnimating={isAnimating}
+                    playAnimation={playAnimation}
+                    pauseAnimation={pauseAnimation}
+                    stopAnimation={stopAnimation}
+                    playStep={playStep}
+                  />
                 </div>
               </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold my-8">Animasi</h3>
-              <div className="flex gap-4 items-center">
-                {isAnimating ? (
-                  <IoMdPause
-                    size={30}
-                    onClick={pauseAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                ) : (
-                  <IoMdPlay
-                    size={30}
-                    onClick={playAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                )}
-                <TbReload
-                  size={30}
-                  onClick={stopAnimation}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-                <HiMiniPlayPause
-                  size={30}
-                  onClick={playStep}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-              </div>
+              <ResultTable
+                heading="Table Citra Hasil"
+                information="Tabel citra hasil proses threshold"
+                resultData={resultData}
+                row={row}
+                col={col}
+                animationStage={animationStage}
+              />
             </div>
             <div className="my-10">
               <ImageTreshold value={thresholdInput} />
             </div>
+            <AnotherTopicsContainer classes="justify-between">
+              <AnotherTopicsItem name="Brightness" url="/brightness" direction="left" />
+              <AnotherTopicsItem name="Blending" url="/blending" direction="right" />
+            </AnotherTopicsContainer>
           </div>
         )}
       </div>
@@ -338,4 +338,4 @@ F_0(x,y) =
   );
 };
 
-export default index;
+export default Threshold;
