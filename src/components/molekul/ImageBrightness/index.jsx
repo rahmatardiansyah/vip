@@ -2,15 +2,30 @@ import { useRef, useState } from 'react';
 import { CiBrightnessDown } from 'react-icons/ci';
 
 const Index = () => {
-  const [rangeBrightness, setRangeBrightness] = useState(10);
+  const [rangeBrightness, setRangeBrightness] = useState(50);
   const [grayscaleImage, setGrayscaleImage] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
   const [brightnessImage, setBrightnessImage] = useState(null);
+  const [rangeValue, setRangeValue] = useState(50);
+  const [errorParameterInput, setErrorParameterInput] = useState(null);
   const canvasRef = useRef(null);
 
-  const handleRange = (e) => {
+  const handleParameter = (e) => {
     const value = e.target.value;
-    setRangeBrightness(parseInt(value));
+    setRangeValue(value);
+    if (value !== '' && !isNaN(value)) {
+      const intValue = parseInt(value);
+      if (intValue >= -255 && intValue <= 255) {
+        setRangeBrightness(intValue);
+        setErrorParameterInput(null);
+      } else {
+        console.error('Parameter harus diatas -256 dan dibawah 256!');
+        setErrorParameterInput('Parameter harus diatas -256 dan dibawah 256!');
+      }
+    } else {
+      console.error('Invalid input paramater');
+      setErrorParameterInput('Invalid input parameter');
+    }
   };
 
   const handleImageUpload = (event) => {
@@ -57,20 +72,26 @@ const Index = () => {
 
   return (
     <div>
-      <h3 className="font-bold text-xl my-8">Ubah Gambar Sendiri ke Grayscale dan Negatif</h3>
+      <h3 className="font-semibold text-xl my-8">Upload Gambar Anda</h3>
+      <p className="text-base my-4 text-justify">
+        Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar Anda
+        di sini.
+      </p>
       <div className="flex gap-4 items-center my-8">
         <CiBrightnessDown size={30} />
         <input
-          type="range"
-          min={-100}
-          max={100}
-          step={1}
-          data={rangeBrightness}
-          onChange={handleRange}
+          type="number"
+          onChange={handleParameter}
           id="brightness"
+          value={rangeValue}
+          className={`border-2 border-black p-2 rounded w-32`}
         />
-        <label htmlFor="brightness">{rangeBrightness}</label>
       </div>
+      {errorParameterInput && (
+        <div className="p-4 bg-red-400 my-4 font-semibold w-72 rounded border shadow border-black">
+          <p>{errorParameterInput}</p>
+        </div>
+      )}
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
 

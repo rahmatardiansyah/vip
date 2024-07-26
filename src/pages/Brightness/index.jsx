@@ -5,13 +5,23 @@ import pikachu from '../../assets/images/pikachu-grayscale.png';
 import panda from '../../assets/images/panda-grayscale.png';
 import doraemon from '../../assets/images/doraemon-grayscale.png';
 import { BlockMath } from 'react-katex';
-import { Case, Formula, ImageBrightness, Operation } from '../../components';
-import { IoMdPause, IoMdPlay } from 'react-icons/io';
-import { HiMiniPlayPause } from 'react-icons/hi2';
-import { TbReload } from 'react-icons/tb';
-import { CiBrightnessDown } from 'react-icons/ci';
+import {
+  AnotherTopicsContainer,
+  AnotherTopicsItem,
+  CalculationProcess,
+  Case,
+  Formula,
+  ImageBrightness,
+  ImageDataInput,
+  Operation,
+  ProcessControl,
+  ResultTable,
+  SelectImage
+} from '../../components';
+import ParameterInputText from '../../components/atoms/ParameterInputText';
+import { PulseLoader } from 'react-spinners';
 
-const index = () => {
+const Brightness = () => {
   const brightnessFormula = `
     I_{\\text{baru}}(x, y) = I(x, y) + \\Delta
   `;
@@ -20,8 +30,10 @@ const index = () => {
   const [selectedData, setSelectedData] = useState(null);
   const [textareaValue, setTextareaValue] = useState('');
   const [rangeBrightness, setRangeBrightness] = useState(10);
+  const [rangeValue, setRangeValue] = useState(10);
   const [resultData, setResultData] = useState([]);
   const [error, setError] = useState(null);
+  const [errorParameterInput, setErrorParameterInput] = useState(null);
 
   const images = [
     { src: pikachu, name: 'pikachu-grayscale' },
@@ -36,12 +48,26 @@ const index = () => {
     setResultData(Array(5).fill(Array(5).fill(null)));
     setTextareaValue(JSON.stringify(selectedData.imageData));
     setError(null);
+    setErrorParameterInput(null);
     stopAnimation();
   };
 
-  const handleRange = (e) => {
+  const handleParameter = (e) => {
     const value = e.target.value;
-    setRangeBrightness(parseInt(value));
+    setRangeValue(value);
+    if (value !== '' && !isNaN(value)) {
+      const intValue = parseInt(value);
+      if (intValue >= -255 && intValue <= 255) {
+        setRangeBrightness(intValue);
+        setErrorParameterInput(null);
+      } else {
+        console.error('Parameter harus diatas -256 dan dibawah 256 !');
+        setErrorParameterInput('Parameter harus diatas -256 dan dibawah 256!');
+      }
+    } else {
+      console.error('Invalid input paramater');
+      setErrorParameterInput('Invalid input parameter');
+    }
   };
 
   const handleTextareaChange = (e) => {
@@ -144,7 +170,6 @@ const index = () => {
     if (selectedData) {
       const grayscale = selectedData[row][col];
       const brightness = grayscale + rangeBrightness > 255 ? 255 : grayscale + rangeBrightness;
-      console.log(brightness);
       setCurrentGrayscale(grayscale);
       setBrightnessValue(brightness);
 
@@ -175,12 +200,10 @@ const index = () => {
           kecerahan dengan konstanta {rangeBrightness}.
         </Case>
         <div className="my-10 px-4">
-          <h2 className="text-xl font-semibold">Pilih Gambar</h2>
-          <p className="text-xl">
-            Silakan pilih salah satu gambar RGB yang disediakan di bawah ini untuk melihat proses
-            penyesuaian tingkat kecerahan.
-          </p>
-          <div className="flex justify-around flex-wrap gap-4 mt-8">
+          <SelectImage
+            title="Pilih Gambar Grayscale"
+            information="Silakan pilih salah satu gambar grayscale yang disediakan di bawah ini untuk melihat proses konversi proses brightness."
+          >
             {images.map((image, index) => (
               <Image
                 key={index}
@@ -190,51 +213,26 @@ const index = () => {
                 isSelected={image.name === selectedImage}
               />
             ))}
-          </div>
+          </SelectImage>
           {selectedImage && (
             <div>
-              <p className="text-xl my-4">
-                Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel
-                berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di
-                bawah.
-              </p>
-              {selectedData && (
-                <div>
-                  <textarea
-                    value={textareaValue}
-                    onChange={handleTextareaChange}
-                    cols={40}
-                    rows={5}
-                    className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
-                    disabled={isAnimating}
-                  />
+              <ImageDataInput
+                information="Setelah memilih gambar, nilai grayscale dari gambar tersebut akan muncul di tabel berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di bawah."
+                selectedData={selectedData}
+                textareaValue={textareaValue}
+                handleTextareaChange={handleTextareaChange}
+                isAnimating={isAnimating}
+                error={error}
+              />
 
-                  <p className="text-xl my-4">
-                    Anda juga bisa mengubah nilai konstanta yang akan digunakan dalam proses
-                    perhitungan operasi brightness menggunakan slider di bawah.
-                  </p>
-                  <div className="flex gap-4 items-center mt-8">
-                    <CiBrightnessDown size={30} />
-                    <input
-                      type="range"
-                      min={-100}
-                      max={100}
-                      step={1}
-                      data={rangeBrightness}
-                      onChange={handleRange}
-                      id="brightness"
-                      disabled={isAnimating}
-                      className={`${isAnimating && 'cursor-not-allowed'}`}
-                    />
-                    <label htmlFor="brightness">{rangeBrightness}</label>
-                  </div>
-                </div>
-              )}
-              {error && (
-                <div className="p-4 bg-red-400 mt-4 font-semibold w-72 rounded border shadow border-black">
-                  <h3>{error}</h3>
-                </div>
-              )}
+              <ParameterInputText
+                information="Anda juga bisa mengubah nilai parameter yang akan digunakan dalam proses perhitungan operasi brightness menggunakan input di bawah."
+                handleParameter={handleParameter}
+                isAnimating={isAnimating}
+                rangeBrightness={rangeBrightness}
+                rangeValue={rangeValue}
+                errorParameterInput={errorParameterInput}
+              />
             </div>
           )}
         </div>
@@ -242,92 +240,73 @@ const index = () => {
         {selectedImage && (
           <div className="my-10 px-4">
             <div className="flex flex-wrap gap-8">
-              <div>
-                <h2 className="text-xl font-semibold">Table Citra Grayscale</h2>
-                <p className="w-[60%]">
-                  Tabel citra grayscale 5x5 piksel dari gambar yang telah di-resize
-                </p>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {selectedData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
-                          >
-                            <p>{color}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Table Citra Hasil Brightness</h2>
-                <p>Tabel citra hasil proses brightness</p>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {resultData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col && animationStage === 2
-                                ? 'bg-green-200'
-                                : 'bg-white'
-                              }`}
-                          >
-                            <p>{color !== null ? color : ''}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Proses</h2>
-                <div className="flex items-center gap-4 sm:ml-10">
-                  {animationStage >= 0 && (
-                    <BlockMath math={`${currentGrayscale}+${rangeBrightness} = `} />
-                  )}
-                  {animationStage >= 1 && <BlockMath math={`${brightnessValue}`} />}
+              <div className="flex items-center w-full flex-wrap gap-4">
+                <div>
+                  <h2 className="text-xl font-semibold">Table Citra Grayscale</h2>
+                  <p className="w-[60%]">
+                    Tabel citra grayscale 5x5 piksel dari gambar yang telah di-resize
+                  </p>
+                  <table className="border border-black text-base mt-4">
+                    <tbody>
+                      {selectedData.map((rowItem, rowIndex) => (
+                        <tr key={rowIndex}>
+                          {rowItem.map((color, colIndex) => (
+                            <td
+                              key={colIndex}
+                              className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
+                            >
+                              <p>{color}</p>
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <CalculationProcess
+                    title="Proses Perhitungan"
+                    classes="flex gap-4 flex-col items-start"
+                  >
+                    {animationStage >= 0 && (
+                      <BlockMath
+                        math={`I_{\\text{baru}}(x, y) = I(${currentGrayscale}) + ${rangeBrightness} = `}
+                      />
+                    )}
+
+                    <div className="flex gap-2 items-center">
+                      <BlockMath math={`I_{\\text{baru}}(x, y) =`} />
+                      {animationStage >= 1 && <BlockMath math={`${brightnessValue}`} />}
+                      {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
+                    </div>
+                  </CalculationProcess>
+                  <ProcessControl
+                    heading="Kontrol Proses Perhitungan"
+                    information="konversi grayscale ke invert"
+                    isAnimating={isAnimating}
+                    playAnimation={playAnimation}
+                    pauseAnimation={pauseAnimation}
+                    stopAnimation={stopAnimation}
+                    playStep={playStep}
+                  />
                 </div>
               </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold my-8">Animasi</h3>
-              <div className="flex gap-4 items-center">
-                {isAnimating ? (
-                  <IoMdPause
-                    size={30}
-                    onClick={pauseAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                ) : (
-                  <IoMdPlay
-                    size={30}
-                    onClick={playAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                )}
-                <TbReload
-                  size={30}
-                  onClick={stopAnimation}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-                <HiMiniPlayPause
-                  size={30}
-                  onClick={playStep}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-              </div>
+              <ResultTable
+                heading="Table Citra Hasil"
+                information="Tabel citra hasil operasi brightness"
+                resultData={resultData}
+                row={row}
+                col={col}
+                animationStage={animationStage}
+              />
             </div>
             <div className="my-10">
               <ImageBrightness />
             </div>
+            <AnotherTopicsContainer classes="justify-between">
+              <AnotherTopicsItem name="Invert" url="/invert" direction="left" />
+              <AnotherTopicsItem name="Threshold" url="/threshold" direction="right" />
+            </AnotherTopicsContainer>
           </div>
         )}
       </div>
@@ -335,4 +314,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Brightness;

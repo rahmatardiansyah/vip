@@ -56,7 +56,11 @@ const BlendImages = ({ value }) => {
 
   return (
     <div>
-      <h3 className="font-bold text-xl my-8">Gabungkan 2 buah gambar</h3>
+      <h3 className="font-semibold text-xl my-8">Upload Gambar Anda</h3>
+      <p className="text-base my-4 text-justify">
+        Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar Anda
+        di sini.
+      </p>
       <div className="flex flex-wrap">
         <div>
           <h2 className="text-xl">Upload Gambar 1</h2>
@@ -89,7 +93,7 @@ const BlendImages = ({ value }) => {
         disabled={!imageA || !imageB}
         className="p-2 bg-green-300 hover:bg-green-400 rounded mt-4 border-2 border-black shadow"
       >
-        Blend Images
+        Proses
       </button>
     </div>
   );

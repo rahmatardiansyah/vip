@@ -60,17 +60,21 @@ const SubtractImages = () => {
 
   return (
     <div>
-      <h3 className="font-bold text-xl my-8">Subtract Two Images</h3>
+      <h3 className="font-semibold text-xl my-8">Upload Gambar Anda</h3>
+      <p className="text-base my-4 text-justify">
+        Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar Anda
+        di sini.
+      </p>
       <div className="flex flex-wrap">
         <div>
-          <h2 className="text-xl">Upload Image 1</h2>
+          <h2 className="text-xl">Upload gambar 1</h2>
           <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setImageA)} />
           {imageA && (
             <img src={imageA} alt="Image A" style={{ maxWidth: '200px', marginTop: '10px' }} />
           )}
         </div>
         <div>
-          <h2 className="text-xl">Upload Image 2</h2>
+          <h2 className="text-xl">Upload gambar 2</h2>
           <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, setImageB)} />
           {imageB && (
             <img src={imageB} alt="Image B" style={{ maxWidth: '200px', marginTop: '10px' }} />
@@ -93,7 +97,7 @@ const SubtractImages = () => {
         disabled={!imageA || !imageB}
         className="p-2 bg-green-300 hover:bg-green-400 rounded mt-4 border-2 border-black shadow"
       >
-        Subtract Images
+        Proses
       </button>
     </div>
   );

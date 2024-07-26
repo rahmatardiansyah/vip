@@ -8,19 +8,17 @@ import { BlockMath } from 'react-katex';
 import {
   AnotherTopicsContainer,
   AnotherTopicsItem,
+  CalculationProcess,
   Case,
   Formula,
   ImageDataInput,
   ImageInvert,
   Operation,
-  SelectImage,
-  Tooltip
+  ProcessControl,
+  ResultTable,
+  SelectImage
 } from '../../components';
-import { IoMdPause, IoMdPlay } from 'react-icons/io';
-import { HiMiniPlayPause } from 'react-icons/hi2';
-import { TbReload } from 'react-icons/tb';
 import { PulseLoader } from 'react-spinners';
-import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
 
 const Invert = () => {
   const negationFormula = `
@@ -229,85 +227,38 @@ const Invert = () => {
                   </table>
                 </div>
                 <div>
-                  <div>
-                    <h2 className="text-xl font-semibold">Proses Perhitungan</h2>
-                    <div className="flex gap-4 flex-col items-start">
-                      {animationStage >= 0 && (
-                        <BlockMath math={`f_0(x,y) = 255 - f_i(${currentGrayscale})`} />
-                      )}
-                      <div className="flex gap-2 items-center">
-                        <BlockMath math={`f_0(x,y) =`} />
-                        {animationStage >= 1 && <BlockMath math={`${negationValue}`} />}
-                        {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
-                      </div>
+                  <CalculationProcess
+                    title="Proses Perhitungan"
+                    classes="flex gap-4 flex-col items-start"
+                  >
+                    {animationStage >= 0 && (
+                      <BlockMath math={`f_0(x,y) = 255 - f_i(${currentGrayscale})`} />
+                    )}
+                    <div className="flex gap-2 items-center">
+                      <BlockMath math={`f_0(x,y) =`} />
+                      {animationStage >= 1 && <BlockMath math={`${negationValue}`} />}
+                      {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
                     </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mt-4">Kontrol Proses Perhitungan</h3>
-                    <p className="text-justify">
-                      Gunakan tombol (<IoMdPlay size={15} className="inline-block" />) di bawah ini
-                      untuk melihat proses konversi grayscale ke invert.
-                    </p>
-                    <div className="flex gap-4 items-center mt-4">
-                      {isAnimating ? (
-                        <Tooltip tooltip="pause">
-                          <IoMdPause
-                            size={30}
-                            onClick={pauseAnimation}
-                            className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                          />
-                        </Tooltip>
-                      ) : (
-                        <Tooltip tooltip="play">
-                          <IoMdPlay
-                            size={30}
-                            onClick={playAnimation}
-                            className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                          />
-                        </Tooltip>
-                      )}
-
-                      <Tooltip tooltip="repeat">
-                        <TbReload
-                          size={30}
-                          onClick={stopAnimation}
-                          className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                        />
-                      </Tooltip>
-                      <Tooltip tooltip="step by step">
-                        <HiMiniPlayPause
-                          size={30}
-                          onClick={playStep}
-                          className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                        />
-                      </Tooltip>
-                    </div>
-                  </div>
+                  </CalculationProcess>
+                  <ProcessControl
+                    heading="Kontrol Proses Perhitungan"
+                    information="konversi grayscale ke invert"
+                    isAnimating={isAnimating}
+                    playAnimation={playAnimation}
+                    pauseAnimation={pauseAnimation}
+                    stopAnimation={stopAnimation}
+                    playStep={playStep}
+                  />
                 </div>
               </div>
-              <div>
-                <h2 className="text-xl font-semibold">Tabel Citra Hasil</h2>
-                <p>Tabel citra hasil gambar invert</p>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {resultData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col && animationStage === 2
-                                ? 'bg-green-200'
-                                : 'bg-white'
-                              }`}
-                          >
-                            <p>{color !== null ? color : ''}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <ResultTable
+                heading="Table Citra Hasil"
+                information="Tabel citra hasil gambar invert"
+                resultData={resultData}
+                row={row}
+                col={col}
+                animationStage={animationStage}
+              />
             </div>
             <div className="my-10">
               <ImageInvert />

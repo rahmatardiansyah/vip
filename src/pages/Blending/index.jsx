@@ -8,12 +8,25 @@ import amoeba4 from '../../assets/images/amoeba4.png';
 import amoeba5 from '../../assets/images/amoeba5.png';
 import amoeba6 from '../../assets/images/amoeba6.png';
 import { BlockMath } from 'react-katex';
-import { Case, Formula, ImageBlending, Operation } from '../../components';
+import {
+  AnotherTopicsContainer,
+  AnotherTopicsItem,
+  CalculationProcess,
+  Case,
+  Formula,
+  ImageBlending,
+  ImageDataInput,
+  Operation,
+  ProcessControl,
+  ResultTable,
+  SelectImage
+} from '../../components';
 import { IoMdPause, IoMdPlay } from 'react-icons/io';
 import { HiMiniPlayPause } from 'react-icons/hi2';
 import { TbReload } from 'react-icons/tb';
+import { PulseLoader } from 'react-spinners';
 
-const index = () => {
+const Blending = () => {
   const blendingFormula = `
 (x,y) = w_1 A_1(x,y) + w_2 A_2(x,y) + w_3 A_3(x,y) + \\ldots + w_n A_n(x,y)
 `;
@@ -214,73 +227,80 @@ const index = () => {
   return (
     <div>
       <div className="max-w-screen-xl mx-auto">
-        <Operation title="Operasi Penjumlahan Citra">Penjumlahan citra???</Operation>
+        <Operation title="Operasi Image Blending">
+          Image blending adalah teknik yang digunakan untuk menggabungkan dua atau lebih citra
+          menjadi satu citra baru dengan cara mengatur proporsi dari masing-masing citra yang
+          digabungkan. Operasi ini sering digunakan untuk membuat efek transisi atau pencampuran
+          antara dua gambar.
+        </Operation>
         <Formula formula={blendingFormula} />
-        <Case>Dilakukan dengan cara menjumlahkan sebuah citra dengan citra yang lain.</Case>
+        <Case>
+          Diketahui dua buah citra A(x,y) dan citra B (x,y) akan digabungkan dengan bobot wA = {wA},
+          sehingga menghasilkan citra baru C(x,y). Gambarkan citra hasil penjumlahan citra A dan
+          citra B.
+        </Case>
 
+        <SelectImage
+          title="Pilih Gambar 1"
+          information="Silakan pilih salah satu gambar grayscale pertama yang disediakan di bawah ini untuk melihat proses konversi proses blending."
+        >
+          {images.map((image, index) => (
+            <Image
+              key={index}
+              src={image.src}
+              alt={image.name}
+              onClick={() => handleImageClick(image.name)}
+              isSelected={image.name === selectedImage}
+            />
+          ))}
+        </SelectImage>
+
+        <SelectImage
+          title="Pilih Gambar 2"
+          information="Silakan pilih salah satu gambar grayscale kedua yang disediakan di bawah ini untuk melihat proses konversi proses blending."
+        >
+          {images2.map((image, index) => (
+            <Image
+              key={index}
+              src={image.src}
+              alt={image.name}
+              onClick={() => handleImageClick2(image.name)}
+              isSelected={image.name === selectedImage2}
+            />
+          ))}
+        </SelectImage>
         <div className="my-10 px-4">
-          <h2 className="text-xl font-semibold">Pilih Gambar 1</h2>
-          <div className="flex justify-around flex-wrap gap-4 mt-8">
-            {images.map((image, index) => (
-              <Image
-                key={index}
-                src={image.src}
-                alt={image.name}
-                onClick={() => handleImageClick(image.name)}
-                isSelected={image.name === selectedImage}
-              />
-            ))}
-          </div>
-          <h2 className="text-xl font-semibold">Pilih Gambar 2</h2>
-          <div className="flex justify-around flex-wrap gap-4 mt-8">
-            {images2.map((image, index) => (
-              <Image
-                key={index}
-                src={image.src}
-                alt={image.name}
-                onClick={() => handleImageClick2(image.name)}
-                isSelected={image.name === selectedImage2}
-              />
-            ))}
-          </div>
-          <h3 className="text-base font-bold my-8">Atau ubah nilai pada field dibawah</h3>
           {selectedImage && (
             <div>
-              {selectedData && (
-                <textarea
-                  value={textareaValue}
-                  onChange={handleTextareaChange}
-                  cols={40}
-                  rows={5}
-                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
-                  disabled={isAnimating}
-                />
-              )}
-              {error && (
-                <div className="p-4 bg-red-400 mt-4 font-semibold w-72 rounded border shadow border-black">
-                  <h3>{error}</h3>
-                </div>
-              )}
+              <ImageDataInput
+                information="Setelah memilih gambar, nilai grayscale dari kedua gambar tersebut akan muncul di tabel berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di bawah."
+                selectedData={selectedData}
+                textareaValue={textareaValue}
+                handleTextareaChange={handleTextareaChange}
+                isAnimating={isAnimating}
+                error={error}
+              />
             </div>
           )}
           {selectedImage2 && (
             <div>
-              {selectedData2 && (
-                <textarea
-                  value={textareaValue2}
-                  onChange={handleTextareaChange2}
-                  cols={40}
-                  rows={5}
-                  className={`border-2 border-black text-xl w-full sm:w-auto ${isAnimating && 'cursor-not-allowed'}`}
-                  disabled={isAnimating}
-                />
-              )}
-              {error && (
-                <div className="p-4 bg-red-400 mt-4 font-semibold w-72 rounded border shadow border-black">
-                  <h3>{error}</h3>
-                </div>
-              )}
-              <div className="flex gap-4 items-center mt-8">
+              <ImageDataInput
+                information=""
+                selectedData={selectedData2}
+                textareaValue={textareaValue2}
+                handleTextareaChange={handleTextareaChange2}
+                isAnimating={isAnimating}
+                error={error}
+              />
+            </div>
+          )}
+          {selectedImage2 && (
+            <div>
+              <div className="my-8">
+                <p>
+                  Anda juga bisa mengubah nilai parameter yang akan digunakan dalam proses
+                  perhitungan operasi brightness menggunakan input di bawah.
+                </p>
                 <input
                   type="number"
                   min={0.1}
@@ -289,10 +309,12 @@ const index = () => {
                   value={wA}
                   onChange={handleInputWA}
                   id="WA"
-                  className={`border-2 border-black rounded w-20 h-10 p-2 ${isAnimating && 'cursor-not-allowed'}`}
+                  className={`mt-8 border-2 border-black rounded w-20 h-10 p-2 ${isAnimating && 'cursor-not-allowed'}`}
                   disabled={isAnimating}
                 />
-                <label htmlFor="WA">wA</label>
+                <label htmlFor="WA" className="ml-4">
+                  wA
+                </label>
               </div>
             </div>
           )}
@@ -300,9 +322,12 @@ const index = () => {
 
         {selectedImage && selectedImage2 && (
           <div className="my-10 px-4">
-            <div className="flex flex-wrap gap-8">
+            <div className="flex items-center flex-wrap gap-4">
               <div>
                 <h2 className="text-xl font-semibold">Table Citra Grayscale 1</h2>
+                <p className="w-[60%]">
+                  Tabel citra grayscale 5x5 piksel dari gambar pertama yang telah di-resize
+                </p>
                 <table className="border border-black text-base mt-4">
                   <tbody>
                     {selectedData.map((rowItem, rowIndex) => (
@@ -322,6 +347,9 @@ const index = () => {
               </div>
               <div>
                 <h2 className="text-xl font-semibold">Table Citra Grayscale 2</h2>
+                <p className="w-[60%]">
+                  Tabel citra grayscale 5x5 piksel dari gambar kedua yang telah di-resize
+                </p>
                 <table className="border border-black text-base mt-4">
                   <tbody>
                     {selectedData2.map((rowItem, rowIndex) => (
@@ -339,77 +367,58 @@ const index = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+
+            <div className="flex flex-row flex-wrap mt-8 gap-8">
+              <ResultTable
+                heading="Table Citra Hasil"
+                information="Tabel citra hasil proses image blending"
+                resultData={resultData}
+                row={row}
+                col={col}
+                animationStage={animationStage}
+              />
               <div>
-                <h2 className="text-xl font-semibold">Table Citra Hasil</h2>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {resultData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col && animationStage === 2
-                                ? 'bg-green-200'
-                                : 'bg-white'
-                              }`}
-                          >
-                            <p>{color !== null ? color : ''}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Proses</h2>
-                <div className="flex items-center gap-4 sm:ml-10 flex-col">
-                  <div>
-                    <BlockMath math={`wA = ${wA} `} />
-                    <BlockMath math={`wB = 1 - ${wA} = ${(1 - wA).toFixed(1)}`} />
-                  </div>
-                  <div className="flex gap-4">
+                <CalculationProcess
+                  title="Proses Perhitungan"
+                  classes="flex gap-2 flex-col items-start"
+                >
+                  <BlockMath math={`wA = ${wA} `} />
+                  <BlockMath math={`wA + wB = 1`} />
+                  <BlockMath math={`wB = 1 - ${wA} = ${(1 - wA).toFixed(1)}`} />
+
+                  <div className="flex gap-2 items-center">
+                    <BlockMath math={`C(x,y) =`} />
                     {animationStage >= 0 && (
                       <BlockMath
-                        math={`(${currentGrayscale} * ${wA})+(${currentGrayscale2} * ${(1 - wA).toFixed(1)}) = `}
+                        math={`A(${currentGrayscale} * ${wA})+B(${currentGrayscale2} * ${(1 - wA).toFixed(1)})`}
                       />
                     )}
-                    {animationStage >= 1 && <BlockMath math={`${blendingValue}`} />}
                   </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold my-8">Animasi</h3>
-              <div className="flex gap-4 items-center">
-                {isAnimating ? (
-                  <IoMdPause
-                    size={30}
-                    onClick={pauseAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                ) : (
-                  <IoMdPlay
-                    size={30}
-                    onClick={playAnimation}
-                    className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                  />
-                )}
-                <TbReload
-                  size={30}
-                  onClick={stopAnimation}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
-                />
-                <HiMiniPlayPause
-                  size={30}
-                  onClick={playStep}
-                  className="select-none cursor-pointer text-gray-700 hover:text-gray-900"
+                  <div className="flex gap-2 items-center">
+                    <BlockMath math={`C(x,y) =`} />
+                    {animationStage >= 1 && <BlockMath math={`${blendingValue}`} />}
+                    {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
+                  </div>
+                </CalculationProcess>
+                <ProcessControl
+                  heading="Kontrol Proses Perhitungan"
+                  information="konversi grayscale ke threshold"
+                  isAnimating={isAnimating}
+                  playAnimation={playAnimation}
+                  pauseAnimation={pauseAnimation}
+                  stopAnimation={stopAnimation}
+                  playStep={playStep}
                 />
               </div>
             </div>
             <div className="my-10">
               <ImageBlending value={wA} />
             </div>
+            <AnotherTopicsContainer classes="justify-between">
+              <AnotherTopicsItem name="Threshold" url="/threshold" direction="left" />
+              <AnotherTopicsItem name="Substraction" url="/substraction" direction="right" />
+            </AnotherTopicsContainer>
           </div>
         )}
       </div>
@@ -417,4 +426,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Blending;
