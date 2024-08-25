@@ -169,7 +169,7 @@ const Brightness = () => {
   useEffect(() => {
     if (selectedData) {
       const grayscale = selectedData[row][col];
-      const brightness = grayscale + rangeBrightness > 255 ? 255 : grayscale + rangeBrightness;
+      const brightness = Math.min(255, Math.max(0, grayscale + rangeBrightness));
       setCurrentGrayscale(grayscale);
       setBrightnessValue(brightness);
 
