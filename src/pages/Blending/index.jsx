@@ -28,7 +28,7 @@ import { PulseLoader } from 'react-spinners';
 
 const Blending = () => {
   const blendingFormula = `
-(x,y) = w_1 A_1(x,y) + w_2 A_2(x,y) + w_3 A_3(x,y) + \\ldots + w_n A_n(x,y)
+C(x,y) = w_1 A_1(x,y) + w_2 A_2(x,y) + w_3 A_3(x,y) + \\ldots + w_n A_n(x,y)
 `;
 
   const [selectedImage, setSelectedImage] = useState(null);

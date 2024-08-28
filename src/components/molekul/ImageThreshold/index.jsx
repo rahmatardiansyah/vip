@@ -4,8 +4,8 @@ const Index = () => {
   const [grayscaleImage, setGrayscaleImage] = useState(null);
   const [originalImage, setOriginalImage] = useState(null);
   const [thresholdImage, setThresholdImage] = useState(null);
-  const [thresholdValue, setThresholdValue] = useState(200);
-  const [thresholdValueInput, setThresholdValueInput] = useState(200);
+  const [thresholdValue, setThresholdValue] = useState(100);
+  const [thresholdValueInput, setThresholdValueInput] = useState(100);
   const [errorParameterInput, setErrorParameterInput] = useState(null);
   const canvasRef = useRef(null);
 
@@ -71,7 +71,7 @@ const Index = () => {
 
   return (
     <div>
-      <h3 className="font-bold text-xl my-8">Ubah Gambar Sendiri ke Grayscale dan Negatif</h3>
+      <h3 className="font-semibold text-xl my-8">Upload Gambar Anda</h3>
       <p className="text-base my-4 text-justify">
         Jika Anda ingin melihat hasil konversi dari gambar Anda sendiri, silakan upload gambar Anda
         di sini.

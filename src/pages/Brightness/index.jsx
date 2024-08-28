@@ -270,7 +270,7 @@ const Brightness = () => {
                   >
                     {animationStage >= 0 && (
                       <BlockMath
-                        math={`I_{\\text{baru}}(x, y) = I(${currentGrayscale}) + ${rangeBrightness} = `}
+                        math={`I_{\\text{baru}}(x, y) = I(${currentGrayscale}) + ${rangeBrightness}`}
                       />
                     )}
 

@@ -207,14 +207,11 @@ F_0(x,y) =
           dengan background dalam suatu citra berdasarkan pada perbedaan tingkat kecerahannya atau
           gelap terangnya.
         </Operation>
-        <Formula formula={thresholdingFormula}>
-          <div className="font-light mt-2 text-base">
-            <p>g(g,x) adalah citra hasil</p>
-            <p>F(g,y) adalah citra awal</p>
-            <p>T adalah ambang batas yang disyaratkan sesuai kebutuhan.</p>
-          </div>
-        </Formula>
-        <Case>Diketahui citra grayscale 256 warna dengan sebagai berikut:</Case>
+        <Formula formula={thresholdingFormula}></Formula>
+        <Case>
+          Diketahui citra grayscale 256 dengan ukuran 5x5 pixel akan akan dilakukan operasi
+          threshold dengan fungsi sebagai berikut:
+        </Case>
         <div>
           <BlockMath math={thresholdingCase} />
         </div>
