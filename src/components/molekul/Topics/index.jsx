@@ -11,7 +11,7 @@ const index = () => {
       className="max-w-screen-xl mx-auto flex justify-center flex-col items-center bg-no-repeat sm:bg-contain mt-40"
     >
       <div className="text-center">
-        <p className="text-xl sm:text-2xl md:text-4xl">Jelajahi Topik Lainnya</p>
+        <p className="text-xl sm:text-2xl md:text-4xl">Jelajahi Topik</p>
       </div>
       <ul className="grid grid-cols-2 md:grid-cols-3 gap-4 justify-center my-16">
         <li>
