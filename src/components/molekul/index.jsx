@@ -17,6 +17,7 @@ import ImageTreshold from './ImageThreshold';
 import ImageBlending from './ImageBlending';
 import ImageSubstraction from './ImageSubstraction';
 import ImageCorrelation from './ImageCorrelation';
+import Quiz from './Quiz';
 import Basic from './Basic';
 import About from './About';
 
@@ -41,5 +42,6 @@ export {
   ImageBlending,
   ImageSubstraction,
   ImageCorrelation,
-  About
+  About,
+  Quiz
 };

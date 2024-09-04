@@ -8,6 +8,7 @@ import {
   ImageToGrayscale,
   Operation,
   ProcessControl,
+  Quiz,
   ResultTable,
   SelectImage,
   SourceTable
@@ -169,6 +170,7 @@ const Grayscale = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto">
+      <Quiz />
       <Operation title="Operasi Grayscale">
         Grayscale adalah operasi pengolahan citra yang mengubah gambar berwarna (RGB) menjadi gambar
         hitam putih (grayscale). Proses ini dilakukan dengan mengkombinasikan nilai merah (Red),
