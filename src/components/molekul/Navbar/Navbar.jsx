@@ -72,7 +72,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="my-4 mx-auto max-w-screen-xl bg-white z-50">
+    <nav className="my-4 z-50">
       <div className="h-20 flex items-center justify-between">
         <div className="z-30 ml-4 sm:text-4xl text-2xl">
           <a href="/" className="flex gap-2 sm:gap-4 items-center">

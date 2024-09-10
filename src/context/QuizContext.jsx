@@ -1,66 +1,91 @@
 import { createContext, useReducer, useContext } from 'react';
 
 // Initial state
-const getInitialState = (slug) => {
-  const quizData = JSON.parse(localStorage.getItem(`${slug}-data`)) || {};
-  return {
-    questions: quizData.questions || [],
-    selectedAnswers: quizData.selectedAnswers || {}, // Load from local storage
-    revealedAnswers: quizData.revealedAnswers || false, // Load from local storage
-    results: quizData.results || { correct: 0, incorrect: 0 } // Load from local storage
-  };
-};
+const initialState = {};
 
 // Reducer function
 const quizReducer = (state, action) => {
   switch (action.type) {
-    case 'SET_QUESTIONS': {
-      const setQuestions = {
-        slug: action.slug,
-        questions: action.payload
-      };
-      localStorage.setItem(`${action.slug}-data`, JSON.stringify(setQuestions));
-      return { ...state, questions: action.payload };
-    }
-    case 'SET_SELECTED_ANSWER': {
-      const updatedAnswers = {
-        ...state,
-        selectedAnswers: {
-          [action.payload.qId]: action.payload.answer
-        }
-      };
-      localStorage.setItem(`${action.slug}-data`, JSON.stringify(updatedAnswers));
+    case 'SET_QUIZ_DATA': {
       return {
         ...state,
-        selectedAnswers: { ...state.selectedAnswers, [action.payload.qId]: action.payload.answer }
+        [action.slug]: {
+          ...state[action.slug],
+          questions: action.payload,
+          userAnswers: [],
+          isQuizCompleted: false,
+          score: 0
+        },
+        totalScore: 0
       };
     }
-    case 'SET_REVEALED_ANSWERS': {
-      const revealedAnswers = {
+    case 'SET_USER_ANSWER': {
+      // Cek apakah input dari user adalah string kosong
+      if (action.payload.answer.trim() === '') {
+        // Hapus entry dengan id yang sama dari userAnswers
+        const filteredAnswers = state[action.slug].userAnswers.filter(
+          (answer) => answer.id !== action.payload.id
+        );
+
+        return {
+          ...state,
+          [action.slug]: {
+            ...state[action.slug],
+            userAnswers: filteredAnswers
+          }
+        };
+      }
+      const updatedUserAnswers = state[action.slug].userAnswers.map((answer) =>
+        answer.id === action.payload.id ? { ...answer, ...action.payload } : answer
+      );
+
+      const isExistingAnswer = state[action.slug].userAnswers.some(
+        (answer) => answer.id === action.payload.id
+      );
+
+      return {
         ...state,
-        revealedAnswers: action.payload
+        [action.slug]: {
+          ...state[action.slug],
+          userAnswers: isExistingAnswer
+            ? updatedUserAnswers // Jika id sudah ada, timpa jawaban
+            : [...state[action.slug].userAnswers, action.payload] // Jika belum ada, tambahkan jawaban baru
+        }
       };
-      localStorage.setItem(`${action.slug}-data`, JSON.stringify(revealedAnswers));
-      return { ...state, revealedAnswers: action.payload };
     }
-    case 'SET_RESULTS': {
-      const result = {
+    case 'CONFIRM_USER_ANSWERS': {
+      const userAnswers = state[action.slug].userAnswers;
+      const questions = state[action.slug].questions;
+
+      // Hitung skor
+      const score = questions.reduce((acc, question) => {
+        const userAnswer = userAnswers.find((answer) => answer.id === question.id);
+        if (userAnswer && userAnswer.answer === question.answer) {
+          return acc + 1;
+        }
+        return acc;
+      }, 0);
+
+      return {
         ...state,
-        results: action.payload
+        [action.slug]: {
+          ...state[action.slug],
+          isQuizCompleted: action.payload,
+          score: score
+        },
+        totalScore: state.totalScore + score
       };
-      localStorage.setItem(`${action.slug}-data`, JSON.stringify(result));
-      return { ...state, results: action.payload };
     }
-    case 'RESET_ANSWERS': {
-      const allData = {
+    case 'RESET_USER_ANSWERS': {
+      return {
         ...state,
-        questions: state.questions,
-        selectedAnswers: {},
-        revealedAnswers: false,
-        results: { correct: 0, incorrect: 0 }
+        [action.slug]: {
+          ...state[action.slug],
+          userAnswers: [],
+          isQuizCompleted: false,
+          score: 0
+        }
       };
-      localStorage.setItem(`${action.slug}-data`, JSON.stringify(allData));
-      return allData;
     }
     default:
       return state;
@@ -71,8 +96,8 @@ const quizReducer = (state, action) => {
 const QuizContext = createContext();
 
 // Provider component
-export const QuizProvider = ({ children, slug }) => {
-  const [state, dispatch] = useReducer(quizReducer, getInitialState(slug));
+export const QuizProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(quizReducer, initialState);
 
   return <QuizContext.Provider value={{ state, dispatch }}>{children}</QuizContext.Provider>;
 };

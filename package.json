@@ -14,6 +14,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "axios": "^1.4.0",
+    "firebase": "^10.13.1",
     "katex": "^0.16.10",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

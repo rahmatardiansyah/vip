@@ -10,16 +10,17 @@ import Threshold from './Threshold';
 import Blending from './Blending';
 import Substraction from './Substraction';
 import Correlation from './Correlation';
-import Robert from './Robert';
 import { QuizProvider } from '../context/QuizContext';
+import Register from './Register';
+import Login from './Login';
 
 const MainApp = () => {
   const slug = useLocation().pathname.split('/')[1];
   return (
     <QuizProvider slug={slug}>
-      <div className="main">
+      <div className="main flex flex-col min-h-screen">
         <Navbar />
-        <div>
+        <main className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/grayscale" element={<Grayscale />} />
@@ -29,9 +30,10 @@ const MainApp = () => {
             <Route path="/blending" element={<Blending />} />
             <Route path="/substraction" element={<Substraction />} />
             <Route path="/correlation" element={<Correlation />} />
-            <Route path="/Robert" element={<Robert />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
-        </div>
+        </main>
         <CustomFooter />
       </div>
     </QuizProvider>

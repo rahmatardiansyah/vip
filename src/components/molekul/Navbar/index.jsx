@@ -25,7 +25,7 @@ const CustomNavbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg sticky-top">
+    <nav className="navbar navbar-expand-lg sticky-top ">
       <div className="container">
         <a
           className="navbar-brand"
