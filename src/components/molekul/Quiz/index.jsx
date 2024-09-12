@@ -6,6 +6,8 @@ import { auth, db } from '../../../firebase/config';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import AlertInformation from '../../atoms/AlertInformation/index.jsx';
 import UserInfo from '../UserInfo/index.jsx';
+import { FaCheck } from 'react-icons/fa6';
+import { MdOutlineClose } from 'react-icons/md';
 
 const Quiz = () => {
   const { state, dispatch } = useQuiz();
@@ -118,6 +120,26 @@ const Quiz = () => {
 
   const resetAnswers = () => {
     dispatch({ type: 'RESET_USER_ANSWERS', slug: slug });
+
+    const newData = quizData
+      .filter((item) => item.slug === slug)
+      .map((item) => {
+        if (item.type === 'dynamic-input') {
+          const { question, answer } = item.generateQuestion();
+          return { question, answer, id: item.id, type: item.type, slug: item.slug };
+        }
+        return item;
+      });
+
+    if (userDetails) {
+      const quizRef = doc(db, 'Quiz', auth.currentUser.uid);
+      setDoc(
+        quizRef,
+        { [slug]: { questions: newData, userAnswers: [], isQuizCompleted: false, score: 0 } },
+        { merge: true }
+      );
+    }
+    dispatch({ type: 'SET_QUIZ_DATA', payload: newData, slug: slug });
   };
 
   const confirmUserAnswers = async () => {
@@ -168,23 +190,35 @@ const Quiz = () => {
                     {q.options.map((option, index) => (
                       <li
                         key={index}
-                        className={`flex items-center p-4 border rounded my-2 ${userAnswers.find((ua) => ua.id === q.id && ua.answer === option) ? 'bg-blue-100 hover:bg-blue-100' : ''} ${isQuizCompleted ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}
-`}
                         onClick={() => !isQuizCompleted && handleUserAnswer(q.id, option)}
                       >
-                        {option}
+                        <div
+                          className={`flex justify-between items-center p-4 border rounded my-2 ${userAnswers.find((ua) => ua.id === q.id && ua.answer === option) ? 'bg-blue-100 sm:hover:bg-blue-100' : 'sm:hover:bg-gray-100'} ${isQuizCompleted ? 'cursor-not-allowed' : 'cursor-pointer'}
+${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === option && ua.answer === q.answer) ? 'bg-green-200' : ''} ${isQuizCompleted &&
+                              userAnswers.find(
+                                (ua) =>
+                                  ua.id === q.id && ua.answer === option && ua.answer !== q.answer
+                              )
+                              ? 'bg-red-200 sm:hover:bg-red-200'
+                              : ''
+                            }
+`}
+                        >
+                          {option}
+                          {isQuizCompleted &&
+                            userAnswers.find((ua) => ua.id === q.id && q.answer === option) ? (
+                            <FaCheck className="text-green-600" />
+                          ) : null}
+                          {isQuizCompleted &&
+                            userAnswers.find(
+                              (ua) => ua.id === q.id && ua.answer === option && ua.answer !== q.answer
+                            ) ? (
+                            <MdOutlineClose />
+                          ) : null}
+                        </div>
                       </li>
                     ))}
                   </ul>
-                  {isQuizCompleted && (
-                    <div className="mt-2 flex justify-center">
-                      {userAnswers.find((ua) => ua.id === q.id && ua.answer === q.answer) ? (
-                        <span className="text-green-500"> (Benar)</span>
-                      ) : (
-                        <span className="text-red-500"> (Salah)</span>
-                      )}
-                    </div>
-                  )}
                 </div>
               ))}
           {['static-input', 'dynamic-input'].map((type) =>
@@ -195,20 +229,15 @@ const Quiz = () => {
                   <h4 className="my-4 text-xl">{data.question}</h4>
                   <input
                     type="text"
-                    className="border p-2 rounded w-full disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className={`border p-2 rounded w-full disabled:cursor-not-allowed ${!isQuizCompleted && 'bg-white'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === data.id && ua.answer === data.answer) ? 'bg-green-200' : 'bg-red-200'}`}
                     value={userAnswers.find((ua) => ua.id === data.id)?.answer || ''}
                     onChange={(e) => !isQuizCompleted && handleUserAnswer(data.id, e.target.value)}
                     disabled={isQuizCompleted}
                   />
-                  {isQuizCompleted && (
-                    <div className="mt-2 flex justify-center">
-                      {userAnswers.find((ua) => ua.id === data.id && ua.answer === data.answer) ? (
-                        <span className="text-green-500"> (Benar)</span>
-                      ) : (
-                        <span className="text-red-500"> (Salah)</span>
-                      )}
-                    </div>
-                  )}
+                  {isQuizCompleted &&
+                    userAnswers.find((ua) => ua.id === data.id && ua.answer !== data.answer) && (
+                      <div className="mt-2 text-red-500">Jawaban yang benar: {data.answer}</div>
+                    )}
                 </div>
               ))
           )}
