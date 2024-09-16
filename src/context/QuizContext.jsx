@@ -15,8 +15,7 @@ const quizReducer = (state, action) => {
           userAnswers: [],
           isQuizCompleted: false,
           score: 0
-        },
-        totalScore: 0
+        }
       };
     }
     case 'SET_USER_ANSWER': {
@@ -72,8 +71,7 @@ const quizReducer = (state, action) => {
           ...state[action.slug],
           isQuizCompleted: action.payload,
           score: score
-        },
-        totalScore: state.totalScore + score
+        }
       };
     }
     case 'RESET_USER_ANSWERS': {

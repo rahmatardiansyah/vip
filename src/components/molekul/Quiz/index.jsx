@@ -31,15 +31,14 @@ const Quiz = () => {
             const quizRef = doc(db, 'Quiz', user.uid);
             const quizSnap = await getDoc(quizRef);
 
-            const totalUserAnswered = Object.values(quizSnap.data()).reduce((total, obj) => {
-              if (obj.questions) {
-                total += obj.questions.length;
-              }
-              return total;
-            }, 0);
-            setTotalUnAnsweredQuestions(quizData.length - totalUserAnswered);
-
             if (quizSnap.exists()) {
+              const totalUserAnswered = Object.values(quizSnap.data()).reduce((total, obj) => {
+                if (obj.questions) {
+                  total += obj.userAnswers.length;
+                }
+                return total;
+              }, 0);
+              setTotalUnAnsweredQuestions(quizData.length - totalUserAnswered);
               if (!quizSnap.data()[slug]) return;
               const getQuizQuestions = quizSnap.data()[slug].questions;
               dispatch({ type: 'SET_QUIZ_DATA', payload: getQuizQuestions, slug: slug });
@@ -55,6 +54,19 @@ const Quiz = () => {
           }
         } else {
           console.log('No user is logged in');
+          const localData = localStorage.getItem(slug);
+          if (localData) {
+            const parsedData = JSON.parse(localData);
+            dispatch({ type: 'SET_QUIZ_DATA', payload: parsedData.questions, slug: slug });
+
+            const userAnswers = parsedData.userAnswers;
+            userAnswers.forEach((ua) => {
+              dispatch({ type: 'SET_USER_ANSWER', payload: ua, slug: slug });
+            });
+            dispatch({ type: 'CONFIRM_USER_ANSWERS', payload: true, slug: slug });
+            setTotalUnAnsweredQuestions(quizData.length - parsedData.questions.length);
+            setUserDetails(null);
+          }
         }
       });
     };
@@ -87,8 +99,7 @@ const Quiz = () => {
       if (user) {
         try {
           const quizDataToSend = {
-            [slug]: state[slug],
-            totalScore: state.totalScore
+            [slug]: state[slug]
           };
           setDoc(doc(db, 'Quiz', user.uid), quizDataToSend, { merge: true });
 
@@ -98,7 +109,7 @@ const Quiz = () => {
         }
       }
     }
-  }, [quizDataBySlug?.isQuizCompleted, slug, state, dispatch]); // Ensure this runs when quiz is completed
+  }, [quizDataBySlug?.isQuizCompleted, slug, state]); // Ensure this runs when quiz is completed
 
   const handleLogout = async () => {
     try {
@@ -140,10 +151,25 @@ const Quiz = () => {
       );
     }
     dispatch({ type: 'SET_QUIZ_DATA', payload: newData, slug: slug });
+
+    setTotalUnAnsweredQuestions(totalUnAnsweredQuestions - questions.length);
+
+    if (!userDetails) {
+      localStorage.setItem(
+        slug,
+        JSON.stringify({ questions: newData, userAnswers: [], isQuizCompleted: false, score: 0 })
+      );
+    }
   };
 
-  const confirmUserAnswers = async () => {
+  const confirmUserAnswers = () => {
     dispatch({ type: 'CONFIRM_USER_ANSWERS', payload: true, slug: slug });
+    setTotalUnAnsweredQuestions(totalUnAnsweredQuestions - quizDataBySlug.questions.length);
+
+    if (!userDetails) {
+      console.log('User is not logged in. Saving user answers to local storage...');
+      localStorage.setItem(slug, JSON.stringify(quizDataBySlug));
+    }
   };
 
   if (!quizDataBySlug) {
@@ -194,7 +220,7 @@ const Quiz = () => {
                       >
                         <div
                           className={`flex justify-between items-center p-4 border rounded my-2 ${userAnswers.find((ua) => ua.id === q.id && ua.answer === option) ? 'bg-blue-100 sm:hover:bg-blue-100' : 'sm:hover:bg-gray-100'} ${isQuizCompleted ? 'cursor-not-allowed' : 'cursor-pointer'}
-${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === option && ua.answer === q.answer) ? 'bg-green-200' : ''} ${isQuizCompleted &&
+${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === option && ua.answer === q.answer) ? 'bg-green-200 sm:hover:bg-green-200' : ''} ${isQuizCompleted &&
                               userAnswers.find(
                                 (ua) =>
                                   ua.id === q.id && ua.answer === option && ua.answer !== q.answer
