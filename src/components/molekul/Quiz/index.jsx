@@ -8,6 +8,7 @@ import AlertInformation from '../../atoms/AlertInformation/index.jsx';
 import UserInfo from '../UserInfo/index.jsx';
 import { FaCheck } from 'react-icons/fa6';
 import { MdOutlineClose } from 'react-icons/md';
+const version = __APP_VERSION__;
 
 const Quiz = () => {
   const { state, dispatch } = useQuiz();
@@ -15,6 +16,7 @@ const Quiz = () => {
   const quizDataBySlug = state[slug];
 
   const [userDetails, setUserDetails] = useState(null);
+  const [UnAnsweredQuestion, setUnAnswerdQuestion] = useState(false);
 
   const [totalUnAnsweredQuestions, setTotalUnAnsweredQuestions] = useState(0);
 
@@ -82,7 +84,14 @@ const Quiz = () => {
         .map((item) => {
           if (item.type === 'dynamic-input') {
             const { question, answer } = item.generateQuestion();
-            return { question, answer, id: item.id, type: item.type, slug: item.slug };
+            return {
+              question,
+              answer,
+              id: item.id,
+              type: item.type,
+              slug: item.slug,
+              inputType: item.inputType
+            };
           }
           return item;
         });
@@ -121,7 +130,11 @@ const Quiz = () => {
     }
   };
 
-  const handleUserAnswer = (questionId, option) => {
+  const handleUserAnswer = (questionId, option, valid) => {
+    if (valid === false) {
+      console.log('Invalid input');
+      return;
+    }
     dispatch({
       type: 'SET_USER_ANSWER',
       payload: { id: questionId, answer: option },
@@ -137,7 +150,14 @@ const Quiz = () => {
       .map((item) => {
         if (item.type === 'dynamic-input') {
           const { question, answer } = item.generateQuestion();
-          return { question, answer, id: item.id, type: item.type, slug: item.slug };
+          return {
+            question,
+            answer,
+            id: item.id,
+            type: item.type,
+            slug: item.slug,
+            inputType: item.inputType
+          };
         }
         return item;
       });
@@ -155,14 +175,18 @@ const Quiz = () => {
     setTotalUnAnsweredQuestions(totalUnAnsweredQuestions - questions.length);
 
     if (!userDetails) {
-      localStorage.setItem(
-        slug,
-        JSON.stringify({ questions: newData, userAnswers: [], isQuizCompleted: false, score: 0 })
-      );
+      localStorage.removeItem(slug);
     }
   };
 
   const confirmUserAnswers = () => {
+    // cek apakah semua pertanyaan sudah dijawab
+    if (quizDataBySlug.questions.length - quizDataBySlug.userAnswers.length > 0) {
+      setUnAnswerdQuestion(true);
+      console.log('Please answer all questions before confirming.');
+      return;
+    }
+    setUnAnswerdQuestion(false);
     dispatch({ type: 'CONFIRM_USER_ANSWERS', payload: true, slug: slug });
     setTotalUnAnsweredQuestions(totalUnAnsweredQuestions - quizDataBySlug.questions.length);
 
@@ -203,7 +227,7 @@ const Quiz = () => {
         />
       )}
       <div className="bg-white shadow border rounded p-4">
-        <h3 className="text-2xl font-semibold mb-4">Quiz</h3>
+        <h3 className="text-2xl font-semibold mb-4">Kuis</h3>
         <div>
           {questions &&
             questions
@@ -245,6 +269,12 @@ ${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === opt
                       </li>
                     ))}
                   </ul>
+                  {/* Show Alert Question not answerd */}
+                  {!isQuizCompleted &&
+                    UnAnsweredQuestion &&
+                    !userAnswers.some((answer) => answer.id === q.id) && (
+                      <div className="mt-2 text-red-500">Pertanyaan diatas belum dijawab!</div>
+                    )}
                 </div>
               ))}
           {['static-input', 'dynamic-input'].map((type) =>
@@ -255,14 +285,23 @@ ${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === opt
                   <h4 className="my-4 text-xl">{data.question}</h4>
                   <input
                     type="text"
-                    className={`border p-2 rounded w-full disabled:cursor-not-allowed ${!isQuizCompleted && 'bg-white'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === data.id && ua.answer === data.answer) ? 'bg-green-200' : 'bg-red-200'}`}
+                    className={`border p-2 rounded w-full ${!isQuizCompleted ? 'bg-white' : 'disabled:cursor-not-allowed'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === data.id && ua.answer === data.answer) ? 'bg-green-200' : 'bg-red-200'}`}
                     value={userAnswers.find((ua) => ua.id === data.id)?.answer || ''}
-                    onChange={(e) => !isQuizCompleted && handleUserAnswer(data.id, e.target.value)}
+                    onInput={(e) =>
+                      !isQuizCompleted &&
+                      handleUserAnswer(data.id, e.target.value, e.target.validity.valid)
+                    }
                     disabled={isQuizCompleted}
+                    pattern={data.inputType === 'number' ? '[0-9]*' : undefined}
                   />
                   {isQuizCompleted &&
                     userAnswers.find((ua) => ua.id === data.id && ua.answer !== data.answer) && (
                       <div className="mt-2 text-red-500">Jawaban yang benar: {data.answer}</div>
+                    )}
+                  {!isQuizCompleted &&
+                    UnAnsweredQuestion &&
+                    !userAnswers.some((answer) => answer.id === data.id) && (
+                      <div className="mt-2 text-red-500">Pertanyaan diatas belum dijawab!</div>
                     )}
                 </div>
               ))
@@ -271,7 +310,7 @@ ${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === opt
         <div>
           <button
             className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded disabled:bg-blue-300 disabled:cursor-not-allowed"
-            disabled={questions.length !== userAnswers.length}
+            disabled={isQuizCompleted}
             onClick={confirmUserAnswers}
           >
             Konfirmasi Jawaban
@@ -285,7 +324,7 @@ ${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === opt
           </button>
         </div>
         <div className="text-gray-500 mt-4">
-          skor: {score} dari {questions.length}
+          Benar: {score} dari {questions.length} pertanyaan
         </div>
       </div>
     </div>

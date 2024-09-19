@@ -20,7 +20,8 @@ const quizData = [
     type: 'static-input',
     slug: 'grayscale',
     question: 'Berapa intensitas warna dalam 8 bit?',
-    answer: '256'
+    answer: '256',
+    inputType: 'number'
   },
   {
     id: 4,
@@ -33,7 +34,8 @@ const quizData = [
       const question = `Berapa hasil dari ${x} + ${y}?`;
       const answer = (x + y).toString();
       return { question, answer };
-    }
+    },
+    inputType: 'number'
   },
   {
     id: 5,
@@ -56,7 +58,8 @@ const quizData = [
     type: 'static-input',
     slug: 'invert',
     question: 'Berapa intensitas warna dalam 8 bit dari image invert diatas?',
-    answer: '100'
+    answer: '100',
+    inputType: 'number'
   },
   {
     id: 8,
@@ -69,7 +72,15 @@ const quizData = [
       const question = `Berapa hasil dari ${x} + ${y}?`;
       const answer = (x + y).toString();
       return { question, answer };
-    }
+    },
+    inputType: 'number'
+  },
+  {
+    id: 9,
+    type: 'static-input',
+    slug: 'grayscale',
+    question: 'Apa warna gambar yang dipilih?',
+    answer: 'red'
   }
 ];
 
