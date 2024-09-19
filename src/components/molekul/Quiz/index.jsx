@@ -8,7 +8,6 @@ import AlertInformation from '../../atoms/AlertInformation/index.jsx';
 import UserInfo from '../UserInfo/index.jsx';
 import { FaCheck } from 'react-icons/fa6';
 import { MdOutlineClose } from 'react-icons/md';
-const version = __APP_VERSION__;
 
 const Quiz = () => {
   const { state, dispatch } = useQuiz();
@@ -285,9 +284,9 @@ ${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === opt
                   <h4 className="my-4 text-xl">{data.question}</h4>
                   <input
                     type="text"
-                    className={`border p-2 rounded w-full ${!isQuizCompleted ? 'bg-white' : 'disabled:cursor-not-allowed'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === data.id && ua.answer === data.answer) ? 'bg-green-200' : 'bg-red-200'}`}
+                    className={`border p-2 rounded w-full ${!isQuizCompleted ? 'bg-white' : 'disabled:cursor-not-allowed'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === data.id && ua.answer.toLowerCase() === data.answer) ? 'bg-green-200' : 'bg-red-200'}`}
                     value={userAnswers.find((ua) => ua.id === data.id)?.answer || ''}
-                    onInput={(e) =>
+                    onChange={(e) =>
                       !isQuizCompleted &&
                       handleUserAnswer(data.id, e.target.value, e.target.validity.valid)
                     }
@@ -295,9 +294,9 @@ ${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === opt
                     pattern={data.inputType === 'number' ? '[0-9]*' : undefined}
                   />
                   {isQuizCompleted &&
-                    userAnswers.find((ua) => ua.id === data.id && ua.answer !== data.answer) && (
-                      <div className="mt-2 text-red-500">Jawaban yang benar: {data.answer}</div>
-                    )}
+                    userAnswers.find(
+                      (ua) => ua.id === data.id && ua.answer.toLowerCase() !== data.answer
+                    ) && <div className="mt-2 text-red-500">Jawaban yang benar: {data.answer}</div>}
                   {!isQuizCompleted &&
                     UnAnsweredQuestion &&
                     !userAnswers.some((answer) => answer.id === data.id) && (

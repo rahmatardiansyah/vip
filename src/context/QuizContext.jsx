@@ -59,7 +59,7 @@ const quizReducer = (state, action) => {
       // Hitung skor
       const score = questions.reduce((acc, question) => {
         const userAnswer = userAnswers.find((answer) => answer.id === question.id);
-        if (userAnswer && userAnswer.answer === question.answer) {
+        if (userAnswer && userAnswer.answer.toLowerCase() === question.answer) {
           return acc + 1;
         }
         return acc;
