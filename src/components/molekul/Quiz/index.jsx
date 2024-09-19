@@ -171,7 +171,7 @@ const Quiz = () => {
     }
     dispatch({ type: 'SET_QUIZ_DATA', payload: newData, slug: slug });
 
-    setTotalUnAnsweredQuestions(totalUnAnsweredQuestions - questions.length);
+    setTotalUnAnsweredQuestions(totalUnAnsweredQuestions + quizDataBySlug.questions.length);
 
     if (!userDetails) {
       localStorage.removeItem(slug);
