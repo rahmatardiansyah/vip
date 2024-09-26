@@ -164,7 +164,6 @@ const Invert = () => {
   return (
     <div>
       <div className="max-w-screen-xl mx-auto">
-        <Quiz />
         <Operation title="Operasi Invert">
           Operasi invert atau disebut juga dengan operasi negatif adalah proses membalikkan nilai
           intensitas piksel pada citra, menghasilkan efek negatif.
@@ -265,6 +264,7 @@ const Invert = () => {
             <div className="my-10">
               <ImageInvert />
             </div>
+            <Quiz />
             <AnotherTopicsContainer classes="justify-between">
               <AnotherTopicsItem name="Grayscale" url="/grayscale" direction="left" />
               <AnotherTopicsItem name="Brightness" url="/brightness" direction="right" />

@@ -196,7 +196,7 @@ const Quiz = () => {
   };
 
   if (!quizDataBySlug) {
-    return <div>Loading quiz data...</div>;
+    return <div>Kuis tidak ditemukan</div>;
   }
 
   const { questions, userAnswers, isQuizCompleted, score } = quizDataBySlug;
