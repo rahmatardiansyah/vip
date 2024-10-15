@@ -18,6 +18,7 @@ import {
   ImageDataInput,
   Operation,
   ProcessControl,
+  Quiz,
   ResultTable,
   SelectImage
 } from '../../components';
@@ -415,6 +416,7 @@ C(x,y) = w_1 A_1(x,y) + w_2 A_2(x,y) + w_3 A_3(x,y) + \\ldots + w_n A_n(x,y)
             <div className="my-10">
               <ImageBlending value={wA} />
             </div>
+            <Quiz />
             <AnotherTopicsContainer classes="justify-between">
               <AnotherTopicsItem name="Threshold" url="/threshold" direction="left" />
               <AnotherTopicsItem name="Substraction" url="/substraction" direction="right" />

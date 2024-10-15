@@ -108,7 +108,7 @@ const Index = () => {
         )}
         {thresholdImage && (
           <div>
-            <h2 className="text-xl my-4">Brightness Image</h2>
+            <h2 className="text-xl my-4">Threshold Image</h2>
             <img src={thresholdImage} alt="Brightness" width="80%" />
           </div>
         )}

@@ -16,7 +16,8 @@ import {
   ProcessControl,
   ResultTable,
   AnotherTopicsContainer,
-  AnotherTopicsItem
+  AnotherTopicsItem,
+  Quiz
 } from '../../components';
 import ParameterInputText from '../../components/atoms/ParameterInputText';
 import { PulseLoader } from 'react-spinners';
@@ -324,6 +325,7 @@ F_0(x,y) =
             <div className="my-10">
               <ImageTreshold value={thresholdInput} />
             </div>
+            <Quiz />
             <AnotherTopicsContainer classes="justify-between">
               <AnotherTopicsItem name="Brightness" url="/brightness" direction="left" />
               <AnotherTopicsItem name="Blending" url="/blending" direction="right" />

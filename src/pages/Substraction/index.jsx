@@ -18,6 +18,7 @@ import {
   ImageSubstraction,
   Operation,
   ProcessControl,
+  Quiz,
   ResultTable,
   SelectImage
 } from '../../components';
@@ -250,7 +251,7 @@ I_{\\text{normalized}}(x, y) = \\max(0, \\min(255, I_{\\text{subtracted}}(x, y) 
           <BlockMath math={substractionNormalizeFormula} />
         </div>
         <Case>
-          Diketahui dua buah citra (citra A dan citra B) berukuran 4x5 piksel dengan resolusi
+          Diketahui dua buah citra (citra A dan citra B) berukuran 5x5 piksel dengan resolusi
           keabuan L=256
         </Case>
 
@@ -438,6 +439,7 @@ I_{\\text{normalized}}(x, y) = \\max(0, \\min(255, I_{\\text{subtracted}}(x, y) 
             <div className="my-10">
               <ImageSubstraction />
             </div>
+            <Quiz />
             <AnotherTopicsContainer classes="justify-between">
               <AnotherTopicsItem name="Blending" url="/blending" direction="left" />
               <AnotherTopicsItem name="Correlation" url="/correlation" direction="right" />

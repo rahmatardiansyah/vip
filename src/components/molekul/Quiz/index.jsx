@@ -201,6 +201,22 @@ const Quiz = () => {
 
   const { questions, userAnswers, isQuizCompleted, score } = quizDataBySlug;
 
+  // Definisikan urutan pertanyaan
+  const typeOrder = ['multiple-choice', 'static-input', 'dynamic-input'];
+
+  // Urutkan array berdasarkan urutan tipe
+  questions.sort((a, b) => {
+    const indexA = typeOrder.indexOf(a.type);
+    const indexB = typeOrder.indexOf(b.type);
+
+    // Jika tipe tidak ditemukan, beri prioritas lebih rendah
+    if (indexA === -1 && indexB === -1) return 0;
+    if (indexA === -1) return 1;
+    if (indexB === -1) return -1;
+
+    return indexA - indexB;
+  });
+
   return (
     <div className="px-4 max-w-screen-md mx-auto">
       {!userDetails && (
@@ -229,82 +245,163 @@ const Quiz = () => {
         <h3 className="text-2xl font-semibold mb-4">Kuis</h3>
         <div>
           {questions &&
-            questions
-              .filter((item) => item.type === 'multiple-choice')
-              .map((q) => (
-                <div key={q.id} className="border p-2 my-2">
-                  <h4 className="my-4 text-xl">{q.question}</h4>
-
-                  <ul className="flex flex-col">
-                    {q.options.map((option, index) => (
-                      <li
-                        key={index}
-                        onClick={() => !isQuizCompleted && handleUserAnswer(q.id, option)}
-                      >
-                        <div
-                          className={`flex justify-between items-center p-4 border rounded my-2 ${userAnswers.find((ua) => ua.id === q.id && ua.answer === option) ? 'bg-blue-100 sm:hover:bg-blue-100' : 'sm:hover:bg-gray-100'} ${isQuizCompleted ? 'cursor-not-allowed' : 'cursor-pointer'}
-${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === option && ua.answer === q.answer) ? 'bg-green-200 sm:hover:bg-green-200' : ''} ${isQuizCompleted &&
+            questions.map((questionItem, questionIndex) => {
+              if (questionItem.type === 'multiple-choice') {
+                return (
+                  <div key={questionItem.id} className="border-2 p-2 my-2">
+                    <h4 className="my-4 text-xl">
+                      {`${questionIndex + 1}. `}
+                      {questionItem.question}
+                    </h4>
+                    <ol className="flex flex-col">
+                      {questionItem.options.map((option, index) => {
+                        const alfabet = ['A', 'B', 'C', 'D', 'E'];
+                        const classes = () => {
+                          if (!isQuizCompleted) {
+                            if (
+                              userAnswers.find(
+                                (ua) => ua.id === questionItem.id && ua.answer === option
+                              )
+                            ) {
+                              return 'bg-blue-100 cursor-pointer';
+                            }
+                            return 'cursor-pointer sm:hover:bg-gray-100';
+                          } else {
+                            if (
+                              userAnswers.find(
+                                (ua) => ua.id === questionItem.id && ua.answer === option
+                              ) &&
+                              questionItem.answer !== option
+                            ) {
+                              return 'bg-red-200';
+                            }
+                            if (
+                              userAnswers.find(
+                                (ua) => ua.id === questionItem.id && ua.answer === option
+                              ) &&
+                              questionItem.answer === option
+                            ) {
+                              return 'bg-green-200';
+                            }
+                          }
+                        };
+                        return (
+                          <li
+                            key={index}
+                            onClick={() =>
+                              !isQuizCompleted && handleUserAnswer(questionItem.id, option)
+                            }
+                            className={`flex justify-between p-4 border rounded my-2 items-center ${classes()}`}
+                          >
+                            <span className="flex-grow">
+                              {`${alfabet[index]}. `}
+                              {option}
+                            </span>
+                            {isQuizCompleted &&
+                              userAnswers.find(
+                                (ua) => ua.id === questionItem.id && questionItem.answer === option
+                              ) ? (
+                              <FaCheck className="text-green-600 flex-shrink-0" />
+                            ) : null}
+                            {isQuizCompleted &&
                               userAnswers.find(
                                 (ua) =>
-                                  ua.id === q.id && ua.answer === option && ua.answer !== q.answer
-                              )
-                              ? 'bg-red-200 sm:hover:bg-red-200'
-                              : ''
-                            }
-`}
-                        >
-                          {option}
-                          {isQuizCompleted &&
-                            userAnswers.find((ua) => ua.id === q.id && q.answer === option) ? (
-                            <FaCheck className="text-green-600" />
-                          ) : null}
-                          {isQuizCompleted &&
-                            userAnswers.find(
-                              (ua) => ua.id === q.id && ua.answer === option && ua.answer !== q.answer
-                            ) ? (
-                            <MdOutlineClose />
-                          ) : null}
+                                  ua.id === questionItem.id &&
+                                  ua.answer === option &&
+                                  ua.answer !== questionItem.answer
+                              ) ? (
+                              <MdOutlineClose className="text-red-600 flex-shrink-0" />
+                            ) : null}
+                          </li>
+                        );
+                      })}
+                    </ol>
+                    {/* Show Alert Question not answerd */}
+                    {!isQuizCompleted &&
+                      UnAnsweredQuestion &&
+                      !userAnswers.some((answer) => answer.id === questionItem.id) && (
+                        <div className="mt-2 text-red-500">Pertanyaan diatas belum dijawab!</div>
+                      )}
+                  </div>
+                );
+              }
+
+              if (questionItem.type === 'static-input') {
+                return (
+                  <div key={questionItem.id} className="border p-2 my-2">
+                    <h4 className="my-4 text-xl">
+                      {`${questionIndex + 1}. `}
+                      {questionItem.question}
+                    </h4>
+                    <input
+                      type="text"
+                      className={`border p-2 rounded w-full ${!isQuizCompleted ? 'bg-white' : 'disabled:cursor-not-allowed'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === questionItem.id && ua.answer.toLowerCase() === questionItem.answer) ? 'bg-green-200' : 'bg-red-200'}`}
+                      value={userAnswers.find((ua) => ua.id === questionItem.id)?.answer || ''}
+                      onChange={(e) =>
+                        !isQuizCompleted &&
+                        handleUserAnswer(questionItem.id, e.target.value, e.target.validity.valid)
+                      }
+                      disabled={isQuizCompleted}
+                      pattern={questionItem.inputType === 'number' ? '[0-9]*' : undefined}
+                      inputMode={questionItem.inputType === 'number' ? 'numeric' : undefined}
+                    />
+                    {isQuizCompleted &&
+                      userAnswers.find(
+                        (ua) =>
+                          ua.id === questionItem.id &&
+                          ua.answer.toLowerCase() !== questionItem.answer
+                      ) && (
+                        <div className="mt-2 text-red-500">
+                          Jawaban yang benar: {questionItem.answer}
                         </div>
-                      </li>
-                    ))}
-                  </ul>
-                  {/* Show Alert Question not answerd */}
-                  {!isQuizCompleted &&
-                    UnAnsweredQuestion &&
-                    !userAnswers.some((answer) => answer.id === q.id) && (
-                      <div className="mt-2 text-red-500">Pertanyaan diatas belum dijawab!</div>
-                    )}
-                </div>
-              ))}
-          {['static-input', 'dynamic-input'].map((type) =>
-            questions
-              .filter((item) => item.type === type)
-              .map((data) => (
-                <div key={data.id} className="border p-2 my-2">
-                  <h4 className="my-4 text-xl">{data.question}</h4>
-                  <input
-                    type="text"
-                    className={`border p-2 rounded w-full ${!isQuizCompleted ? 'bg-white' : 'disabled:cursor-not-allowed'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === data.id && ua.answer.toLowerCase() === data.answer) ? 'bg-green-200' : 'bg-red-200'}`}
-                    value={userAnswers.find((ua) => ua.id === data.id)?.answer || ''}
-                    onChange={(e) =>
-                      !isQuizCompleted &&
-                      handleUserAnswer(data.id, e.target.value, e.target.validity.valid)
-                    }
-                    disabled={isQuizCompleted}
-                    pattern={data.inputType === 'number' ? '[0-9]*' : undefined}
-                  />
-                  {isQuizCompleted &&
-                    userAnswers.find(
-                      (ua) => ua.id === data.id && ua.answer.toLowerCase() !== data.answer
-                    ) && <div className="mt-2 text-red-500">Jawaban yang benar: {data.answer}</div>}
-                  {!isQuizCompleted &&
-                    UnAnsweredQuestion &&
-                    !userAnswers.some((answer) => answer.id === data.id) && (
-                      <div className="mt-2 text-red-500">Pertanyaan diatas belum dijawab!</div>
-                    )}
-                </div>
-              ))
-          )}
+                      )}
+                    {!isQuizCompleted &&
+                      UnAnsweredQuestion &&
+                      !userAnswers.some((answer) => answer.id === questionItem.id) && (
+                        <div className="mt-2 text-red-500">Pertanyaan diatas belum dijawab!</div>
+                      )}
+                  </div>
+                );
+              }
+
+              if (questionItem.type === 'dynamic-input') {
+                return (
+                  <div key={questionItem.id} className="border p-2 my-2">
+                    <h4 className="my-4 text-xl">
+                      {`${questionIndex + 1}. `}
+                      {questionItem.question}
+                    </h4>
+                    <input
+                      type="text"
+                      className={`border p-2 rounded w-full ${!isQuizCompleted ? 'bg-white' : 'disabled:cursor-not-allowed'} ${isQuizCompleted && userAnswers.find((ua) => ua.id === questionItem.id && ua.answer.toLowerCase() === questionItem.answer) ? 'bg-green-200' : 'bg-red-200'}`}
+                      value={userAnswers.find((ua) => ua.id === questionItem.id)?.answer || ''}
+                      onChange={(e) =>
+                        !isQuizCompleted &&
+                        handleUserAnswer(questionItem.id, e.target.value, e.target.validity.valid)
+                      }
+                      disabled={isQuizCompleted}
+                      pattern={questionItem.inputType === 'number' ? '[0-9]*' : undefined}
+                      inputMode={questionItem.inputType === 'number' ? 'numeric' : undefined}
+                    />
+                    {isQuizCompleted &&
+                      userAnswers.find(
+                        (ua) =>
+                          ua.id === questionItem.id &&
+                          ua.answer.toLowerCase() !== questionItem.answer
+                      ) && (
+                        <div className="mt-2 text-red-500">
+                          Jawaban yang benar: {questionItem.answer}
+                        </div>
+                      )}
+                    {!isQuizCompleted &&
+                      UnAnsweredQuestion &&
+                      !userAnswers.some((answer) => answer.id === questionItem.id) && (
+                        <div className="mt-2 text-red-500">Pertanyaan diatas belum dijawab!</div>
+                      )}
+                  </div>
+                );
+              }
+            })}
         </div>
         <div>
           <button
@@ -323,7 +420,7 @@ ${isQuizCompleted && userAnswers.find((ua) => ua.id === q.id && q.answer === opt
           </button>
         </div>
         <div className="text-gray-500 mt-4">
-          Benar: {score} dari {questions.length} pertanyaan
+          Benar {score} dari {questions.length} pertanyaan
         </div>
       </div>
     </div>

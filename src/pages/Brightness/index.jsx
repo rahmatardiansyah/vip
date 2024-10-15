@@ -15,6 +15,7 @@ import {
   ImageDataInput,
   Operation,
   ProcessControl,
+  Quiz,
   ResultTable,
   SelectImage
 } from '../../components';
@@ -282,7 +283,7 @@ const Brightness = () => {
                   </CalculationProcess>
                   <ProcessControl
                     heading="Kontrol Proses Perhitungan"
-                    information="konversi grayscale ke invert"
+                    information="konversi grayscale ke brightness"
                     isAnimating={isAnimating}
                     playAnimation={playAnimation}
                     pauseAnimation={pauseAnimation}
@@ -303,6 +304,7 @@ const Brightness = () => {
             <div className="my-10">
               <ImageBrightness />
             </div>
+            <Quiz />
             <AnotherTopicsContainer classes="justify-between">
               <AnotherTopicsItem name="Invert" url="/invert" direction="left" />
               <AnotherTopicsItem name="Threshold" url="/threshold" direction="right" />

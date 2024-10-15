@@ -11,7 +11,7 @@ const Basic = () => {
         melalui algoritma komputer. Beberapa teori dasar dalam pengolahan citra digital meliputi:
       </p>
       <div className="p-4 bg-gray-100 mt-8 rounded shadow-xl border border-black">
-        <Accordion title="Perolehan Citra (Image Acquisition)">
+        <Accordion title="Pengambilan Citra (Image Acquisition)">
           Melibatkan proses pengambilan gambar dari sensor seperti kamera digital atau scanner.
           Citra yang diperoleh kemudian dikonversi menjadi format digital.
         </Accordion>
