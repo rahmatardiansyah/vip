@@ -22,9 +22,6 @@ import {
   ResultTable,
   SelectImage
 } from '../../components';
-import { IoMdPause, IoMdPlay } from 'react-icons/io';
-import { HiMiniPlayPause } from 'react-icons/hi2';
-import { TbReload } from 'react-icons/tb';
 import { PulseLoader } from 'react-spinners';
 
 const Substraction = () => {
@@ -238,197 +235,97 @@ I_{\\text{normalized}}(x, y) = \\max(0, \\min(255, I_{\\text{subtracted}}(x, y) 
   }, [row, col, selectedData, selectedData2, animationStage]);
 
   return (
-    <div>
-      <div className="max-w-screen-xl mx-auto">
-        <Operation title="Operasi Image Substraction">
-          Image subtraction adalah teknik yang digunakan untuk mengurangi satu citra dari citra
-          lainnya, yang sering digunakan untuk mendeteksi perbedaan antara dua citra atau untuk
-          menyoroti perubahan. Operasi ini biasanya digunakan dalam aplikasi seperti deteksi
-          gerakan, pengurangan latar belakang, dan analisis perubahan
-        </Operation>
-        <Formula formula={substractionFormula} />
-        <div className="text-xl">
+    <div className="max-w-screen-xl mx-auto">
+      <Operation title="Operasi Image Substraction">
+        Image subtraction adalah teknik yang digunakan untuk mengurangi satu citra dari citra
+        lainnya, yang sering digunakan untuk mendeteksi perbedaan antara dua citra atau untuk
+        menyoroti perubahan. Operasi ini biasanya digunakan dalam aplikasi seperti deteksi gerakan,
+        pengurangan latar belakang, dan analisis perubahan
+      </Operation>
+      <Formula formula={substractionFormula}>
+        <div className="md:text-[1.6rem] sm:text-[1.5rem] text-base overflow-x-auto">
           <BlockMath math={substractionNormalizeFormula} />
         </div>
-        <Case>
-          Diketahui dua buah citra (citra A dan citra B) berukuran 5x5 piksel dengan resolusi
-          keabuan L=256
-        </Case>
+      </Formula>
+      <Case>
+        Diketahui dua buah citra (citra A dan citra B) berukuran 5x5 piksel dengan resolusi keabuan
+        L=256
+      </Case>
 
-        <SelectImage
-          title="Pilih Gambar 1"
-          information="Silakan pilih salah satu gambar grayscale pertama yang disediakan di bawah ini untuk melihat proses konversi proses blending."
-        >
-          {images.map((image, index) => (
-            <Image
-              key={index}
-              src={image.src}
-              alt={image.name}
-              onClick={() => handleImageClick(image.name)}
-              isSelected={image.name === selectedImage}
-            />
-          ))}
-        </SelectImage>
+      <SelectImage
+        title="Pilih Gambar 1"
+        information="Silakan pilih salah satu gambar grayscale pertama yang disediakan di bawah ini untuk melihat proses konversi proses blending."
+      >
+        {images.map((image, index) => (
+          <Image
+            key={index}
+            src={image.src}
+            alt={image.name}
+            onClick={() => handleImageClick(image.name)}
+            isSelected={image.name === selectedImage}
+          />
+        ))}
+      </SelectImage>
 
-        <SelectImage
-          title="Pilih Gambar 2"
-          information="Silakan pilih salah satu gambar grayscale kedua yang disediakan di bawah ini untuk melihat proses konversi proses blending."
-        >
-          {images2.map((image, index) => (
-            <Image
-              key={index}
-              src={image.src}
-              alt={image.name}
-              onClick={() => handleImageClick2(image.name)}
-              isSelected={image.name === selectedImage2}
+      <SelectImage
+        title="Pilih Gambar 2"
+        information="Silakan pilih salah satu gambar grayscale kedua yang disediakan di bawah ini untuk melihat proses konversi proses blending."
+      >
+        {images2.map((image, index) => (
+          <Image
+            key={index}
+            src={image.src}
+            alt={image.name}
+            onClick={() => handleImageClick2(image.name)}
+            isSelected={image.name === selectedImage2}
+          />
+        ))}
+      </SelectImage>
+      <div className="my-10 px-4">
+        {selectedImage && (
+          <div>
+            <ImageDataInput
+              information="Setelah memilih gambar, nilai grayscale dari kedua gambar tersebut akan muncul di tabel berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di bawah."
+              selectedData={selectedData}
+              textareaValue={textareaValue}
+              handleTextareaChange={handleTextareaChange}
+              isAnimating={isAnimating}
+              error={error}
             />
-          ))}
-        </SelectImage>
+          </div>
+        )}
+        {selectedImage2 && (
+          <div>
+            <ImageDataInput
+              information=""
+              selectedData={selectedData2}
+              textareaValue={textareaValue2}
+              handleTextareaChange={handleTextareaChange2}
+              isAnimating={isAnimating}
+              error={error}
+            />
+          </div>
+        )}
+      </div>
+
+      {selectedImage && selectedImage2 && (
         <div className="my-10 px-4">
-          {selectedImage && (
+          <div className="flex flex-wrap gap-8">
             <div>
-              <ImageDataInput
-                information="Setelah memilih gambar, nilai grayscale dari kedua gambar tersebut akan muncul di tabel berikut. Anda bisa mengubah nilai grayscale tersebut secara manual melalui field di bawah."
-                selectedData={selectedData}
-                textareaValue={textareaValue}
-                handleTextareaChange={handleTextareaChange}
-                isAnimating={isAnimating}
-                error={error}
-              />
-            </div>
-          )}
-          {selectedImage2 && (
-            <div>
-              <ImageDataInput
-                information=""
-                selectedData={selectedData2}
-                textareaValue={textareaValue2}
-                handleTextareaChange={handleTextareaChange2}
-                isAnimating={isAnimating}
-                error={error}
-              />
-            </div>
-          )}
-        </div>
-
-        {selectedImage && selectedImage2 && (
-          <div className="my-10 px-4">
-            <div className="flex flex-wrap gap-8">
-              <div>
-                <h2 className="text-xl font-semibold">Table Citra Grayscale 1</h2>
-                <p className="">
-                  Tabel citra grayscale 5x5 piksel dari gambar pertama yang telah di-resize
-                </p>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {selectedData.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
-                          >
-                            <p>{color}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Table Citra Grayscale 2</h2>
-                <p className="">
-                  Tabel citra grayscale 5x5 piksel dari gambar kedua yang telah di-resize
-                </p>
-                <table className="border border-black text-base mt-4">
-                  <tbody>
-                    {selectedData2.map((rowItem, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {rowItem.map((color, colIndex) => (
-                          <td
-                            key={colIndex}
-                            className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-blue-200' : 'bg-white'}`}
-                          >
-                            <p>{color}</p>
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="flex flex-row flex-wrap mt-8 gap-8">
-                <ResultTable
-                  heading="Table Citra Hasil"
-                  information="Tabel citra hasil proses image substraction"
-                  resultData={resultData}
-                  row={row}
-                  col={col}
-                  animationStage={animationStage}
-                />
-                <div>
-                  <CalculationProcess
-                    title="Proses Perhitungan"
-                    classes="flex gap-2 flex-col items-start"
-                  >
-                    <div className="flex gap-4 flex-col items-start">
-                      {animationStage >= 0 && (
-                        <BlockMath
-                          math={`I_{\\text{subtracted}}(x, y) = I_1(${currentGrayscale})-I_2(${currentGrayscale2}) = `}
-                        />
-                      )}
-                      <div className="flex gap-2 items-center">
-                        <BlockMath math={`I_{\\text{subtracted}}(x, y) = `} />
-                        {animationStage >= 1 && <BlockMath math={`${substractionValue}`} />}
-                        {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
-                      </div>
-                    </div>
-                    <p>Normalisasi</p>
-                    <div className="flex gap-4 flex-col">
-                      {animationStage >= 0 && (
-                        <BlockMath
-                          math={`I_{\\text{normalized}}(x, y) = (255 + ${substractionValue})/2 = `}
-                        />
-                      )}
-
-                      <div className="flex gap-2 items-center">
-                        <BlockMath math={`I_{\\text{normalized}}(x, y) = `} />
-                        {animationStage >= 1 && <BlockMath math={`${normalizeValue}`} />}
-                        {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
-                      </div>
-                    </div>
-                  </CalculationProcess>
-                  <ProcessControl
-                    heading="Kontrol Proses Perhitungan"
-                    information="konversi grayscale ke image substraction"
-                    isAnimating={isAnimating}
-                    playAnimation={playAnimation}
-                    pauseAnimation={pauseAnimation}
-                    stopAnimation={stopAnimation}
-                    playStep={playStep}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="mt-8">
-              <h2 className="text-xl font-semibold">Table Citra Normalisasi</h2>
+              <h2 className="text-xl font-semibold">Table Citra Grayscale 1</h2>
               <p className="">
-                Tabel citra hasil normalisasi dari proses konversi image substraction
+                Tabel citra grayscale 5x5 piksel dari gambar pertama yang telah di-resize
               </p>
               <table className="border border-black text-base mt-4">
                 <tbody>
-                  {resultData2.map((rowItem, rowIndex) => (
+                  {selectedData.map((rowItem, rowIndex) => (
                     <tr key={rowIndex}>
                       {rowItem.map((color, colIndex) => (
                         <td
                           key={colIndex}
-                          className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col && animationStage === 2
-                              ? 'bg-red-300'
-                              : 'bg-white'
-                            }`}
+                          className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-yellow-200' : 'bg-white'}`}
                         >
-                          <p>{color !== null ? color : ''}</p>
+                          <p>{color}</p>
                         </td>
                       ))}
                     </tr>
@@ -436,17 +333,116 @@ I_{\\text{normalized}}(x, y) = \\max(0, \\min(255, I_{\\text{subtracted}}(x, y) 
                 </tbody>
               </table>
             </div>
-            <div className="my-10">
-              <ImageSubstraction />
+            <div>
+              <h2 className="text-xl font-semibold">Table Citra Grayscale 2</h2>
+              <p className="">
+                Tabel citra grayscale 5x5 piksel dari gambar kedua yang telah di-resize
+              </p>
+              <table className="border border-black text-base mt-4">
+                <tbody>
+                  {selectedData2.map((rowItem, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {rowItem.map((color, colIndex) => (
+                        <td
+                          key={colIndex}
+                          className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col ? 'bg-blue-200' : 'bg-white'}`}
+                        >
+                          <p>{color}</p>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-            <Quiz />
-            <AnotherTopicsContainer classes="justify-between">
-              <AnotherTopicsItem name="Blending" url="/blending" direction="left" />
-              <AnotherTopicsItem name="Correlation" url="/correlation" direction="right" />
-            </AnotherTopicsContainer>
+            <div className="flex flex-row flex-wrap mt-8 gap-8">
+              <ResultTable
+                heading="Table Citra Hasil"
+                information="Tabel citra hasil proses image substraction"
+                resultData={resultData}
+                row={row}
+                col={col}
+                animationStage={animationStage}
+              />
+              <div>
+                <CalculationProcess
+                  title="Proses Perhitungan"
+                  classes="flex gap-2 flex-col items-start"
+                >
+                  <div className="flex gap-4 flex-col items-start">
+                    {animationStage >= 0 && (
+                      <BlockMath
+                        math={`I_{\\text{subtracted}}(x, y) = I_1(${currentGrayscale})-I_2(${currentGrayscale2}) = `}
+                      />
+                    )}
+                    <div className="flex gap-2 items-center">
+                      <BlockMath math={`I_{\\text{subtracted}}(x, y) = `} />
+                      {animationStage >= 1 && <BlockMath math={`${substractionValue}`} />}
+                      {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
+                    </div>
+                  </div>
+                  <p>Normalisasi</p>
+                  <div className="flex gap-4 flex-col">
+                    {animationStage >= 0 && (
+                      <BlockMath
+                        math={`I_{\\text{normalized}}(x, y) = (255 + ${substractionValue})/2 = `}
+                      />
+                    )}
+
+                    <div className="flex gap-2 items-center">
+                      <BlockMath math={`I_{\\text{normalized}}(x, y) = `} />
+                      {animationStage >= 1 && <BlockMath math={`${normalizeValue}`} />}
+                      {animationStage === 0 && <PulseLoader size={5} speedMultiplier={1} />}
+                    </div>
+                  </div>
+                </CalculationProcess>
+                <ProcessControl
+                  heading="Kontrol Proses Perhitungan"
+                  information="konversi grayscale ke image substraction"
+                  isAnimating={isAnimating}
+                  playAnimation={playAnimation}
+                  pauseAnimation={pauseAnimation}
+                  stopAnimation={stopAnimation}
+                  playStep={playStep}
+                />
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold">Table Citra Normalisasi</h2>
+            <p className="">
+              Tabel citra hasil normalisasi dari proses konversi image substraction
+            </p>
+            <table className="border border-black text-base mt-4">
+              <tbody>
+                {resultData2.map((rowItem, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {rowItem.map((color, colIndex) => (
+                      <td
+                        key={colIndex}
+                        className={`border-2 border-black size-20 text-center ${rowIndex === row && colIndex === col && animationStage === 2
+                            ? 'bg-red-300'
+                            : 'bg-white'
+                          }`}
+                      >
+                        <p>{color !== null ? color : ''}</p>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="my-10">
+            <ImageSubstraction />
+          </div>
+          <Quiz />
+          <AnotherTopicsContainer classes="justify-between">
+            <AnotherTopicsItem name="Blending" url="/blending" direction="left" />
+            <AnotherTopicsItem name="Correlation" url="/correlation" direction="right" />
+          </AnotherTopicsContainer>
+        </div>
+      )}
     </div>
   );
 };
