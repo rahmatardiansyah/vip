@@ -6,6 +6,5 @@ export default defineConfig({
   plugins: [react()],
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version)
-  },
-  base: process.env.NODE_ENV === 'production' ? 'https://rahmatardiansyah.github.io/vip' : '/'
+  }
 });
